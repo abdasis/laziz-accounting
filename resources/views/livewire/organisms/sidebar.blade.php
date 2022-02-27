@@ -85,10 +85,10 @@
                         <div class="collapse" id="customer">
                             <ul class="nav-second-level">
                                 <li>
-                                    <a href="crm-dashboard.html">Create Customer</a>
+                                    <a href="{{route('customers.create')}}">Tambah Customer</a>
                                 </li>
                                 <li>
-                                    <a href="crm-contacts.html">All Customers</a>
+                                    <a href="{{route('customers.index')}}">Semua Customer</a>
                                 </li>
                             </ul>
                         </div>

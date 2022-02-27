@@ -12,3 +12,24 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
+
+//breadcrumb untuk customer
+Breadcrumbs::for('customers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Semua Customer', route('customers.index'));
+});
+
+Breadcrumbs::for('customers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('customers.index');
+    $trail->push('Tambah Customer', route('customers.create'));
+});
+
+Breadcrumbs::for('customers.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('customers.index');
+    $trail->push('Sunting Customer', route('customers.edit', $id));
+});
+
+Breadcrumbs::for('customers.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('customers.index');
+    $trail->push('Detail Customer', route('customers.show', $id));
+});
