@@ -1,13 +1,10 @@
 <div>
     {{-- In work, do what you enjoy. --}}
-    <footer class="footer">
+    <footer class="footer bg-white">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    &copy; UBold theme by <a href="">Coderthemes</a>
+                    {{\Carbon\Carbon::now()->format('Y')}} &copy; {{config('app.name')}} by <a href=""><strong>Lazizdev</strong></a>
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">

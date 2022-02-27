@@ -6,11 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "diglactic/laravel-breadcrumbs": "^7.1",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^2.2",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "laravolt/avatar": "^4.1",
         "livewire/livewire": "^2.5",
         "rappasoft/laravel-livewire-tables": "^1.24"
     },
