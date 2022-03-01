@@ -19,13 +19,13 @@
         <link href="{{asset('assets/css/config/default/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
         <!-- icons -->
         <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-
+        <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
         @livewireStyles
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="loading" data-sidebar-icon="twotones" data-sidebar-icon="twotones" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": true}'>
+    <body class="loading" data-sidebar-icon="twotones" data-sidebar-icon="twotones" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": false}'>
     <div id="wrapper">
         <!-- Topbar Start -->
         <livewire:organisms.navbar/>
@@ -74,6 +74,9 @@
 
     <!-- App js -->
     <script src="{{asset('assets/js/app.min.js')}}"></script>
-        @livewireScripts
+    @livewireScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+    @stack('scripts')
     </body>
 </html>

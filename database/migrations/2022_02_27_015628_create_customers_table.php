@@ -15,6 +15,16 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('company_name');
+            $table->string('contact_name')->nullable();
+            $table->string('email')->unique();
+            $table->string('phone');
+            $table->string('province');
+            $table->string('city');
+            $table->string('districts');
+            $table->string('postal_code');
+            $table->string('address')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

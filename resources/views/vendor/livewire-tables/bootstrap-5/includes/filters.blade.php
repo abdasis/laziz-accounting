@@ -9,8 +9,9 @@
         <button
             x-on:click="open = !open"
             type="button"
-            class="btn dropdown-toggle d-block w-100 d-md-inline"
+            class="btn bg-soft-light border dropdown-toggle d-block w-100 d-md-inline"
         >
+            <i class="mdi mdi-filter me-1"></i>
             @lang('Filters')
 
             @if (count($this->getFiltersWithoutSearch()))
@@ -22,20 +23,20 @@
             <span class="caret"></span>
         </button>
         <ul
-            class="dropdown-menu w-100"
+            class="dropdown-menu"
             x-bind:class="{'show' : open}"
             role="menu"
+            style="min-width: 200px;"
         >
             <li>
                 @if ($filtersView)
                     @include($filtersView)
                 @elseif (count($customFilters))
                     @foreach ($customFilters as $key => $filter)
-                        <div wire:key="filter-{{ $key }}" class="p-2">
-                            <label for="filter-{{ $key }}" class="mb-2">
+                        <div wire:key="filter-{{ $key }}" class="px-2 pb-1">
+                            <label for="filter-{{ $key }}" class="mb-0">
                                 {{ $filter->name() }}
                             </label>
-
                             @if ($filter->isSelect())
                                 @include('livewire-tables::bootstrap-5.includes.filter-type-select')
                             @elseif($filter->isMultiSelect())

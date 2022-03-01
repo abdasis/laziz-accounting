@@ -6,7 +6,7 @@
     @endphp
 @endif
 
-<tr
+<tr class="align-middle"
     {{ $attributes->merge($customAttributes) }}
 
     @if ($url)

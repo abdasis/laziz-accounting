@@ -1,0 +1,21 @@
+.fa, .fas{
+    font-size: 14px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #727272;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    height: 10px;
+    width: 8px;
+    border: 1px solid #ededed;
+    border-radius: 10px;
+    background: #f7f7f7;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background: #cbcbcb;
+    border-radius: 10px;
+}
+

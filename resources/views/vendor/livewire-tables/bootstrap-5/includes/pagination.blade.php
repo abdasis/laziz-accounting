@@ -1,6 +1,6 @@
 @if ($showPagination)
     @if ($paginationEnabled && $rows->lastPage() > 1)
-        <div class="row">
+        <div class="row mt-2">
             <div class="col-12 col-md-6">
                 {{ $rows->links() }}
             </div>

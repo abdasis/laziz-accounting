@@ -7,7 +7,7 @@
                 @if ($key !== 'search' && filled($value))
                     <span
                         wire:key="filter-pill-{{ $key }}"
-                        class="badge rounded-pill bg-info d-inline-flex align-items-center"
+                        class="badge badge-soft-pink py-1 px-2 d-inline-flex align-items-center"
                     >
                         {{ $filterNames[$key] ?? collect($this->columns())->pluck('text', 'column')->get($key, isset($customFilters[$key]) && property_exists($customFilters[$key], 'name') ? $customFilters[$key]->name : ucwords(strtr($key, ['_' => ' ', '-' => ' ']))) }}:
                         @if(isset($customFilters[$key]) && method_exists($customFilters[$key], 'options'))
@@ -41,7 +41,7 @@
             <a
                 href="#"
                 wire:click.prevent="resetFilters"
-                class="badge rounded-pill bg-light text-dark text-decoration-none"
+                class="badge badge-light px-2 py-1 bg-light text-dark text-decoration-none"
             >
                 @lang('Clear')
             </a>

@@ -6,14 +6,14 @@
             @foreach($sorts as $col => $dir)
                 <span
                     wire:key="sorting-pill-{{ $col }}"
-                    class="badge rounded-pill bg-info d-inline-flex align-items-center"
+                    class="badge px-2 py-1 badge-soft-blue d-inline-flex align-items-center"
                 >
                     <span>{{ $sortNames[$col] ?? collect($this->columns())->pluck('text', 'column')->get($col, ucwords(strtr($col, ['_' => ' ', '-' => ' ']))) }}: {{ $dir === 'asc' ? ($sortDirectionNames[$col]['asc'] ?? 'A-Z') : ($sortDirectionNames[$col]['desc'] ?? 'Z-A') }}</span>
 
                     <a
                         href="#"
                         wire:click.prevent="removeSort('{{ $col }}')"
-                        class="text-white ms-2"
+                        class="text-blue-900 ms-2"
                     >
                         <span class="visually-hidden">@lang('Remove sort option')</span>
                         <svg style="width:.5em;height:.5em" stroke="currentColor" fill="none" viewBox="0 0 8 8">
@@ -26,7 +26,7 @@
             <a
                 href="#"
                 wire:click.prevent="resetSorts"
-                class="badge rounded-pill bg-light text-dark text-decoration-none"
+                class="badge px-2 py-1 badge-soft-secondary text-dark text-decoration-none"
             >
                 @lang('Clear')
             </a>

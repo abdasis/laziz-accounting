@@ -6,6 +6,6 @@
         type="datetime-local"
         @if(isset($filter->options['min']) && strlen($filter->options['min'])) min="{{ $filter->options['min'] }}" @endif
         @if(isset($filter->options['max']) && strlen($filter->options['max'])) max="{{ $filter->options['max'] }}" @endif
-        class="form-control"
+        class="form-control "
     />
 </div>

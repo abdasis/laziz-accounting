@@ -8,7 +8,7 @@
         >
             <button
                 x-on:click="open = !open"
-                class="btn dropdown-toggle d-block w-100 d-md-inline"
+                class="btn dropdown-toggle d-block w-100 d-md-inline btn-soft-light text-dark border"
                 type="button"
                 aria-haspopup="true"
                 x-bind:aria-expanded="open"
@@ -17,7 +17,7 @@
             </button>
 
             <div
-                class="dropdown-menu dropdown-menu-end w-100"
+                class="dropdown-menu dropdown-menu-end py-2" style="min-width: 200px;"
                 x-bind:class="{'show' : open}"
             >
                 @foreach($columns as $column)
