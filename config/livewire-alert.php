@@ -20,7 +20,7 @@ return [
         'timer' => null,
         'showConfirmButton' => true,
         'showCancelButton' => true,
-        'cancelButtonText' => 'No',
+        'cancelButtonText' => 'Batal',
         'confirmButtonColor' => '#3085d6',
         'cancelButtonColor' => '#d33'
     ]

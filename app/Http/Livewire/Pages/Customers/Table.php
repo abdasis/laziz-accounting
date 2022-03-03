@@ -29,35 +29,6 @@ class Table extends DataTableComponent
         }
     }
 
-    public function filters(): array
-    {
-        return [
-            'active' => Filter::make('Active')
-                ->select([
-                    '' => 'Any',
-                    'yes' => 'Yes',
-                    'no' => 'No',
-                ]),
-            'verified' => Filter::make('E-mail Verified')
-                ->select([
-                    '' => 'Any',
-                    1 => 'Yes',
-                    0 => 'No',
-                ]),
-            'date' => Filter::make('Date')
-                ->date([
-                    'min' => now()->subYear()->format('Y-m-d'), // Optional
-                    'max' => now()->format('Y-m-d') // Optional
-                ]),
-            'tags' => Filter::make('Tags')
-                ->multiSelect([
-                    'tag1' => 'Tags 1',
-                    'tag2' => 'Tags 2',
-                    'tag3' => 'Tags 3',
-                    'tag4' => 'Tags 4',
-                ]),
-        ];
-    }
     public function columns(): array
     {
         return [
@@ -71,13 +42,13 @@ class Table extends DataTableComponent
             Column::make('Email', 'email')->searchable()->sortable(),
             Column::make('Telepon', 'phone')->searchable()->sortable(),
             Column::make('Status', 'status')->format(function ($val){
-                $status = $val ? 'Aktif' : 'Tidak Aktif';
-                $badge = $val ? 'success' : 'danger';
+                $status = $val == 'active' ? 'Aktif' : 'Tidak Aktif';
+                $badge = $val == 'active' ? 'success' : 'danger';
                 return "<span class='badge badge-outline-$badge'>{$status}</span>";
             })->asHtml()->searchable()->sortable(),
-            Column::make('Aksi', 'id')->format(function ($id){
+            Column::make('Aksi', 'id')->format(function ($id, $kolom, $baris){
                 return view('partials.button_actions', [
-                    'edit' => route('customers.edit', $id),
+                    'editModal' => $baris,
                     'delete' => $id
                 ]);
             }),

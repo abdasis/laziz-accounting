@@ -77,21 +77,10 @@
                     </li>
                     <li class="menu-title mt-2">Finance</li>
                     <li>
-                        <a href="#customer" data-bs-toggle="collapse">
+                        <a href="{{route('customers.index')}}">
                             <i class="fas fa-user-friends"></i>
                             <span> Customers </span>
-                            <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="customer">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{route('customers.create')}}">Tambah Customer</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('customers.index')}}">Semua Customer</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li>
                         <a href="#supplier" data-bs-toggle="collapse">
