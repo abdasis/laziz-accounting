@@ -23,6 +23,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('edit/{customer}', \App\Http\Livewire\Pages\Customers\Edit::class)->name('customers.edit');
         Route::get('show/{customer}', \App\Http\Livewire\Pages\Customers\Show::class)->name('customers.show');
     });
+
+    Route::group(['prefix' => 'suppliers'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Suppliers\Index::class)->name('suppliers.index');
+        Route::get('create', \App\Http\Livewire\Pages\Suppliers\Create::class)->name('suppliers.create');
+        Route::get('edit/{supplier}', \App\Http\Livewire\Pages\Suppliers\Edit::class)->name('suppliers.edit');
+        Route::get('show/{supplier}', \App\Http\Livewire\Pages\Suppliers\Show::class)->name('suppliers.show');
+    });
+
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

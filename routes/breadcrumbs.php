@@ -33,3 +33,14 @@ Breadcrumbs::for('customers.show', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('customers.index');
     $trail->push('Detail Customer', route('customers.show', $id));
 });
+
+
+Breadcrumbs::for('suppliers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Semua Supplier', route('suppliers.index'));
+});
+
+Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Login', route('login'));
+});

@@ -83,21 +83,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#supplier" data-bs-toggle="collapse">
+                        <a href="{{route('suppliers.index')}}">
                             <i class="fas fa-truck"></i>
                             <span> Suppliers </span>
-                            <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="supplier">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="crm-dashboard.html">Tambah Supplier</a>
-                                </li>
-                                <li>
-                                    <a href="crm-contacts.html">Semua Supplier</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li>
                         <a href="#sidebarCrm" data-bs-toggle="collapse">

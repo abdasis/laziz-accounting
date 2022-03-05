@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
             $table->string('contact_name')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('districts');
             $table->string('postal_code');
             $table->string('address')->nullable();
+            $table->string('industry_type');
             $table->string('bank_account')->nullable();
             $table->string('bank_name')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
@@ -38,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('suppliers');
     }
 };

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Supplier>
  */
-class CustomerFactory extends Factory
+class SupplierFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -28,6 +28,7 @@ class CustomerFactory extends Factory
             'postal_code' => $this->faker->postcode,
             'bank_name' => $this->faker->creditCardType,
             'bank_account' => $this->faker->creditCardNumber,
+            'industry_type' => $this->faker->randomElement(['Food', 'Fashion', 'Electronics', 'Cosmetics', 'Others']),
             'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
