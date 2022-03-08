@@ -44,3 +44,24 @@ Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Login', route('login'));
 });
+
+Breadcrumbs::for('accounts.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Semua Akun', route('accounts.index'));
+});
+
+Breadcrumbs::for('category-account.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Kategori Akun', route('category-account.index'));
+});
+
+Breadcrumbs::for('purchases.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Pembelian', route('purchases.index'));
+});
+
+
+Breadcrumbs::for('purchases.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('purchases.index');
+    $trail->push('Tambah Pembelian', route('purchases.create'));
+});

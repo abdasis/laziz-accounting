@@ -2,7 +2,7 @@
 
 <div class="{{ $this->responsive ? 'table-responsive' : '' }}">
     <table {{ $attributes->except(['wire:sortable', 'class']) }} class="{{ trim($attributes->get('class')) ?: 'table table-sm table-hover align-middle table-hover-primary'}}">
-        <thead>
+        <thead class="bg-light bg-gradient">
             <tr>
                 {{ $head }}
             </tr>

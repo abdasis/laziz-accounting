@@ -2,12 +2,14 @@
     {{-- Close your eyes. Count to one. That is how long forever feels. --}}
     <ul class="nav nav-tabs nav-bordered">
         <li class="nav-item">
-            <a href="#home-b1" class="nav-link {{$step != 1 ? '' : 'active'}}">
+            <a href="#perusahaan" class="nav-link {{$step != 1 ? '' : 'active'}}">
+                <i class="mdi mdi-bank"></i>
                 Company Info
             </a>
         </li>
         <li class="nav-item">
-            <a href="#profile-b1"  class="nav-link {{$step != 2 ? '' : 'active'}}">
+            <a href="#contact-perusahaan"  class="nav-link {{$step != 2 ? '' : 'active'}}">
+                <i class="mdi mdi-phone"></i>
                 Contact Info
             </a>
         </li>
@@ -18,18 +20,29 @@
                 <x-form-input name="company_name" label="Nama Customer"
                               placeholder="Masukan nama perusahaan"/>
             </div>
-            <div class="mb-2">
-                <x-form-input name="province" label="Provinsi" placeholder="Masukan provinsi"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="province" label="Provinsi" placeholder="Masukan provinsi"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="city" label="Kota" placeholder="Masukan kota"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="districts" label="Kecamatan" placeholder="Masukan kecamatan"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="postal_code" label="Kode Pos" placeholder="Masukan kode pos"/>
+                    </div>
+                </div>
             </div>
-            <div class="mb-2">
-                <x-form-input name="city" label="Kota" placeholder="Masukan kota"/>
-            </div>
-            <div class="mb-2">
-                <x-form-input name="districts" label="Kecamatan" placeholder="Masukan kecamatan"/>
-            </div>
-            <div class="mb-2">
-                <x-form-input name="postal_code" label="Kode Pos" placeholder="Masukan kode pos"/>
-            </div>
+
             <div class="mb-2">
                 <x-form-textarea name="address" label="Alamat" placeholder="Masukan alamat"/>
             </div>

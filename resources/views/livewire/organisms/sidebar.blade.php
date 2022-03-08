@@ -52,7 +52,7 @@
                     <li class="menu-title">Dashboard</li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-tablet-dashboard mdi-24px"></i>
+                            <i class="mdi mdi-monitor-dashboard mdi-24px"></i>
                             <span> Dashboard </span>
                         </a>
                     </li>
@@ -65,17 +65,23 @@
                     <li class="menu-title mt-2">Operasional</li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-cart-arrow-up mdi-24px"></i>
+                            <i class="mdi mdi-tag mdi-24px"></i>
                             <span> Penjualan </span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-cash-register mdi-24px"></i>
+                        <a href="{{route('purchases.index')}}">
+                            <i class="mdi mdi-cart-outline mdi-24px icon-dual"></i>
                             <span> Pembelian </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Finance</li>
+                    <li>
+                        <a href="{{route('accounts.index')}}">
+                            <i class="fas fa-address-book"></i>
+                            <span> Akun Biaya </span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{route('customers.index')}}">
                             <i class="fas fa-user-friends"></i>
@@ -133,6 +139,9 @@
                         </a>
                         <div class="collapse" id="setting">
                             <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{route('category-account.index')}}">Kategori Akun</a>
+                                </li>
                                 <li>
                                     <a href="crm-dashboard.html">Data Perusahaan</a>
                                 </li>

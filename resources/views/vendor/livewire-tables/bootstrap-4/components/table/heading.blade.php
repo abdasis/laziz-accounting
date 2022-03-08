@@ -7,6 +7,7 @@
     'customAttributes' => [],
 ])
 
+<thead class="bg-gradien bg-light">
 @unless ($sortingEnabled && $sortable)
     <th {{ $attributes->merge($customAttributes) }}>
         {{ $text ?? $slot }}
@@ -38,3 +39,4 @@
         </div>
     </th>
 @endif
+</thead>

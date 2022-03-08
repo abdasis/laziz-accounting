@@ -27,17 +27,27 @@
 
                 </x-form-select>
             </div>
-            <div class="mb-2">
-                <x-form-input name="province" label="Provinsi" placeholder="Masukan provinsi"/>
-            </div>
-            <div class="mb-2">
-                <x-form-input name="city" label="Kota" placeholder="Masukan kota"/>
-            </div>
-            <div class="mb-2">
-                <x-form-input name="districts" label="Kecamatan" placeholder="Masukan kecamatan"/>
-            </div>
-            <div class="mb-2">
-                <x-form-input name="postal_code" label="Kode Pos" placeholder="Masukan kode pos"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="province" label="Provinsi" placeholder="Masukan provinsi"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="city" label="Kota" placeholder="Masukan kota"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="districts" label="Kecamatan" placeholder="Masukan kecamatan"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <x-form-input name="postal_code" label="Kode Pos" placeholder="Masukan kode pos"/>
+                    </div>
+                </div>
             </div>
             <div class="mb-2">
                 <x-form-textarea name="address" label="Alamat" placeholder="Masukan alamat"/>

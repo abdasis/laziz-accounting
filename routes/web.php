@@ -31,6 +31,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('show/{supplier}', \App\Http\Livewire\Pages\Suppliers\Show::class)->name('suppliers.show');
     });
 
+    Route::group(['prefix' => 'accounts'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Account\Index::class)->name('accounts.index');
+        Route::get('create', \App\Http\Livewire\Pages\Account\Create::class)->name('accounts.create');
+        Route::get('edit/{account}', \App\Http\Livewire\Pages\Account\Edit::class)->name('accounts.edit');
+        Route::get('show/{account}', \App\Http\Livewire\Pages\Account\Show::class)->name('accounts.show');
+    });
+
+    Route::group(['prefix' => 'purchases'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Purchase\Index::class)->name('purchases.index');
+        Route::get('create', \App\Http\Livewire\Pages\Purchase\Create::class)->name('purchases.create');
+        Route::get('edit/{purchase}', \App\Http\Livewire\Pages\Purchase\Edit::class)->name('purchases.edit');
+        Route::get('show/{purchase}', \App\Http\Livewire\Pages\Purchase\Show::class)->name('purchases.show');
+    });
+
+    Route::group(['prefix' => 'category-account'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\AccountCategory\Index::class)->name('category-account.index');
+    });
+
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

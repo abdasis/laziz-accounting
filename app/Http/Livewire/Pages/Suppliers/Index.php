@@ -30,7 +30,7 @@ class Index extends Component
     {
         $this->emit('refresh');
         $this->alert('success', 'Berhasil', [
-            'text' => 'Data customer berhasil diubah',
+            'text' => 'Data supplier berhasil diubah',
         ]);
         $this->reset();
     }

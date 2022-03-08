@@ -42,6 +42,7 @@
             $('#modalCustomer').modal('hide');
         });
 
+
         window.addEventListener('showModal', function(e) {
             $('#modal-title').text('Sunting Customer');
             $('#modalCustomer').modal('show');
