@@ -11,67 +11,77 @@ use Livewire\Component;
 class Create extends Component
 {
     use LivewireAlert;
-    public $account_category_id, $name, $code, $description, $parent_id, $account_type, $default_balance;
+    public $account_category_id, $name, $code, $description, $parent_id, $account_type, $default_balance, $lock_status = 'unlocked';
 
-    public $rules = [
-        'account_category_id' => 'required',
-        'name' => 'required|unique:accounts,name',
-        'code' => 'required|unique:accounts,code',
-        'account_type'=> 'required',
-        'default_balance'=> 'required',
-    ];
+    public function rules()
+    {
+        return [
+            'account_category_id' => 'required',
+            'name' => 'required|unique:accounts,name',
+            'code' => 'required|unique:accounts,code',
+            'account_type'=> 'required',
+            'default_balance'=> 'required',
+        ];
+    }
 
     public function makeCodeAccount()
     {
-        /*mengambil data account category*/
-        $account_category = AccountCategory::find($this->account_category_id);
-        $code = $account_category->code;
+        $category = AccountCategory::where('id', $this->account_category_id)->first();
 
+        $account = Account::where('account_category_id', $this->account_category_id)
+            ->where('lock_status', 'locked')->max('code');
 
-        /*membuat kode akun dari kode tarakhir akun + 1*/
-        $account = Account::where('account_category_id', $this->account_category_id)->latest()->first();
-        if(is_null($account)) {
-            $code_account = $code + 10000;
+        if ($account == null){
+            $code = $category->code+10000;
         }else{
-            $code_account = $account->code + 1000;
+            $code = $account+10000;
         }
 
-        return $code_account;
+
+        return $code;
 
     }
 
-
     public function updatedAccountCategoryId()
     {
-        $kode = $this->makeCodeAccount();
-        $this->code = $kode;
+        $this->code = $this->makeCodeAccount();
     }
 
     public function updatedParentId()
     {
-        try {
-            $account = Account::where('account_category_id', $this->account_category_id)->where('parent_id', $this->parent_id)->latest()->first();
-            if (!is_null($account)) {
-                $this->code = $account->code + 1;
-            }else{
-                $account = Account::where('account_category_id', $this->account_category_id)->where('id', $this->parent_id)->latest()->first();
-                if ($account){
-                    $code = $account->code + 1;
-                    $this->code = $code;
+        if ($this->parent_id != null){
+            $account = Account::where('id', $this->parent_id)->first();
+            if($account != null && $account->lock_status == 'locked' && $account->parent_id == null){
+                $locked_code = Account::where('parent_id', $this->parent_id)->max('code');
+                if ($locked_code == null){
+                    $this->code = $account->code+1000;
                 }else{
-                    $this->alert('warning', 'Kesalahan', [
-                        'text' => 'Akun yang ada pilih tidak sesuai dengan kategori akun',
-                    ]);
-                    $this->parent_id = null;
-                    return false;
+                    $this->code = $locked_code+1000;
                 }
+            }elseif($account != null && $account->lock_status == 'locked' && $account->parent_id != null){
+                $locked_code = Account::where('parent_id', $this->parent_id)->max('code');
+                if ($locked_code == null){
+                    $this->code = $account->code+1;
+                }else{
+                    $this->code = $locked_code+1;
+                }
+            }else{
+                $account = Account::where('id', $this->parent_id)->max('code');
+                $this->code = $account+10000;
             }
-        }catch (QueryException $exception){
-            $this->alert('warning', 'Kesalahan', [
-                'text' => 'Akun yang ada pilih tidak sesuai dengan kategori akun',
-            ]);
+        }else{
+            $this->code = $this->makeCodeAccount();
             $this->parent_id = null;
-            return false;
+        }
+
+    }
+
+    public function updateLock()
+    {
+        if($this->lock_status == 'locked'){
+            $this->lock_status = 'unlocked';
+        }else{
+            $this->lock_status = 'locked';
         }
     }
 
@@ -87,6 +97,8 @@ class Create extends Component
                 'parent_id' => $this->parent_id,
                 'account_type' => $this->account_type,
                 'default_balance' => $this->default_balance,
+                'lock_status' => $this->lock_status,
+                'status' => 'active',
             ]);
             $this->alert('success', 'Berhasil', [
                 'text'=> 'Data berhasil ditambahkan',
@@ -101,8 +113,8 @@ class Create extends Component
     public function render()
     {
         return view('livewire.pages.account.create',[
-            'account_categories' => AccountCategory::orderBy('name', 'asc')->get(),
-            'accounts' => Account::orderBy('name', 'asc')->get(),
+            'account_categories' => AccountCategory::orderBy('code', 'asc')->get(),
+            'accounts' => Account::where('lock_status', 'locked')->orderBy('name', 'asc')->get(),
         ]);
     }
 }

@@ -3,7 +3,7 @@
     <div class="modal fade" id="{{$target}}" data-bs-backdrop="static" tabindex="-1" aria-labelledby="{{$title_id}}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-pattern border-bottom border-light">
+                <div class="modal-header bg-white border-bottom border-light">
                     <h5 class="modal-title" id="{{$title_id}}">{{$title}}</h5>
                     <button type="button" wire:click.prevent="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

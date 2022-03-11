@@ -48,7 +48,37 @@
                     <th>Total Harga</th>
                 </tr>
                 </thead>
+                <tbody class="border-light">
+                <tr>
+                    <td>
+                        <x-form-input name="product"/>
+                    </td>
+                    <td>
+                        <x-form-input name="description"/>
+                    </td>
+                    <td width="15">
+                        <x-form-input name="qty" type="number"/>
+                    </td>
+                    <td>
+                        <x-form-input name="price"/>
+                    </td>
+                    <td>
+                        <x-form-input name="tax"/>
+                    </td>
+                    <td>
+                        <x-form-input name="total_price"/>
+                    </td>
+                </tr>
+                </tbody>
             </table>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary">
+                    Tambah Produk
+                </button>
+                <button class="btn btn-primary">
+                    Simpan Pembelian
+                </button>
+            </div>
         </div>
     </div>
 </div>
