@@ -57,7 +57,7 @@ jobs:
       - run: php artisan migrate --env=testing --database=sqlite --force
       - run: cp .env.example .env
       - run: php artisan key:generate
-      - run: php artisan optimize
+      - run: php artisan optimize:clear
 
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
