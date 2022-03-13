@@ -5,7 +5,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-[![CircleCI](https://circleci.com/gh/abdasis/laziz-accounting/tree/main.svg?style=svg)](https://circleci.com/gh/abdasis/laziz-accounting/tree/main)
 </div>
 
 
@@ -64,3 +63,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## CircleCI Test
+[![CircleCI](https://circleci.com/gh/abdasis/laziz-accounting/tree/main.svg?style=svg)](https://circleci.com/gh/abdasis/laziz-accounting/tree/main)
