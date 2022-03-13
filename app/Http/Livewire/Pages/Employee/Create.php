@@ -17,6 +17,7 @@ class Create extends Component
         'ktp' => 'required'
     ];
 
+    
     public function save()
     {
         $this->validate();
