@@ -60,6 +60,6 @@ jobs:
       - run: php artisan optimize
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      - run: php artisan test
       #- run: ./vendor/bin/codecept build
       #- run: ./vendor/bin/codecept run
