@@ -62,21 +62,25 @@ class Create extends Component
             'email' => 'required|email|max:255|unique:customers',
             'phone' => 'required|string|max:255',
         ]);
-        $this->supplier->create([
-            'company_name' => $this->company_name,
-            'contact_name' => $this->contact_name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'province' => $this->province,
-            'city' => $this->city,
-            'districts' => $this->districts,
-            'address' => $this->address,
-            'postal_code' => $this->postal_code,
-            'industry_type' => $this->industry_type,
-            'status' => 'active',
-        ]);
-        $this->reset();
-        $this->emitTo('pages.suppliers.index', 'supplierCreated');
+        try {
+            $this->supplier->create([
+                'company_name' => $this->company_name,
+                'contact_name' => $this->contact_name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'province' => $this->province,
+                'city' => $this->city,
+                'districts' => $this->districts,
+                'address' => $this->address,
+                'postal_code' => $this->postal_code,
+                'industry_type' => $this->industry_type,
+                'status' => 'active',
+            ]);
+            $this->reset();
+            $this->emitTo('pages.suppliers.index', 'supplierCreated');
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function render()

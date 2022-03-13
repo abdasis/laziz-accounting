@@ -19,15 +19,11 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'customers'], function (){
         Route::get('/', \App\Http\Livewire\Pages\Customers\Index::class)->name('customers.index');
-        Route::get('create', \App\Http\Livewire\Pages\Customers\Create::class)->name('customers.create');
-        Route::get('edit/{customer}', \App\Http\Livewire\Pages\Customers\Edit::class)->name('customers.edit');
         Route::get('show/{customer}', \App\Http\Livewire\Pages\Customers\Show::class)->name('customers.show');
     });
 
     Route::group(['prefix' => 'suppliers'], function (){
         Route::get('/', \App\Http\Livewire\Pages\Suppliers\Index::class)->name('suppliers.index');
-        Route::get('create', \App\Http\Livewire\Pages\Suppliers\Create::class)->name('suppliers.create');
-        Route::get('edit/{supplier}', \App\Http\Livewire\Pages\Suppliers\Edit::class)->name('suppliers.edit');
         Route::get('show/{supplier}', \App\Http\Livewire\Pages\Suppliers\Show::class)->name('suppliers.show');
     });
 
@@ -47,6 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'category-account'], function (){
         Route::get('/', \App\Http\Livewire\Pages\AccountCategory\Index::class)->name('category-account.index');
+    });
+
+    Route::group(['prefix' => 'employees'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Employee\Index::class)->name('employees.index');
     });
 
 });

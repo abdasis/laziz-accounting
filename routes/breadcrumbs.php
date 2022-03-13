@@ -38,6 +38,12 @@ Breadcrumbs::for('customers.show', function (BreadcrumbTrail $trail, $id) {
 Breadcrumbs::for('suppliers.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Semua Supplier', route('suppliers.index'));
+
+});
+
+Breadcrumbs::for('suppliers.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('suppliers.index');
+    $trail->push('Detail Supplier', route('suppliers.show', $id));
 });
 
 Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
@@ -64,4 +70,9 @@ Breadcrumbs::for('purchases.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('purchases.create', function (BreadcrumbTrail $trail) {
     $trail->parent('purchases.index');
     $trail->push('Tambah Pembelian', route('purchases.create'));
+});
+
+Breadcrumbs::for('employees.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Semua Karyawan', route('employees.index'));
 });

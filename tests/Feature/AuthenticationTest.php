@@ -22,13 +22,18 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
+
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => $user->password,
         ]);
+
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
+
+        $this->withExceptionHandling();
+
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()

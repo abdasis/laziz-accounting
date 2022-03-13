@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('ktp');
+            $table->string('phone')->nullable();
+            $table->enum('gender', ['perempuan', 'laki-laki']);
+            $table->enum('marital_status', ['sudah menikah','belum menikah']);
+            $table->string('date_birthday');
+            $table->string('place_of_birth');
+            $table->longText('address');
             $table->timestamps();
         });
     }

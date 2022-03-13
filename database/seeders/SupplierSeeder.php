@@ -16,7 +16,6 @@ class SupplierSeeder extends Seeder
      */
     public function run()
     {
-        \Artisan::call('migrate:refresh --path=database/migrations/2022_03_03_111557_create_suppliers_table.php');
         Supplier::factory()->count(100)->create();
     }
 }
