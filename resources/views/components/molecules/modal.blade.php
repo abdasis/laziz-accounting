@@ -4,7 +4,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-white border-bottom border-light">
-                    <h5 class="modal-title" id="{{$title_id}}">{{$title}}</h5>
+                    <h5 class="modal-title fw-bold" id="{{$title_id}}">{{$title}}</h5>
                     <button type="button" wire:click.prevent="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

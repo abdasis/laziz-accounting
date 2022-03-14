@@ -52,88 +52,66 @@
                     <li class="menu-title">Dashboard</li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-monitor-dashboard mdi-24px"></i>
+                            <i class="ti ti-desktop mdi-24px"></i>
                             <span> Dashboard </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-book-account mdi-24px"></i>
+                            <i class="ti ti-receipt mdi-24px"></i>
                             <span> Laporan </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Operasional</li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-tag mdi-24px"></i>
+                            <i class="ti ti-wallet mdi-24px"></i>
                             <span> Penjualan </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('purchases.index')}}">
-                            <i class="mdi mdi-cart-outline mdi-24px icon-dual"></i>
+                            <i class="ti ti-shopping-cart-full mdi-24px icon-dual"></i>
                             <span> Pembelian </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Finance</li>
                     <li>
                         <a href="{{route('accounts.index')}}">
-                            <i class="fas fa-address-book"></i>
+                            <i class="ti ti-agenda"></i>
                             <span> Akun Biaya </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('customers.index')}}">
-                            <i class="fas fa-user-friends"></i>
+                            <i class="icon icon-people"></i>
                             <span> Customers </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('suppliers.index')}}">
-                            <i class="fas fa-truck"></i>
+                            <i class="ti ti-truck"></i>
                             <span> Suppliers </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#sidebarCrm" data-bs-toggle="collapse">
-                            <i class="fas fa-users"></i>
+                        <a href="{{route('employees.index')}}">
+                            <i class="ti ti-user"></i>
                             <span> Karyawan </span>
-                            <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarCrm">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="crm-dashboard.html">Tambah Karyawan</a>
-                                </li>
-                                <li>
-                                    <a href="crm-contacts.html">Semua Karyawan</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li>
-                        <a href="#asset" data-bs-toggle="collapse">
-                            <i class="fas fa-box-open"></i>
+                        <a href="{{route('employees.index')}}">
+                            <i class="icon  icon-briefcase"></i>
                             <span> Data Aset </span>
-                            <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="asset">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="crm-dashboard.html">Tambah Aset</a>
-                                </li>
-                                <li>
-                                    <a href="crm-contacts.html">Semua Aset</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
 
                     <li class="menu-title">Sistem</li>
 
                     <li>
                         <a href="#setting" data-bs-toggle="collapse">
-                            <i class="fas fa-cogs"></i>
+                            <i class="icon icon-settings"></i>
                             <span> Pengaturan </span>
                             <span class="menu-arrow"></span>
                         </a>

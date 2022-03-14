@@ -21,13 +21,7 @@ return new class extends Migration
             $table->dateTime('due_date');
             $table->bigInteger('no_transaction');
             $table->string('no_refrence')->nullable();
-            $table->string('product');
-            $table->text('description');
-            $table->integer('quantity');
-            $table->string('unit');
-            $table->string('tax');
-            $table->decimal('price', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->enum('status', ['dibayar', 'belum dibayar', 'jatuh tempo'])->default('belum dibayar');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

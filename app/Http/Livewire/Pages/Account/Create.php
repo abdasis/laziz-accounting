@@ -100,14 +100,12 @@ class Create extends Component
                 'lock_status' => $this->lock_status,
                 'status' => 'active',
             ]);
-            $this->alert('success', 'Berhasil', [
-                'text'=> 'Data berhasil ditambahkan',
-            ]);
+            $this->reset();
+            $this->emitTo(Index::class, 'accountCreated');
         }catch (\Throwable $exception) {
             $this->alert('error', 'Gagal', [
                 'text'=> 'Data gagal ditambahkan',
             ]);
-            dd($exception);
         }
     }
     public function render()

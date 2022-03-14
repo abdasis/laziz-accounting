@@ -49,7 +49,6 @@ class Table extends DataTableComponent
                 }
             })->addAttributes(['width' => '1%'])
                 ->searchable()
-                ->sortable()
             ->asHtml(),
             Column::make('Kode', 'code')->format(function ($val, $column, $row){
                 $code = number_format($val, 0, ',', '-');
@@ -58,14 +57,14 @@ class Table extends DataTableComponent
                 }else{
                     return "<span class='ps-2'>$code</span>";
                 }
-            })->asHtml()->sortable(),
+            })->asHtml()->sortable()->sortable(),
             Column::make('Nama', 'name')->format(function ($val, $cloumn, $row){
                 if ($row->lock_status == 'locked') {
                     return "<span class='fw-bold'>$val</span>";
                 }else{
                     return "<span class='ps-2'>$val</span>";
                 }
-            })->asHtml()->sortable(),
+            })->asHtml()->sortable()->searchable(),
             Column::make('Tgl. Dibuat', 'created_at')->sortable()->format(function ($val){
                 return Carbon::parse($val)->format('d-m-Y H:i:s');
             }),
@@ -83,7 +82,7 @@ class Table extends DataTableComponent
 
     public function query(): Builder
     {
-        return Account::query()->orderBy('code', 'asc');
+        return Account::query();
 
     }
 }

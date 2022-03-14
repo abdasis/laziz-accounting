@@ -20,12 +20,14 @@
         <!-- icons -->
         <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
+        @stack('css')
         @livewireStyles
+
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="loading" data-sidebar-icon="twotones" data-sidebar-icon="twotones" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": false}'>
+    <body class="loading"  data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": false}'>
     <div id="wrapper">
         <!-- Topbar Start -->
         <livewire:organisms.navbar/>
@@ -46,6 +48,7 @@
                     <!-- start page title -->
                     {{Breadcrumbs::render()}}
                     <!-- end page title -->
+                    <x-atoms.loading-indicator/>
 
                     {{$slot}}
 

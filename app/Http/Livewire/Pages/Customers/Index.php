@@ -21,6 +21,7 @@ class Index extends Component
 
     public function handleEdit($data)
     {
+
         $this->update = true;
         $this->customer = $data;
         $this->dispatchBrowserEvent('showModal');
@@ -33,6 +34,7 @@ class Index extends Component
 
     public function handleCustomerCreated()
     {
+        $this->reset();
         $this->emit('refresh');
         $this->alert('success', 'Berhasil', [
             'text' => 'Data customer berhasil ditambahkan',

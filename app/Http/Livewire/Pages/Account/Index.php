@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Pages\Account;
 
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Index extends Component
 {
+    use LivewireAlert;
+
     public $update = false;
 
     public $account;
@@ -15,6 +18,22 @@ class Index extends Component
         'accountCreated' => 'handleAccountCreated',
         'edit' => 'handleEdit',
     ];
+
+    public function handleAccountCreated()
+    {
+        $this->emit('refresh');
+        $this->alert('success', 'Berhasil', [
+            'text'=> 'Data berhasil ditambahkan',
+        ]);
+    }
+
+    public function handleAccountUpdated()
+    {
+        $this->emit('refresh');
+        $this->alert('success', 'Berhasil', [
+            'text'=> 'Data akun berhasil di perbarui',
+        ]);
+    }
 
     public function handleEdit($account)
     {

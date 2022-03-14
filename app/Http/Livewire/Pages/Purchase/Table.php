@@ -13,7 +13,8 @@ class Table extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Column Name'),
+            Column::make('Kode Pembelian', 'code')->sortable()->searchable(),
+            Column::make('Tanggal Pembelian', 'transaction_date')->sortable()->searchable(),
         ];
     }
 

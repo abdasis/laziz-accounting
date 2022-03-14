@@ -18,7 +18,7 @@
         @include('livewire-tables::bootstrap-5.includes.sorting-pills')
         @include('livewire-tables::bootstrap-5.includes.filter-pills')
 
-        <div class="d-md-flex justify-content-between mb-1">
+        <div class="d-md-flex justify-content-between mb-2">
             <div class="d-md-flex">
                 @include('livewire-tables::bootstrap-5.includes.reorder')
                 @include('livewire-tables::bootstrap-5.includes.search')

@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Http\Livewire\Pages\Employee\Create;
+use App\Http\Livewire\Pages\Employee\Edit;
 use App\Http\Livewire\Pages\Employee\Index;
+use App\Http\Livewire\Pages\Employee\Table;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,28 +25,38 @@ class EmployeeTest extends TestCase
     {
         $this->actingAs(User::factory()->create());
 
-        $response = $this->get('/employees');
+        Employee::factory()->count(10)->create();
 
-        $response->assertStatus(200)
-            ->assertSeeLivewire('pages.employee.table');
-
-        $this->withExceptionHandling();
+        Livewire::test(Index::class)
+            ->assertSeeLivewire(Table::class, ['employees' => Employee::all()]);
 
 
     }
 
-    public function test_modal_employee_can_be_rendered()
+    public function test_create_modal_can_be_showed()
     {
         $this->actingAs(User::factory()->create());
 
-        $this->withExceptionHandling();
-
+        $this->get('/employees')->assertStatus(200);
 
         Livewire::test(Index::class)
             ->assertSet('update', false)
             ->assertSee('Karyawan Baru')
             ->assertSeeLivewire('pages.employee.create')
-            ->assertSeeHtml('#modalEmployee');
+            ->assertSeeHtml('#modalEmployee')
+            ->assertSee('name')
+            ->assertSee('ktp')
+            ->assertSee('phone')
+            ->assertSee('address')
+            ->assertSee('gender')
+            ->assertSee('maritial_status')
+            ->assertSee('date_birthday')
+            ->assertSee('place_of_birth')
+            ->assertSee('Simpan');
+
+        $this->withExceptionHandling();
+
+
     }
 
     public function test_create_a_new_employee()
@@ -58,7 +70,7 @@ class EmployeeTest extends TestCase
             ->set('ktp', $employee->ktp)
             ->set('phone', $employee->phone)
             ->set('gender', $employee->gender)
-            ->set('marital_status', $employee->marital_status)
+            ->set('maritial_status', $employee->marital_status)
             ->set('date_birthday', $employee->date_birthday)
             ->set('place_of_birth', $employee->place_of_birth)
             ->set('address', $employee->address)
@@ -70,4 +82,23 @@ class EmployeeTest extends TestCase
             'phone' => $employee->phone,
         ]);
     }
+
+    public function test_fill_form_edit_employee()
+    {
+        $this->assertTrue(true);
+    }
+
+    public function test_edit_existing_employe()
+    {
+        $this->assertTrue(true);
+    }
+
+
+
+    public function test_can_update_existing_employee()
+    {
+        $this->assertTrue(true);
+    }
+
+
 }

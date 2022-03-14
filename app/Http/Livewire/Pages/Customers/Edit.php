@@ -72,7 +72,6 @@ class Edit extends Component
             'postal_code' => $this->postal_code,
             'status' => 'active',
         ]);
-        $this->reset();
         $this->emitTo('pages.customers.index', 'customerUpdated');
 
     }

@@ -10,11 +10,11 @@ class Create extends Component
 {
     use LivewireAlert;
 
-    public $name, $ktp, $phone, $gender, $address, $marital_status, $date_birthday, $place_of_birth;
+    public $name, $ktp, $phone, $gender, $address, $maritial_status, $date_birthday, $place_of_birth;
 
     protected $rules = [
         'name' => 'required',
-        'ktp' => 'required'
+        'ktp' => 'required|numeric'
     ];
 
 
@@ -28,19 +28,20 @@ class Create extends Component
                 'ktp' => $this->ktp,
                 'phone' => $this->phone,
                 'gender' => $this->gender,
-                'marital_status' => $this->marital_status,
-                'date_of_birth' => $this->date_birthday,
+                'marital_status' => $this->maritial_status,
+                'date_birthday' => $this->date_birthday,
                 'place_of_birth' => $this->place_of_birth,
                 'address' => $this->address,
             ]);
 
-            $this->alert('success', 'Berhasil', [
-                'text' => 'Data Karyawan Berhasil Ditambahkan',
-            ]);
-
+            $this->reset();
+            $this->emitTo(Index::class, 'employeeCreated');
 
         }catch (\Exception $e) {
-            return $e->getMessage();
+
+            $this->alert('error', 'Gagal', [
+                'text' => 'Data Karyawan Gagal Ditambahkan',
+            ]);
         }
     }
     public function render()
