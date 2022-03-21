@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Pages\Purchase;
 
+use App\Models\Account;
+use App\Models\Contact;
 use App\Models\purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Supplier;
@@ -19,7 +21,18 @@ class Create extends Component
 
     public $product, $description, $quantity, $unit, $tax, $price, $total_price;
 
+    public $notes, $message;
+
     public $inputs = [], $i = 1;
+
+    public $sub_total;
+    public $ppn, $pph_total;
+    public $total;
+    public $total_tagihan;
+    public $potongan;
+    public $potongan_nominal;
+    public $grand_total;
+
 
     public function rules()
     {
@@ -30,7 +43,6 @@ class Create extends Component
             'product' => 'required',
             'description' => 'required',
             'quantity' => 'required',
-            'unit' => 'required',
             'tax' => 'required',
             'price' => 'required',
             'total_price' => 'required',
@@ -44,11 +56,24 @@ class Create extends Component
         return array_push($this->inputs, $i);
     }
 
+    public function removeForm($i)
+    {
+        unset($this->inputs[$i]);
+    }
+
     public function mount()
     {
         $transaction = Purchase::max('no_transaction');
         $this->no_transaction = $transaction+1;
+        array_push($this->inputs, 1);
+
     }
+
+    public function updated($property)
+    {
+        $this->validateOnly($property);
+    }
+
 
     public function updatedTransactionDate()
     {
@@ -57,7 +82,7 @@ class Create extends Component
 
     public function updatedSupplierId()
     {
-        $this->address = Supplier::find($this->supplier_id)->address;
+        $this->address = Contact::find($this->supplier_id)->shipping_address;
     }
 
     public function codeTrasanctionGenerator()
@@ -67,26 +92,64 @@ class Create extends Component
         return $code;
     }
 
-    public function calcTotalPrice()
+    public function totalPrice($key)
     {
-        $total_price = $this->quantity * $this->price + ($this->quantity * $this->price * $this->tax / 100);
-
-        return $total_price;
+        if (!empty($this->quantity[$key]) && !empty($this->price[$key]) && !empty($this->tax[$key])) {
+            $this->total_price[$key] = $this->quantity[$key] * $this->price[$key];
+            $this->ppn[$key] = $this->quantity[$key] * $this->price[$key] * $this->tax[$key] / 100;
+            $this->total[$key] = $this->total_price[$key];
+            $this->total_tagihan= collect($this->total)->sum();
+        }elseif(!empty($this->quantity[$key]) && !empty($this->price[$key]) ){
+            $this->total_price[$key] = $this->quantity[$key] * $this->price[$key];
+        }
     }
+
+    public function updatedQuantity($value, $key)
+    {
+        $this->totalPrice($key);
+    }
+
+    public function updatedPrice($value, $key)
+    {
+        $this->totalPrice($key);
+    }
+
+    public function updatedTax($value, $key)
+    {
+        $this->totalPrice($key);
+    }
+
+    public function updatedPotonganNominal($value)
+    {
+        if (collect($this->total)->sum() > 0 && !empty($this->potongan_nominal)) {
+//            $this->pph_total = collect($this->total_price)->sum() + collect($this->ppn)->sum() * ($this->potongan_nominal / 100);
+            $dpp = collect($this->total_price)->sum() + collect($this->ppn)->sum();
+            $pph = $this->potongan_nominal / 100;
+            $this->pph_total = $dpp * $pph;
+        }else{
+            $this->total_tagihan = collect($this->total)->sum();
+        }
+    }
+
 
     public function save()
     {
+        $this->validate();
         try {
             \DB::beginTransaction();
             $purchase  = Purchase::create([
-                'supplier_id' => $this->supplier_id,
+                'contact_id' => $this->supplier_id,
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
                 'status' => 'belum dibayar',
+                'income_tax' => $this->potongan_nominal,
+                'income_tax_type' => $this->potongan,
                 'created_by' => \Auth::user()->id,
                 'updated_by' => \Auth::user()->id,
+                'remarks' => $this->notes,
+                'internal_notes' => $this->message,
             ]);
 
             $products = [];
@@ -115,7 +178,6 @@ class Create extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
-            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);
@@ -124,9 +186,10 @@ class Create extends Component
     public function render()
     {
         return view('livewire.pages.purchase.create',[
-            'suppliers' => Supplier::orderBy('company_name', 'asc')
+            'suppliers' => Contact::where('type_contact', 'supplier')->orderBy('company_name', 'asc')
                 ->where('status', 'active')
                 ->get(),
+            'taxes' => Account::all(),
         ]);
     }
 }

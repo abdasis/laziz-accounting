@@ -17,14 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => 'customers'], function (){
-        Route::get('/', \App\Http\Livewire\Pages\Customers\Index::class)->name('customers.index');
-        Route::get('show/{customer}', \App\Http\Livewire\Pages\Customers\Show::class)->name('customers.show');
-    });
 
-    Route::group(['prefix' => 'suppliers'], function (){
-        Route::get('/', \App\Http\Livewire\Pages\Suppliers\Index::class)->name('suppliers.index');
-        Route::get('show/{supplier}', \App\Http\Livewire\Pages\Suppliers\Show::class)->name('suppliers.show');
+    Route::group(['prefix' => 'contacts'], function(){
+        Route::get('/', \App\Http\Livewire\Pages\Contact\Index::class)->name('contacts.index');
+        Route::get('create', \App\Http\Livewire\Pages\Contact\Create::class)->name('contacts.create');
+        Route::get('edit/{contact}', \App\Http\Livewire\Pages\Contact\Edit::class)->name('contacts.edit');
+        Route::get('show/{contact}', \App\Http\Livewire\Pages\Contact\Show::class)->name('contacts.show');
     });
 
     Route::group(['prefix' => 'accounts'], function (){
@@ -41,14 +39,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('show/{purchase}', \App\Http\Livewire\Pages\Purchase\Show::class)->name('purchases.show');
     });
 
+    Route::group(['prefix' => 'sales'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Sales\Index::class)->name('sales.index');
+        Route::get('create', \App\Http\Livewire\Pages\Sales\Create::class)->name('sales.create');
+        Route::get('edit/{sale}', \App\Http\Livewire\Pages\Sales\Edit::class)->name('sales.edit');
+        Route::get('show/{sale}', \App\Http\Livewire\Pages\Sales\Show::class)->name('sales.show');
+    });
+
     Route::group(['prefix' => 'category-account'], function (){
         Route::get('/', \App\Http\Livewire\Pages\AccountCategory\Index::class)->name('category-account.index');
     });
 
-    Route::group(['prefix' => 'employees'], function (){
-        Route::get('/', \App\Http\Livewire\Pages\Employee\Index::class)->name('employees.index');
+    Route::group(['prefix' => 'products'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Product\Index::class)->name('products.index');
+        Route::get('create', \App\Http\Livewire\Pages\Product\Create::class)->name('products.create');
+        Route::get('edit/{product}', \App\Http\Livewire\Pages\Product\Edit::class)->name('products.edit');
+        Route::get('show/{product}', \App\Http\Livewire\Pages\Product\Show::class)->name('products.show');
     });
-
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

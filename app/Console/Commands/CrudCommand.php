@@ -37,7 +37,7 @@ class CrudCommand extends Command
      */
     public function handle()
     {
-        $model_name = \Str::camel($this->argument('component'));
+        $model_name = \Str::studly($this->argument('component'));
         \Artisan::call("livewire:make pages.{$this->argument('component')}.create");
         $this->info("Component {$this->argument('component')} create successfully created!");
 
@@ -50,11 +50,12 @@ class CrudCommand extends Command
         \Artisan::call("livewire:make pages.{$this->argument('component')}.show");
         $this->info("Component {$this->argument('component')} show successfully created!");
 
-        \Artisan::call("make:datatable pages.{$this->argument('component')}.table");
-        $this->info("Component {$this->argument('component')} table successfully created!");
-
         \Artisan::call("make:model {$model_name} -msf");
         $this->info("{$model_name} migrations, controller, factory, request successfully created! 😍");
+
+        \Artisan::call("make:datatable pages.{$this->argument('component')}.table {$model_name}");
+        $this->info("Component {$this->argument('component')} table successfully created!");
+
 
         $this->info("Happy Ngoding Bro! 😍");
     }

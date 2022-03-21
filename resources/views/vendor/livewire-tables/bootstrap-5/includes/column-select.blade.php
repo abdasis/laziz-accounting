@@ -13,6 +13,7 @@
                 aria-haspopup="true"
                 x-bind:aria-expanded="open"
             >
+                <i class="icon  icon-equalizer me-1"></i>
                 @lang('Columns')
             </button>
 

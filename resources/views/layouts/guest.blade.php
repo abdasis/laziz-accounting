@@ -25,7 +25,7 @@
 <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
-<body class="loading authentication-bg authentication-bg-pattern">
+<body class="loading">
 {{$slot}}
 <!-- Vendor js -->
 <script src="{{asset('assets/js/vendor.min.js')}}"></script>

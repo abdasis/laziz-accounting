@@ -18,9 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-            CustomerSeeder::class,
-            SupplierSeeder::class,
             AccountCategorySeeder::class,
+            ContactSeeder::class
         ]);
         User::create([
             'name' => 'Abdul Aziz',

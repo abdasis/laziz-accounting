@@ -1,6 +1,6 @@
 <div>
     {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
-    <div class="navbar-custom bg-white bg-gradient text-light">
+    <div class="navbar-custom bg-soft-light bg-gradient text-light">
         <div class="container-fluid">
             <ul class="list-unstyled topnav-menu float-end mb-0">
 

@@ -13,39 +13,6 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
-//breadcrumb untuk customer
-Breadcrumbs::for('customers.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Semua Customer', route('customers.index'));
-});
-
-Breadcrumbs::for('customers.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('customers.index');
-    $trail->push('Tambah Customer', route('customers.create'));
-});
-
-Breadcrumbs::for('customers.edit', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('customers.index');
-    $trail->push('Sunting Customer', route('customers.edit', $id));
-});
-
-Breadcrumbs::for('customers.show', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('customers.index');
-    $trail->push('Detail Customer', route('customers.show', $id));
-});
-
-
-Breadcrumbs::for('suppliers.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Semua Supplier', route('suppliers.index'));
-
-});
-
-Breadcrumbs::for('suppliers.show', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('suppliers.index');
-    $trail->push('Detail Supplier', route('suppliers.show', $id));
-});
-
 Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Login', route('login'));
@@ -66,13 +33,77 @@ Breadcrumbs::for('purchases.index', function (BreadcrumbTrail $trail) {
     $trail->push('Pembelian', route('purchases.index'));
 });
 
-
 Breadcrumbs::for('purchases.create', function (BreadcrumbTrail $trail) {
     $trail->parent('purchases.index');
     $trail->push('Tambah Pembelian', route('purchases.create'));
 });
 
-Breadcrumbs::for('employees.index', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('purchases.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('purchases.index');
+    $trail->push('Detail Pembelian', route('purchases.show', $id));
+});
+
+Breadcrumbs::for('purchases.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('purchases.index');
+    $trail->push('Edit Pembelian', route('purchases.edit', $id));
+});
+
+Breadcrumbs::for('contacts.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Semua Karyawan', route('employees.index'));
+    $trail->push('Kontak', route('contacts.index'));
+});
+
+Breadcrumbs::for('contacts.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts.index');
+    $trail->push('Tambah Kontak', route('contacts.create'));
+});
+
+Breadcrumbs::for('contacts.edit', function (BreadcrumbTrail $trail, $contact) {
+    $trail->parent('contacts.index');
+    $trail->push('Edit Kontak', route('contacts.edit', $contact));
+});
+
+Breadcrumbs::for('contacts.show', function (BreadcrumbTrail $trail, $contact) {
+    $trail->parent('contacts.index');
+    $trail->push('Detail Kontak', route('contacts.show', $contact));
+});
+
+Breadcrumbs::for('sales.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Penjualan', route('sales.index'));
+});
+
+Breadcrumbs::for('sales.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('sales.index');
+    $trail->push('Tambah Penjualan', route('sales.create'));
+});
+
+Breadcrumbs::for('sales.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('sales.index');
+    $trail->push('Detail Penjualan', route('sales.show', $id));
+});
+
+Breadcrumbs::for('sales.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('sales.index');
+    $trail->push('Edit Penjualan', route('sales.edit', $id));
+});
+
+Breadcrumbs::for('products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Produk', route('products.index'));
+});
+
+Breadcrumbs::for('products.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.index');
+    $trail->push('Tambah Produk', route('products.create'));
+});
+
+Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('products.index');
+    $trail->push('Edit Produk', route('products.edit', $product));
+});
+
+Breadcrumbs::for('products.show', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('products.index');
+    $trail->push('Detail Produk', route('products.show', $product));
 });

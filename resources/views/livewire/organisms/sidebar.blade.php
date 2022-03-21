@@ -58,21 +58,33 @@
                     </li>
                     <li>
                         <a href="{{route('dashboard')}}">
-                            <i class="ti ti-receipt mdi-24px"></i>
+                            <i class="icon icon-notebook mdi-24px"></i>
                             <span> Laporan </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('contacts.index')}}">
+                            <i class="icon icon-people"></i>
+                            <span> Kontak </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Operasional</li>
                     <li>
-                        <a href="{{route('dashboard')}}">
+                        <a href="{{route('sales.index')}}">
                             <i class="ti ti-wallet mdi-24px"></i>
                             <span> Penjualan </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('purchases.index')}}">
-                            <i class="ti ti-shopping-cart-full mdi-24px icon-dual"></i>
+                            <i class="ti ti-shopping-cart-full mdi-24px"></i>
                             <span> Pembelian </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('products.index')}}">
+                            <i class="icon icon-bag"></i>
+                            <span> Product </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Finance</li>
@@ -82,26 +94,9 @@
                             <span> Akun Biaya </span>
                         </a>
                     </li>
+
                     <li>
-                        <a href="{{route('customers.index')}}">
-                            <i class="icon icon-people"></i>
-                            <span> Customers </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('suppliers.index')}}">
-                            <i class="ti ti-truck"></i>
-                            <span> Suppliers </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('employees.index')}}">
-                            <i class="ti ti-user"></i>
-                            <span> Karyawan </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('employees.index')}}">
+                        <a href="sahabat">
                             <i class="icon  icon-briefcase"></i>
                             <span> Data Aset </span>
                         </a>

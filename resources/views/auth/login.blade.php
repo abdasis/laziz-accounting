@@ -1,9 +1,9 @@
 <x-guest-layout>
-    <div class="account-pages">
+    <div class="bg-soft-light bg-gradient">
         <div class="container">
             <div class="row justify-content-center" style="min-height: 100vh">
                 <div class="col-md-8 col-lg-6 col-xl-4 my-auto">
-                    <div class="card bg-white shadow-sm">
+                    <div class="card bg-white">
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-logo">

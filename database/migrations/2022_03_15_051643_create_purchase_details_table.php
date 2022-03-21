@@ -16,13 +16,16 @@ return new class extends Migration
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('purchase_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedBigInteger('product_id');
             $table->string('product');
             $table->text('description');
             $table->integer('quantity');
             $table->string('unit')->nullable();
             $table->string('tax');
+            $table->string('discount')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('total', 10, 2);
+
             $table->timestamps();
         });
     }
