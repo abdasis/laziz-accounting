@@ -34,7 +34,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
+
 class Product extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

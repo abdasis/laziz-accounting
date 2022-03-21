@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'code' => 'SL-' . $this->faker->numberBetween(100, 999),
+            'code' => 'PRD-' . Carbon::now()->format('Ym') . $this->faker->numberBetween(1,100),
             'name' => $this->faker->randomElement(['Tiket Pesawat', 'Gedung Pernikahan', 'Bus Pariwisata']),
             'description' => $this->faker->sentence,
             'tax' => $this->faker->numberBetween(1,10),

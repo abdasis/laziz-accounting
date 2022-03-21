@@ -23,9 +23,13 @@ class Table extends DataTableComponent
         return [
             Column::make('Kode Transaksi', 'code')
                 ->searchable()
+                ->format(function ($val){
+                    return "<span class='fw-bold text-primary'>{$val}</span>";
+                })
+                ->asHtml()
                 ->sortable(),
             Column::make('Customer', 'customer.company_name')->format(function ($customer) {
-                return "<span class='text-primary fw-bold'>{$customer}</span>";
+                return "<span>{$customer}</span>";
             })->asHtml(),
             Column::make('Tanggal Penjualan', 'transaction_date')->format(function ($val){
                 return Carbon::parse($val)->format('d-m-Y');
