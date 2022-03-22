@@ -61,9 +61,8 @@ class Edit extends Component
 
 
 
-    public function mount($purchase)
+    public function mount(Purchase $purchase)
     {
-        $purchase = Purchase::find(decrypt($purchase));
         $this->purchase = $purchase;
         $this->supplier_id = $purchase->contact_id;
         $this->code = $purchase->code;
@@ -74,7 +73,7 @@ class Edit extends Component
         $this->potongan = $purchase->income_tax_type;
         $this->potongan_nominal = $purchase->income_tax;
         $this->notes = $purchase->remarks;
-        $this->message = $purchase->message;
+        $this->message = $purchase->internal_notes;
         $this->address = $purchase->supplier->shipping_address;
         $this->total = $purchase->details->sum('total');
         $this->ppn = $this->total * $purchase->details->sum('tax') / 100;
@@ -230,9 +229,9 @@ class Edit extends Component
 
             $purchase->details()->saveMany($products);
 
-            $this->alert('success', 'Berhasil',[
-                'text'=> 'Data berhasil disimpan',
-            ]);
+            $this->flash('success', 'Berhasil',[
+                'text'=> "Data {$purchase->code} berhasil diubah",
+            ], route('purchases.show', $purchase->id));
 
             \DB::commit();
 

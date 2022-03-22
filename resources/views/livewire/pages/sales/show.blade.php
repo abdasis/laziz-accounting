@@ -135,9 +135,9 @@
                 </button>
             </a>
 
-            <a href="{{route('purchases.edit', encrypt($sales->id))}}">
+            <a href="{{route('sales.edit', $sales)}}">
                 <button class="btn btn-action text-secondary">
-                    <i class="icon icon-pencil me-1"></i>Sunting
+                    <i class="fe-edit me-1"></i>Sunting
                 </button>
             </a>
         </div>

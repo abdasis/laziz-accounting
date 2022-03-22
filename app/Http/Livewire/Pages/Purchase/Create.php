@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pages\Purchase;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Product;
 use App\Models\purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Supplier;
@@ -72,6 +73,14 @@ class Create extends Component
     public function updated($property)
     {
         $this->validateOnly($property);
+    }
+
+    public function updatedProduct($value, $key)
+    {
+        $product = Product::find($value);
+        $this->description[$key] = $product->description;
+        $this->price[$key] = $product->price;
+        $this->tax[$key] = $product->tax;
     }
 
 
@@ -155,7 +164,7 @@ class Create extends Component
             $products = [];
             foreach ($this->product as $key => $product){
                 $products[] = new PurchaseDetails([
-                    'product' => $this->product[$key],
+                    'product_id' => $this->product[$key],
                     'description' => $this->description[$key],
                     'quantity' => $this->quantity[$key],
                     'tax' => $this->tax[$key],
@@ -190,6 +199,7 @@ class Create extends Component
                 ->where('status', 'active')
                 ->get(),
             'taxes' => Account::all(),
+            'products' => Product::all(),
         ]);
     }
 }

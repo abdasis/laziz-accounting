@@ -10,6 +10,10 @@ use App\Models\Product;
 class Table extends DataTableComponent
 {
 
+    public function getTableRowUrl($row)
+    {
+        return route('products.show', $row);
+    }
     public function columns(): array
     {
         return [

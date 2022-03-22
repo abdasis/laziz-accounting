@@ -40,4 +40,14 @@ class Product extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function saleAccount()
+    {
+        return $this->belongsTo(Account::class, 'sale_account', 'id')->withDefault();
+    }
+
+    public function purchaseAccount()
+    {
+        return $this->belongsTo(Account::class, 'purchase_account', 'id')->withDefault();
+    }
 }

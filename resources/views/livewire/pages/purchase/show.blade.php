@@ -58,7 +58,11 @@
                         <tr>
                             <td>Status</td>
                             <td>:</td>
-                            <td>{{$purchase->status}}</td>
+                            <td>
+                                <span class="badge badge-outline-info py-1 px-2">
+                                    {{$purchase->status}}
+                                </span>
+                            </td>
                         </tr>
                     </table>
                     <table class="table table-sm table-borderless table-hover">
@@ -135,9 +139,9 @@
                 </button>
             </a>
 
-            <a href="{{route('purchases.edit', encrypt($purchase->id))}}">
+            <a href="{{route('purchases.edit', $purchase)}}">
                 <button class="btn btn-action text-secondary">
-                    <i class="icon icon-pencil me-1"></i>Sunting
+                    <i class="fe-edit me-1"></i>Sunting
                 </button>
             </a>
         </div>

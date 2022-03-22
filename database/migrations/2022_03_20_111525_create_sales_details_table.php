@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('sale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->unsignedBigInteger('product_id');
-            $table->string('product');
             $table->text('description');
             $table->integer('quantity');
             $table->string('unit')->nullable();

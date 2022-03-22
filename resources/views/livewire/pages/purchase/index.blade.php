@@ -2,7 +2,7 @@
     {{-- The whole world belongs to you. --}}
     <div class="mb-2">
         <a href="{{route('purchases.create')}}">
-            <button class="btn btn-primary border-bottom border-light width-md rounded">
+            <button class="btn btn-success border-bottom width-md rounded">
                 <i class="fe-plus"></i>
                 <span>
                     Pembelian Baru
