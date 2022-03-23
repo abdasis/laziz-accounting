@@ -77,10 +77,18 @@
                     </li>
                     <li>
                         <a href="{{route('purchases.index')}}">
-                            <i class="ti ti-shopping-cart-full mdi-24px"></i>
+                            <i class="fe-shopping-cart"></i>
                             <span> Pembelian </span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{route('cost.index')}}">
+                            <i class="icon icon-tag mdi-24px"></i>
+                            <span> Biaya </span>
+                        </a>
+                    </li>
+
                     <li>
                         <a href="{{route('products.index')}}">
                             <i class="icon icon-bag"></i>
@@ -88,6 +96,12 @@
                         </a>
                     </li>
                     <li class="menu-title mt-2">Finance</li>
+                    <li>
+                        <a href="{{route('purchases.index')}}">
+                            <i class="ti ti-credit-card"></i>
+                            <span> Kas dan Bank </span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{route('accounts.index')}}">
                             <i class="ti ti-agenda"></i>

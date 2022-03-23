@@ -33,12 +33,12 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="d-grid gap-0">
-                        <button class="btn btn-primary">
+                    <a href="{{route('payment.create', $purchase)}}" class="d-grid gap-2">
+                        <button class="btn btn-primary border-bottom">
                             <i class="icon icon-wallet me-1"></i>
                             Kirim Pembayaran
                         </button>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-8">
@@ -81,7 +81,7 @@
                             @foreach($purchase->details as $detail)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$detail->product}}</td>
+                                <td>{{$detail->product->name}}</td>
                                 <td width="20%">{{$detail->description}}</td>
                                 <td>{{$detail->quantity}}</td>
                                 <td class="text-end">{{rupiah($detail->price)}}</td>

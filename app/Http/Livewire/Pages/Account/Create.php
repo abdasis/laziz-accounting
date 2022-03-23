@@ -95,7 +95,7 @@ class Create extends Component
                 'code' => $this->code,
                 'description' => $this->description,
                 'parent_id' => $this->parent_id,
-                'account_type' => $this->account_type,
+                'report_type' => $this->account_type,
                 'default_balance' => $this->default_balance,
                 'lock_status' => $this->lock_status,
                 'status' => 'active',

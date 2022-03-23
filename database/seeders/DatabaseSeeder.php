@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             AccountCategorySeeder::class,
-            ContactSeeder::class
+            ContactSeeder::class,
+            ProductSeeder::class
         ]);
         User::create([
             'name' => 'Abdul Aziz',

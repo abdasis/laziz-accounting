@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->enum('account_type', ['neraca', 'laba rugi']);
+            $table->enum('report_type', ['neraca', 'laba rugi']);
+            $table->enum('account_type', ['kas', 'umum'])->default('umum');
             $table->enum('default_balance', ['debit', 'kredit']);
             $table->enum('lock_status', ['unlocked', 'locked']);
             $table->enum('status', ['active', 'inactive']);

@@ -107,3 +107,38 @@ Breadcrumbs::for('products.show', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('products.index');
     $trail->push('Detail Produk', route('products.show', $product));
 });
+
+Breadcrumbs::for('payment.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Pembayaran', route('payment.index'));
+});
+
+Breadcrumbs::for('payment.create', function (BreadcrumbTrail $trail, $purchase) {
+    $trail->parent('payment.index');
+    $trail->push('Tambah Pembayaran', route('payment.create', $purchase));
+});
+
+Breadcrumbs::for('payment.edit', function (BreadcrumbTrail $trail, $payment) {
+    $trail->parent('payment.index');
+    $trail->push('Edit Pembayaran', route('payment.edit', $payment));
+});
+
+Breadcrumbs::for('cost.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Biaya', route('cost.index'));
+});
+
+Breadcrumbs::for('cost.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('cost.index');
+    $trail->push('Tambah Biaya', route('cost.create'));
+});
+
+Breadcrumbs::for('cost.edit', function (BreadcrumbTrail $trail, $cost) {
+    $trail->parent('cost.index');
+    $trail->push('Edit Biaya', route('cost.edit', $cost));
+});
+
+Breadcrumbs::for('cost.show', function (BreadcrumbTrail $trail, $cost) {
+    $trail->parent('cost.index');
+    $trail->push('Detail Biaya', route('cost.show', $cost));
+});

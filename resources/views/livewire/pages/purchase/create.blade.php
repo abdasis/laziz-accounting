@@ -165,12 +165,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between mt-2">
-                    <button wire:click.prevent="addForm({{$i}})" class="btn rounded-3 border-bottom border-secondary btn-secondary width-md">
-                        <i class="icon icon-plus me-1"></i>
-
+                    <button wire:click.prevent="addForm({{$i}})" class="btn rounded border-bottom btn-light width-md">
+                        <i class="fe-layers me-1"></i>
                         Tambah Produk
                     </button>
                     <button class="btn rounded-3 border-bottom border-primary btn-primary width-md">
+                        <i class="fe-save"></i>
                         Simpan Pembelian
                     </button>
                 </div>

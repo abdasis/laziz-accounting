@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pages\Purchase;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use Carbon\Carbon;
@@ -83,7 +84,7 @@ class Edit extends Component
         $this->purchase_id = $purchase->id;
         foreach ($purchase->details as $key => $detail) {
             array_push($this->inputs, $key + 1);
-            $this->product[$key] = $detail->product;
+            $this->product[$key] = $detail->product_id;
             $this->description[$key] = $detail->description;
             $this->quantity[$key] = $detail->quantity;
             $this->unit[$key] = $detail->unit;
@@ -126,7 +127,15 @@ class Edit extends Component
     public function updated($property, $value)
     {
         $this->validateOnly($property);
+    }
 
+    public function updatedProduct($value, $key)
+    {
+        $product = Product::find($value);
+        $this->description[$key] = $product->description;
+        $this->price[$key] = $product->price;
+        $this->tax[$key] = $product->tax;
+        $this->quantity[$key] = 0;
     }
 
     public function updatedTransactionDate()
@@ -149,13 +158,12 @@ class Edit extends Component
 
     public function updatedQuantity($value, $key)
     {
-        $this->total_price[$key] = $this->price[$key] ?? 0 * $value;
-        $this->total = collect($this->total_price)->sum();
 
+        $this->total_price[$key] = (int) $this->price[$key] * $value;
+        $this->total = collect($this->total_price)->sum();
         $this->ppn = $this->total * collect($this->tax)->sum() / 100;
         $this->sub_total = $this->total + $this->ppn;
         $this->pph = $this->sub_total * $this->potongan_nominal / 100;
-        $this->total_price[$key] = $this->price[$key] ?? 0 * $value;
         $this->total_tagihan = $this->sub_total - $this->pph;
 
 
@@ -212,7 +220,7 @@ class Edit extends Component
             foreach ($this->product as $key => $product){
                 if ($this->total_price[$key] != null){
                     $products[] = new PurchaseDetails([
-                        'product' => $this->product[$key],
+                        'product_id' => $this->product[$key],
                         'description' => $this->description[$key],
                         'quantity' => $this->quantity[$key],
                         'tax' => $this->tax[$key],
@@ -237,7 +245,6 @@ class Edit extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
-            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);
@@ -250,6 +257,7 @@ class Edit extends Component
                 ->where('status', 'active')
                 ->get(),
             'taxes' => Account::all(),
+            'products' => Product::all(),
         ]);
     }
 }

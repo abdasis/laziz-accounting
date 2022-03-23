@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Pages\Purchase;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Journal;
+use App\Models\JournalDetail;
 use App\Models\Product;
 use App\Models\purchase;
 use App\Models\PurchaseDetails;
@@ -81,6 +83,7 @@ class Create extends Component
         $this->description[$key] = $product->description;
         $this->price[$key] = $product->price;
         $this->tax[$key] = $product->tax;
+        $this->quantity[$key] = 0;
     }
 
 
@@ -146,12 +149,20 @@ class Create extends Component
         $this->validate();
         try {
             \DB::beginTransaction();
+
+            /*--------------------------------
+            mulai fungsi menyimpan pembelian
+            --------------------------------*/
+
+            $no_reference = \Str::uuid();
+
             $purchase  = Purchase::create([
                 'contact_id' => $this->supplier_id,
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
+                'no_refrence' => $no_reference,
                 'status' => 'belum dibayar',
                 'income_tax' => $this->potongan_nominal,
                 'income_tax_type' => $this->potongan,
@@ -162,6 +173,7 @@ class Create extends Component
             ]);
 
             $products = [];
+            $detail_jurnal = [];
             foreach ($this->product as $key => $product){
                 $products[] = new PurchaseDetails([
                     'product_id' => $this->product[$key],
@@ -171,9 +183,39 @@ class Create extends Component
                     'price' => $this->price[$key],
                     'total' => $this->total_price[$key],
                 ]);
+
+                $product = Product::find($this->product[$key]);
+
+                $detail_jurnal[] = new JournalDetail([
+                    'account_id' => $product->purchase_account,
+                    'debit' => $this->total_price[$key],
+                    'credit' => 0,
+                    'memo' => $this->description[$key],
+                ]);
             }
 
             $purchase->details()->saveMany($products);
+
+            /*------------------------------
+            fungsi untuk menyimpan journal
+            ------------------------------*/
+
+
+            $journal = Journal::create([
+                'code' => $this->codeTrasanctionGenerator(),
+                'transaction_date' => $this->transaction_date,
+                'contact_id' => $this->supplier_id,
+                'name' => "Pembelian {$purchase->code}",
+                'description' => $this->notes,
+                'status' => 'draft',
+                'no_reference' => $no_reference,
+                'notes' => $this->message,
+                'total' => $this->total_tagihan,
+                'created_by' => \Auth::user()->id,
+                'updated_by' => \Auth::user()->id,
+            ]);
+
+            $journal->details()->saveMany($detail_jurnal);
 
             $this->alert('success', 'Berhasil',[
                 'text'=> 'Data berhasil disimpan',
@@ -187,6 +229,7 @@ class Create extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
+            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);

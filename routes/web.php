@@ -39,6 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('show/{purchase}', \App\Http\Livewire\Pages\Purchase\Show::class)->name('purchases.show');
     });
 
+    Route::group(['prefix' => 'payment'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Payment\Index::class)->name('payment.index');
+        Route::get('create/{purchase}', \App\Http\Livewire\Pages\Payment\Create::class)->name('payment.create');
+        Route::get('edit/{payment}', \App\Http\Livewire\Pages\Payment\Edit::class)->name('payment.edit');
+        Route::get('show/{payment}', \App\Http\Livewire\Pages\Payment\Show::class)->name('payment.show');
+    });
+
     Route::group(['prefix' => 'sales'], function (){
         Route::get('/', \App\Http\Livewire\Pages\Sales\Index::class)->name('sales.index');
         Route::get('create', \App\Http\Livewire\Pages\Sales\Create::class)->name('sales.create');
@@ -55,6 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('create', \App\Http\Livewire\Pages\Product\Create::class)->name('products.create');
         Route::get('edit/{product}', \App\Http\Livewire\Pages\Product\Edit::class)->name('products.edit');
         Route::get('show/{product}', \App\Http\Livewire\Pages\Product\Show::class)->name('products.show');
+    });
+
+    Route::group(['prefix' => 'cost'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Cost\Index::class)->name('cost.index');
+        Route::get('create', \App\Http\Livewire\Pages\Cost\Create::class)->name('cost.create');
+        Route::get('edit/{cost}', \App\Http\Livewire\Pages\Cost\Edit::class)->name('cost.edit');
+        Route::get('show/{cost}', \App\Http\Livewire\Pages\Cost\Show::class)->name('cost.show');
     });
 });
 
