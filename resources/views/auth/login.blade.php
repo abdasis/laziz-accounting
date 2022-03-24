@@ -3,10 +3,10 @@
         <div class="container">
             <div class="row justify-content-center" style="min-height: 100vh">
                 <div class="col-md-8 col-lg-6 col-xl-4 my-auto">
-                    <div class="card bg-white">
+                    <div class="card border-top border-primary bg-white">
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
-                                <div class="auth-logo">
+                                <div class="auth-logo mb-3">
                                     <a href="{{route('login')}}" class="logo logo-dark text-center">
                                             <span class="logo-lg">
                                                 <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="50">
@@ -57,7 +57,10 @@
                                 </div>
 
                                 <div class="text-center d-grid">
-                                    <button class="btn btn-primary border-bottom border-primary" type="submit"> Log In </button>
+                                    <button class="btn rounded btn-primary border-bottom" type="submit">
+                                        <i class="mdi mdi-login me-1"></i>
+                                        Masuk
+                                    </button>
                                 </div>
 
                             </form>

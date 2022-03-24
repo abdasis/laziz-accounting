@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_category_id')->constrained('account_categories')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('account_category_id')->constrained('account_categories');
             $table->bigInteger('code');
             $table->string('name');
             $table->string('description')->nullable();
