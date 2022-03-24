@@ -36,7 +36,7 @@
        <div class="row">
            <div class="col-md-6">
                <div class="mb-2">
-                   <x-form-select name="account_type" label="Jenis Akun">
+                   <x-form-select name="report_type" label="Jenis Akun">
                        <option value="">Pilih Jenis Akun</option>
                        <option value="neraca">Neraca</option>
                        <option value="laba rugi">Laba rugi</option>
@@ -56,14 +56,25 @@
            </div>
        </div>
         <div class="mb-2 mt-2 d-flex justify-content-between">
-            <div class="btn-left">
-                <button wire:click.prevent="updateLock" type="button" class="btn btn-light">
-                    @if($lock_status == 'locked')
-                        <i class="mdi mdi-lock text-danger" ></i>
-                    @else
-                        <i class="mdi mdi-lock-open" ></i>
-                    @endif
-                </button>
+            <div class="button-group d-flex gap-1">
+                <div class="btn-left">
+                    <button wire:click.prevent="updateLock" type="button" class="btn btn-light">
+                        @if($lock_status == 'locked')
+                            <i class="mdi mdi-lock text-danger" ></i>
+                        @else
+                            <i class="mdi mdi-lock-open" ></i>
+                        @endif
+                    </button>
+                </div>
+                <div class="btn-left">
+                    <button wire:click.prevent="updateAccountType" type="button" class="btn btn-light text-{{$account_type == 'kas' ? 'success' : ''}}">
+                        @if($account_type == 'kas')
+                            <i class="ti ti-wallet" ></i>
+                        @else
+                            <i class="mdi mdi-bank" ></i>
+                        @endif
+                    </button>
+                </div>
             </div>
             <button class="btn btn-primary">
                 <i class="fas fa-save"></i>

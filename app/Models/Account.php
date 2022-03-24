@@ -42,4 +42,9 @@ class Account extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function journals()
+    {
+        return $this->hasMany(JournalDetail::class, 'account_id', 'id');
+    }
 }

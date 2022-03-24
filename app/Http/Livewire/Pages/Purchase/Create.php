@@ -49,6 +49,8 @@ class Create extends Component
             'tax' => 'required',
             'price' => 'required',
             'total_price' => 'required',
+            'message' => 'required',
+            'notes' => 'required',
         ];
     }
 

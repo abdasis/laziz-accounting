@@ -11,7 +11,8 @@ use Livewire\Component;
 class Create extends Component
 {
     use LivewireAlert;
-    public $account_category_id, $name, $code, $description, $parent_id, $account_type, $default_balance, $lock_status = 'unlocked';
+    public $account_category_id, $name, $code, $description, $parent_id, $report_type, $default_balance, $lock_status = 'unlocked';
+    public $account_type = 'kas';
 
     public function rules()
     {
@@ -19,7 +20,7 @@ class Create extends Component
             'account_category_id' => 'required',
             'name' => 'required|unique:accounts,name',
             'code' => 'required|unique:accounts,code',
-            'account_type'=> 'required',
+            'report_type'=> 'required',
             'default_balance'=> 'required',
         ];
     }
@@ -85,6 +86,15 @@ class Create extends Component
         }
     }
 
+    public function updateAccountType()
+    {
+        if ($this->account_type == 'kas'){
+            $this->account_type = 'umum';
+        }else{
+            $this->account_type = 'kas';
+        }
+    }
+
     public function store()
     {
         $this->validate();
@@ -95,9 +105,10 @@ class Create extends Component
                 'code' => $this->code,
                 'description' => $this->description,
                 'parent_id' => $this->parent_id,
-                'report_type' => $this->account_type,
+                'report_type' => $this->report_type,
                 'default_balance' => $this->default_balance,
                 'lock_status' => $this->lock_status,
+                'account_type' => $this->account_type,
                 'status' => 'active',
             ]);
             $this->reset();

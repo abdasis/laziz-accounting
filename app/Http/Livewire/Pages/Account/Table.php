@@ -59,10 +59,11 @@ class Table extends DataTableComponent
                 }
             })->asHtml()->sortable()->sortable(),
             Column::make('Nama', 'name')->format(function ($val, $cloumn, $row){
+                $url = route('accounts.show', $row->id);
                 if ($row->lock_status == 'locked') {
-                    return "<span class='fw-bold'>$val</span>";
+                    return "<a class='fw-bold' href='$url'>$val</a>";
                 }else{
-                    return "<span class='ps-2'>$val</span>";
+                    return "<a class='ps-2' href='$url'>$val</a>";
                 }
             })->asHtml()->sortable()->searchable(),
             Column::make('Tgl. Dibuat', 'created_at')->sortable()->format(function ($val){

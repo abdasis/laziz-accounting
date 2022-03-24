@@ -1,5 +1,13 @@
 <?php
 
+use App\Http\Livewire\Pages\Cost\Create;
+use App\Http\Livewire\Pages\Cost\Edit;
+use App\Http\Livewire\Pages\Cost\Index;
+use App\Http\Livewire\Pages\Cost\Show;
+use App\Http\Livewire\Pages\Report\ReportCreate;
+use App\Http\Livewire\Pages\Report\ReportEdit;
+use App\Http\Livewire\Pages\Report\ReportIndex;
+use App\Http\Livewire\Pages\Report\ReportShow;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,10 +73,17 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'cost'], function (){
-        Route::get('/', \App\Http\Livewire\Pages\Cost\Index::class)->name('cost.index');
-        Route::get('create', \App\Http\Livewire\Pages\Cost\Create::class)->name('cost.create');
-        Route::get('edit/{cost}', \App\Http\Livewire\Pages\Cost\Edit::class)->name('cost.edit');
-        Route::get('show/{cost}', \App\Http\Livewire\Pages\Cost\Show::class)->name('cost.show');
+        Route::get('/', Index::class)->name('cost.index');
+        Route::get('create', Create::class)->name('cost.create');
+        Route::get('edit/{cost}', Edit::class)->name('cost.edit');
+        Route::get('show/{cost}', Show::class)->name('cost.show');
+    });
+
+    Route::group(['prefix' => 'reports'], function (){
+        Route::get('/', ReportIndex::class)->name('reports.index');
+        Route::get('create', ReportCreate::class)->name('reports.create');
+        Route::get('edit/{report}', ReportEdit::class)->name('reports.edit');
+        Route::get('show/{report}', ReportShow::class)->name('reports.show');
     });
 });
 

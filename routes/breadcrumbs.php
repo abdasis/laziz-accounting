@@ -142,3 +142,38 @@ Breadcrumbs::for('cost.show', function (BreadcrumbTrail $trail, $cost) {
     $trail->parent('cost.index');
     $trail->push('Detail Biaya', route('cost.show', $cost));
 });
+
+Breadcrumbs::for('reports.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Laporan', route('reports.index'));
+});
+
+Breadcrumbs::for('reports.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('reports.index');
+    $trail->push('Tambah Laporan', route('reports.create'));
+});
+
+Breadcrumbs::for('reports.edit', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('reports.index');
+    $trail->push('Edit Laporan', route('reports.edit', $report));
+});
+
+Breadcrumbs::for('reports.show', function (BreadcrumbTrail $trail, $report) {
+    $trail->parent('reports.index');
+    $trail->push('Detail Laporan', route('reports.show', $report));
+});
+
+Breadcrumbs::for('accounts.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('accounts.index');
+    $trail->push('Tambah Akun', route('accounts.create'));
+});
+
+Breadcrumbs::for('accounts.edit', function (BreadcrumbTrail $trail, $account) {
+    $trail->parent('accounts.index');
+    $trail->push('Edit Akun', route('accounts.edit', $account));
+});
+
+Breadcrumbs::for('accounts.show', function (BreadcrumbTrail $trail, $account) {
+    $trail->parent('accounts.index');
+    $trail->push('Detail Akun', route('accounts.show', $account));
+});

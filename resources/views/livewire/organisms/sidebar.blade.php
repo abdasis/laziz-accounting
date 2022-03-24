@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('dashboard')}}">
+                        <a href="{{route('reports.index')}}">
                             <i class="icon icon-notebook mdi-24px"></i>
                             <span> Laporan </span>
                         </a>

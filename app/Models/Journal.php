@@ -15,4 +15,9 @@ class Journal extends Model
     {
         return $this->hasMany(JournalDetail::class);
     }
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
 }

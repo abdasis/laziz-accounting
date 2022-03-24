@@ -10,4 +10,9 @@ class JournalDetail extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function journal()
+    {
+        return $this->belongsTo(Journal::class);
+    }
 }
