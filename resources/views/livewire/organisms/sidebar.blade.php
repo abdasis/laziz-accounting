@@ -91,7 +91,7 @@
 
                     <li>
                         <a href="{{route('products.index')}}">
-                            <i class="icon icon-bag"></i>
+                            <i class="fe-shopping-bag"></i>
                             <span> Product </span>
                         </a>
                     </li>
