@@ -48,7 +48,7 @@
                         <td width="30%">
                             <x-form-select name="account_id.0" label="">
                                 <option value="">Pilih Akun</option>
-                                @foreach($accounts as $account)
+                                @foreach($account_debets as $account)
                                     <option value="{{ $account->id }}">{{ $account->name }}</option>
                                 @endforeach"></option>
                             </x-form-select>
@@ -66,7 +66,7 @@
                             <td class="align-middle">
                                 <x-form-select name="account_id.{{$input}}" label="">
                                     <option value="">Pilih Akun</option>
-                                    @foreach($accounts as $account)
+                                    @foreach($account_debets as $account)
                                         <option value="{{ $account->id }}">{{ $account->name }}</option>
                                     @endforeach"></option>
                                 </x-form-select>

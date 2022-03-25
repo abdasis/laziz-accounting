@@ -68,12 +68,26 @@ class Create extends Component
     public function store()
     {
         $this->validate();
+        $journal = Journal::create([
+            'code' => $this->code,
+            'description' => $this->description,
+            'notes' => $this->notes,
+            'transaction_date' => $this->transaction_date,
+            'account_id' => $this->credit_account,
+            'amount' => $this->amount,
+            'memo' => $this->memo,
+        ]);
     }
 
     public function render()
     {
         return view('livewire.pages.cost.create',[
-            'accounts' => Account::latest()->get()
+            'accounts' => Account::where('account_type', 'kas')
+                ->where('lock_status', 'unlocked')
+                ->get(),
+            'account_debets' => Account::where('account_type', 'umum')
+                ->where('lock_status', 'unlocked')
+                ->get()
         ]);
     }
 }
