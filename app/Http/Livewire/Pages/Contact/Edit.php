@@ -77,7 +77,7 @@ class Edit extends Component
         ]);
 
         $this->alert('success', 'Berhasil', [
-            'text' => "Data {$this->company_name} berhasil ditambahkan",
+            'text' => "Data {$this->company_name} berhasil diperbarui",
         ]);
     }
 

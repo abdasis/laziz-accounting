@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pages\Sales;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sales;
 use App\Models\SalesDetails;
@@ -179,6 +180,7 @@ class Create extends Component
                 ->where('status', 'active')
                 ->get(),
             'taxes' => Account::all(),
+            'products' => Product::all(),
         ]);
     }
 }

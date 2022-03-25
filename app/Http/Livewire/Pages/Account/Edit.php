@@ -11,7 +11,7 @@ class Edit extends Component
 {
 
     use LivewireAlert;
-    public $account_category_id, $name, $code, $description, $parent_id, $account_type, $default_balance, $lock_status = 'unlocked';
+    public $account_category_id, $name, $code, $description, $parent_id, $account_type, $default_balance, $lock_status = 'unlocked', $report_type;
 
     public $account_id;
 
@@ -34,7 +34,8 @@ class Edit extends Component
         $this->code = $account['code'];
         $this->description = $account['description'];
         $this->parent_id = $account['parent_id'];
-        $this->account_type = $account['report_type'];
+        $this->report_type = $account['report_type'];
+        $this->account_type = $account['account_type'];
         $this->default_balance = $account['default_balance'];
         $this->lock_status = $account['lock_status'];
         $this->account_id = $account['id'];
@@ -102,6 +103,15 @@ class Edit extends Component
         }
     }
 
+    public function updateAccountType()
+    {
+        if ($this->account_type == 'kas'){
+            $this->account_type = 'umum';
+        }else{
+            $this->account_type = 'kas';
+        }
+    }
+
     public function store()
     {
         $this->validate();
@@ -112,7 +122,8 @@ class Edit extends Component
                 'code' => $this->code,
                 'description' => $this->description,
                 'parent_id' => $this->parent_id,
-                'report_type' => $this->account_type,
+                'report_type' => $this->report_type,
+                'account_type' => $this->account_type,
                 'default_balance' => $this->default_balance,
                 'lock_status' => $this->lock_status,
                 'status' => 'active',
@@ -121,6 +132,7 @@ class Edit extends Component
             $this->emitTo(Index::class, 'accountUpdated');
 
         }catch (\Throwable $exception) {
+            dd($exception);
             $this->alert('error', 'Gagal', [
                 'text'=> 'Data gagal ditambahkan',
             ]);

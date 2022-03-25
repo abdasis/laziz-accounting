@@ -30,8 +30,12 @@
                     </div>
                     <div class="col-md-3">
                         <div class="mb-2">
-                            <x-form-input label="Nomor Transaksi" name="no_transaction" />
-
+                            <x-form-input-group label="Kode Transaksi" >
+                                <x-form-input-group-text>
+                                    <i class="fe-clipboard"></i>
+                                </x-form-input-group-text>
+                                <x-form-input name="no_transaction" placeholder="Kode Transaksi" id="no_transaction" />
+                            </x-form-input-group>
                         </div>
                     </div>
                     <div class="col-md-3">

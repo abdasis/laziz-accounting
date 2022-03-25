@@ -56,7 +56,12 @@
                         <tbody class="border-light">
                         <tr>
                             <td>
-                                <x-form-input name="product.0"/>
+                                <x-form-select name="product.0">
+                                    <option value="">Pilih Produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </x-form-select>
                             </td>
                             <td>
                                 <x-form-input name="description.0"/>
@@ -77,7 +82,12 @@
                         @foreach($inputs as $key => $value)
                             <tr>
                                 <td>
-                                    <x-form-input name="product.{{$value}}"/>
+                                    <x-form-select name="product.{{$value}}">
+                                        <option value="">Pilih Produk</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                        @endforeach
+                                    </x-form-select>
                                 </td>
                                 <td>
                                     <x-form-input name="description.{{$value}}"/>

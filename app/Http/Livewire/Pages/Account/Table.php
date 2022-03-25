@@ -13,7 +13,17 @@ class Table extends DataTableComponent
 {
     use DeleteConfirm;
 
-    protected $listeners = ['confirmed' => 'deleteAccount'];
+    public string $defaultSortColumn = 'code';
+    public string $defaultSortDirection = 'asc';
+
+    protected $listeners = ['confirmed' => 'deleteAccount', 'refresh'];
+
+    public function refresh()
+    {
+        return true;
+    }
+
+
 
     public function deleteAccount()
     {

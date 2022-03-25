@@ -25,6 +25,7 @@ class Index extends Component
         $this->alert('success', 'Berhasil', [
             'text'=> 'Data berhasil ditambahkan',
         ]);
+        $this->emitTo(Table::class, 'refresh');
     }
 
     public function handleAccountUpdated()

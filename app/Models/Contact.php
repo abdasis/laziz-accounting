@@ -65,4 +65,9 @@ class Contact extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
+    }
 }
