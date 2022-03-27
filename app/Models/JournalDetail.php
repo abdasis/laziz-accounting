@@ -15,4 +15,9 @@ class JournalDetail extends Model
     {
         return $this->belongsTo(Journal::class);
     }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 }

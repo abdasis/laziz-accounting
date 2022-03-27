@@ -102,7 +102,7 @@ class Create extends Component
     public function codeTrasanctionGenerator()
     {
         $transaction = Purchase::max('no_transaction');
-        $code = 'PUR-' . Carbon::now()->format('ymd') . ($transaction+1);
+        $code = 'PUR-' . Carbon::now()->format('ymd') . '.' . ($transaction+1);
         return $code;
     }
 
@@ -208,11 +208,19 @@ class Create extends Component
                 'name' => "Pembelian {$purchase->code}",
                 'description' => $this->notes,
                 'status' => 'draft',
-                'no_reference' => $no_reference,
+                'no_reference' => $this->no_reference,
                 'notes' => $this->message,
                 'total' => $this->total_tagihan,
+                'type' => 'purchase',
                 'created_by' => \Auth::user()->id,
                 'updated_by' => \Auth::user()->id,
+            ]);
+
+            $detail_jurnal[] = new JournalDetail([
+                'account_id' => $purchase->supplier->akun_hutang,
+                'debit' => 0,
+                'credit' => $this->total_tagihan,
+                'memo' => 'Pembelian '.$purchase->code,
             ]);
 
             $journal->details()->saveMany($detail_jurnal);
