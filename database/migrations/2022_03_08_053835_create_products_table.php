@@ -21,7 +21,9 @@ return new class extends Migration
             $table->decimal('price', 20, 2)->nullable();
             $table->integer('tax')->nullable();
             $table->unsignedBigInteger('sale_account')->nullable();
+            $table->decimal('sales_price', 20, 2)->nullable();
             $table->unsignedBigInteger('purchase_account')->nullable();
+            $table->decimal('purchase_price', 20, 2)->nullable();
             $table->timestamps();
         });
     }

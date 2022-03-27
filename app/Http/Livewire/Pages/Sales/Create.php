@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Pages\Sales;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Journal;
+use App\Models\JournalDetail;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sales;
@@ -20,9 +22,9 @@ class Create extends Component
 
     public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
 
-    public $product, $description, $quantity, $unit, $tax, $price, $total_price;
+    public $product, $description, $quantity, $unit, $tax, $price, $total_price, $no_reference;
 
-    public $notes, $message;
+    public $remarks, $internal_notes;
 
     public $inputs = [], $i = 1;
 
@@ -41,6 +43,7 @@ class Create extends Component
             'supplier_id' => 'required',
             'transaction_date' => 'required',
             'due_date' => 'required',
+
             'product.0' => 'required',
             'description.0' => 'required',
             'quantity.0' => 'required',
@@ -54,6 +57,27 @@ class Create extends Component
             'tax.*' => 'required',
             'price.*' => 'required',
             'total_price.*' => 'required',
+            'no_reference.*' => 'required',
+
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'product.0.required' => 'Product is required',
+            'description.0.required' => 'Description is required',
+            'quantity.0.required' => 'Quantity is required',
+            'tax.0.required' => 'Tax is required',
+            'price.0.required' => 'Price is required',
+            'total_price.0.required' => 'Total Price is required',
+
+            'product.*.required' => 'Product is required',
+            'description.*.required' => 'Description is required',
+            'quantity.*.required' => 'Quantity is required',
+            'tax.*.required' => 'Tax is required',
+            'price.*.required' => 'Price is required',
+            'total_price.*.required' => 'Total Price is required',
 
         ];
     }
@@ -111,15 +135,25 @@ class Create extends Component
 
     public function codeTrasanctionGenerator()
     {
-        $transaction = Sales::max('no_transaction');
-        $code = 'SL-' . Carbon::now()->format('ymd') . ($transaction+1);
-        return $code;
+        $last_transaction = Sales::max('no_transaction');
+        $number = now()->format('ymd') . '.' .$last_transaction+1;
+        $text = sprintf('BYR-%s', $number);
+        return $text;
+
     }
 
     public function updatedSupplierId()
     {
         $supplier = Contact::find($this->supplier_id);
         $this->address = $supplier->shipping_address;
+    }
+
+    public function updatedProduct($val, $key)
+    {
+        $product = Product::find($val);
+        $this->description[$key] = $product->description;
+        $this->price[$key] = $product->price;
+        $this->tax[$key] = $product->tax;
     }
 
     public function save()
@@ -136,8 +170,8 @@ class Create extends Component
                 'no_refrence' => $this->no_refrence,
                 'income_tax_type' => $this->potongan,
                 'income_tax' => $this->potongan_nominal,
-                'remarks' => $this->notes,
-                'internal_notes' => $this->message,
+                'remarks' => $this->remarks,
+                'internal_notes' => $this->internal_notes,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
@@ -145,20 +179,63 @@ class Create extends Component
             $detail_products = [];
 
             foreach ($this->product as $key => $product){
-                if (!empty($product)){
+                if (!empty($product[$key]) && !empty($this->total_price[$key])){
                     $detail_products[] = new SalesDetails([
-                        'product' => $product,
+                        'product_id' => $product,
                         'description' => $this->description[$key],
                         'quantity' => $this->quantity[$key],
                         'tax' => $this->tax[$key],
                         'price' => $this->price[$key],
                         'total' => $this->total_price[$key],
                     ]);
+
+
                 }
             }
 
-
             $sale->details()->saveMany($detail_products);
+
+            //membuat journal untuk penjualan
+
+            //membuat kode journal
+
+            $last_transaction = Journal::count();
+            $number = now()->format('ymd') . '.' .$last_transaction+1;
+            $code_journal = sprintf('BYR-%s', $number);
+
+            $journal = Journal::create([
+                'code' => $code_journal,
+                'name' => 'Penjualan Kode' . $sale->code,
+                'transaction_date' => $sale->transaction_date,
+                'description' => $sale->remarks,
+                'notes' => $sale->internal_notes,
+                'total' => $sale->total,
+                'status' => 'draft',
+                'no_reference' => $sale->no_refrence,
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            //membuat journal detail untuk penjualan
+            $journal_details = [];
+            foreach ($sale->details as $detail){
+                $product = Product::find($detail->product_id);
+                $journal_details[] = new JournalDetail([
+                    'account_id' => $product->sale_account,
+                    'debit' => 0,
+                    'credit' => $detail->total,
+                    'memo' => $detail->description,
+                ]);
+            }
+
+            $journal_details[] = new JournalDetail([
+                'account_id' => $sale->customer->akun_piutang,
+                'debit' => $sale->details->sum('total'),
+                'credit' => 0,
+                'memo' => 'Penjualan Kode' . $sale->code,
+            ]);
+
+            $journal->details()->saveMany($journal_details);
 
             $this->alert('success', 'Berhasil', [
                 'text' => 'Data berhasil disimpan',

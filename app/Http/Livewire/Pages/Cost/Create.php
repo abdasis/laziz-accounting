@@ -4,11 +4,14 @@ namespace App\Http\Livewire\Pages\Cost;
 
 use App\Models\Account;
 use App\Models\Journal;
+use App\Models\JournalDetail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Create extends Component
 {
 
+    use LivewireAlert;
     public $memo, $amount, $account_id;
 
     public $credit_account, $transaction_date, $code, $description, $notes;
@@ -43,7 +46,7 @@ class Create extends Component
     public function mount()
     {
         $last_transaction = Journal::count();
-        $number = now()->format('Ymd') . $last_transaction+1;
+        $number = now()->format('ymd') . '.' .$last_transaction+1;
         $text = sprintf('BYR-%s', $number);
         $this->code = $text;
     }
@@ -68,15 +71,55 @@ class Create extends Component
     public function store()
     {
         $this->validate();
-        $journal = Journal::create([
-            'code' => $this->code,
-            'description' => $this->description,
-            'notes' => $this->notes,
-            'transaction_date' => $this->transaction_date,
-            'account_id' => $this->credit_account,
-            'amount' => $this->amount,
-            'memo' => $this->memo,
-        ]);
+        try {
+            \DB::beginTransaction();;
+            $journal = Journal::create([
+                'code' => $this->code,
+                'name' => '-',
+                'transaction_date' => $this->transaction_date,
+                'description' => $this->description,
+                'notes' => $this->notes,
+                'total' => collect($this->amount)->sum(),
+                'status' => 'draft',
+            ]);
+
+            $details = [];
+
+            foreach ($this->inputs as $key => $value) {
+                if (!empty($this->account_id[$key]) && !empty($this->amount[$key])){
+                    $details[] = new JournalDetail([
+                        'journal_id' => $journal->id,
+                        'account_id' => $this->account_id[$key],
+                        'debit' => $this->amount[$key],
+                        'credit' => 0,
+                        'memo' => $this->memo[$key],
+                    ]);
+                }
+            }
+
+            /*pengeluaran untuk akun kas dan bank*/
+            $details[] = new JournalDetail([
+                'journal_id' => $journal->id,
+                'account_id' => $this->credit_account,
+                'debit' => 0,
+                'credit' => collect($this->amount)->sum(),
+                'memo' => $this->notes,
+            ]);
+
+            $journal->details()->saveMany($details);
+
+            $this->alert('success', 'Berhasil', [
+                'text' => 'Data berhasil disimpan',
+            ]);
+            \DB::commit();
+            $this->reset();
+        }catch (\Exception $e) {
+            dd($e);
+            \DB::rollBack();
+            $this->alert('error', 'Gagal', [
+                'text' => 'Data gagal disimpan',
+            ]);
+        }
     }
 
     public function render()

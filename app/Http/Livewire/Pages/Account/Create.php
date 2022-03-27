@@ -12,7 +12,7 @@ class Create extends Component
 {
     use LivewireAlert;
     public $account_category_id, $name, $code, $description, $parent_id, $report_type, $default_balance, $lock_status = 'unlocked';
-    public $account_type = 'kas';
+    public $account_type = 'umum';
 
     public function rules()
     {

@@ -43,14 +43,6 @@
                             </div>
                         </div>
 
-                        <div class="row align-items-center mb-3">
-                            <div class="col-md-3 fw-bold">
-                                Price
-                            </div>
-                            <div class="col">
-                                <x-form-input type="text" name="price" placeholder="Masukan harga" class="border-0 border-bottom" />
-                            </div>
-                        </div>
 
                         <div class="row align-items-center mb-3">
                             <div class="col-md-3 fw-bold">
@@ -80,6 +72,9 @@
                                     @endforeach
                                 </x-form-select>
                             </div>
+                            <div class="col">
+                                <x-form-input name="sales_price" placeholder="Harga Penjualan" class="border-0 border-bottom" />
+                            </div>
                         </div>
 
                         <div class="row align-items-center mb-3">
@@ -93,6 +88,9 @@
                                         <option  value="{{ $account->id }}">{{ $account->name }}</option>
                                     @endforeach
                                 </x-form-select>
+                            </div>
+                            <div class="col">
+                                <x-form-input name="purchase_price" placeholder="Harga Penjualan" class="border-0 border-bottom" />
                             </div>
                         </div>
 

@@ -4,13 +4,13 @@
         <div class="card-header d-flex justify-content-between bg-white">
             <h4>{{ __('Biaya Pengeluaran') }}</h4>
             <h4>
-                Total: <span class="text-danger">{{rupiah(collect($amount)->sum())}}</span>
+                Jenis Transaksi
             </h4>
         </div>
         <div class="card-body">
             <form wire:submit.prevent="store">
                 <div class="row">
-                    <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-1">
                         <x-form-select name="credit_account" label="Bayar Menggunakan: ">
                             <option value="">Pilih Akun</option>
                             @foreach($accounts as $account)
@@ -18,18 +18,18 @@
                             @endforeach
                         </x-form-select>
                     </div>
-                    <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-1">
                         <x-form-input name="transaction_date" label="Tanggal Transaksi" type="date"/>
                     </div>
-                    <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-1">
                         <x-form-input-group label="Kode Transaksi" >
                             <x-form-input-group-text>
                                 <i class="fe-clipboard"></i>
                             </x-form-input-group-text>
-                            <x-form-input name="code" placeholder="Kode Transaksi" id="nickname" />
+                            <x-form-input name="code" placeholder="Kode Transaksi" id="code" />
                         </x-form-input-group>
                     </div>
-                    <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-1">
                         <x-form-textarea name="description" label="Masukan keterangan "/>
                     </div>
                 </div>
@@ -84,10 +84,19 @@
                             </td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <th colspan="2" class="text-end">
+                            Total:
+                        </th>
+                        <th>
+                            <span class="text-danger">{{rupiah(collect($amount)->sum())}}</span>
+                        </th>
+                        <td></td>
+                    </tr>
                     </tbody>
                 </table>
                 <div class="row my-3">
-                    <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-1">
                         <x-form-textarea name="notes" label="Remarks"/>
                     </div>
                 </div>

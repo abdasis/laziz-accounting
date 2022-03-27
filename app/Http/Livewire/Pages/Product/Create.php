@@ -11,7 +11,7 @@ class Create extends Component
 {
 
     use LivewireAlert;
-    public $code, $name, $description, $price, $tax, $sale_account;
+    public $code, $name, $description, $price, $tax, $sale_account, $sales_price, $purchase_price;
     public $purchase_account;
 
     protected $rules = [
@@ -19,6 +19,8 @@ class Create extends Component
         'description' => 'required|min:3',
         'sale_account' => 'required',
         'purchase_account' => 'required',
+        'sales_price' => 'required|numeric',
+        'purchase_price' => 'required|numeric',
     ];
 
     public function mount()
@@ -39,10 +41,12 @@ class Create extends Component
                 'name' => $this->name,
                 'code' => $this->code,
                 'description' => $this->description,
-                'price' => $this->price,
+                'price' => $this->purchase_price,
                 'tax' => $this->tax,
                 'sale_account' => $this->sale_account,
+                'sales_price' => $this->sales_price,
                 'purchase_account' => $this->purchase_account,
+                'purchase_price' => $this->purchase_price,
             ]);
 
             $this->alert('success', 'Berhasil' , [
@@ -50,6 +54,8 @@ class Create extends Component
             ]);
 
             $this->reset();
+
+            $this->mount();
         }catch (\Exception $e) {
             dd($e);
             $this->alert('error', 'Kesalaham', [

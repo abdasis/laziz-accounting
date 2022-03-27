@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contact_id')->nullable()->constrained();
             $table->string('code');
+            $table->string('unit')->nullable();
             $table->string('name');
             $table->date('transaction_date');
             $table->text('description');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->decimal('total', 65, 30)->default(0);
             $table->enum('status', ['draft', 'posted']);
             $table->string('no_reference')->nullable();
+            $table->string('type', 50)->nullable()->comment('penjualan', 'pembelian', 'pembayaran', 'penerimaan', 'pengeluaran');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->nullable();

@@ -32,12 +32,29 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-2">
-                                <x-form-input label="Nomor Transaksi" name="no_transaction" />
+                                <x-form-input-group label="No. Transaksi" >
+                                    <x-form-input-group-text>
+                                        <i class="fe-activity"></i>
+                                    </x-form-input-group-text>
+                                    <x-form-input  name="no_transaction" />
+                                </x-form-input-group>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-2">
                                 <x-form-textarea label="Alamat Supplier" name="address" placeholder="Masukan Alamat" />
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <x-form-input-group label="No. Referensi" >
+                                    <x-form-input-group-text>
+                                        <i class="fe-file-text"></i>
+                                    </x-form-input-group-text>
+                                    <x-form-input name="no_reference" placeholder="No Referensi" id="no_refenrence" />
+                                </x-form-input-group>
                             </div>
                         </div>
                     </div>
@@ -116,10 +133,10 @@
                     <div class="row justify-content-between">
                         <div class="col-md-4">
                             <div class="mb-2">
-                                <x-form-textarea label="Catatan" name="notes" placeholder="Masukan Catatan" />
+                                <x-form-textarea label="Remark" name="remarks" placeholder="Tulis Remark" />
                             </div>
                             <div class="mb-2">
-                                <x-form-textarea label="Keterangan" name="message" placeholder="Masukan Keterangan" />
+                                <x-form-textarea label="Keterangan Penjualan" name="internal_notes" placeholder="Masukan Keterangan" />
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -166,12 +183,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
-                        <button wire:click.prevent="addForm({{$i}})" class="btn rounded-3 border-bottom border-secondary btn-secondary width-md">
+                        <button wire:click.prevent="addForm({{$i}})" class="btn rounded-3 border-bottom btn-light width-md">
                             <i class="icon icon-plus me-1"></i>
-
                             Tambah Produk
                         </button>
                         <button class="btn rounded-3 border-bottom border-primary btn-primary width-md">
+                            <i class="fe-save"></i>
                             Simpan Penjualan
                         </button>
                     </div>

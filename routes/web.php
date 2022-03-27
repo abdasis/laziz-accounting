@@ -84,6 +84,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('create', ReportCreate::class)->name('reports.create');
         Route::get('edit/{report}', ReportEdit::class)->name('reports.edit');
         Route::get('show/{report}', ReportShow::class)->name('reports.show');
+        Route::get('sales-journal', \App\Http\Livewire\Pages\Journal\Sales::class)->name('reports.sales-journal');
+        Route::get('purchases-journal', \App\Http\Livewire\Pages\Journal\Purchase::class)->name('reports.purchases-journal');
+        Route::get('cash-in', \App\Http\Livewire\Pages\Journal\CashIn::class)->name('reports.cash-in');
+        Route::get('cash-out', \App\Http\Livewire\Pages\Journal\CashOut::class)->name('reports.cash-out');
     });
 });
 

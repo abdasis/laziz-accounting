@@ -163,6 +163,16 @@ Breadcrumbs::for('reports.show', function (BreadcrumbTrail $trail, $report) {
     $trail->push('Detail Laporan', route('reports.show', $report));
 });
 
+Breadcrumbs::for('reports.purchases-journal', function (BreadcrumbTrail $trail) {
+    $trail->parent('reports.index');
+    $trail->push('Laporan Kas Masuk', route('reports.cash-in'));
+});
+
+Breadcrumbs::for('reports.sales-journal', function (BreadcrumbTrail $trail) {
+    $trail->parent('reports.index');
+    $trail->push('Sales Journal', route('reports.cash-out'));
+});
+
 Breadcrumbs::for('accounts.create', function (BreadcrumbTrail $trail) {
     $trail->parent('accounts.index');
     $trail->push('Tambah Akun', route('accounts.create'));

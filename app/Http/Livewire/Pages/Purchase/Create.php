@@ -20,7 +20,7 @@ class Create extends Component
 
     use LivewireAlert;
 
-    public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
+    public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_reference, $address;
 
     public $product, $description, $quantity, $unit, $tax, $price, $total_price;
 
@@ -156,15 +156,13 @@ class Create extends Component
             mulai fungsi menyimpan pembelian
             --------------------------------*/
 
-            $no_reference = \Str::uuid();
-
             $purchase  = Purchase::create([
                 'contact_id' => $this->supplier_id,
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
-                'no_refrence' => $no_reference,
+                'no_refrence' => $this->no_reference,
                 'status' => 'belum dibayar',
                 'income_tax' => $this->potongan_nominal,
                 'income_tax_type' => $this->potongan,
