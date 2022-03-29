@@ -28,5 +28,10 @@ class Purchase extends Model
         return $this->details->sum('total');
     }
 
+    public function journal()
+    {
+        return $this->hasOne(Journal::class, 'no_reference', 'no_refrence');
+    }
+
 
 }

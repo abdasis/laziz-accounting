@@ -200,7 +200,6 @@ class Create extends Component
             fungsi untuk menyimpan journal
             ------------------------------*/
 
-
             $journal = Journal::create([
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
@@ -223,6 +222,16 @@ class Create extends Component
                 'memo' => 'Pembelian '.$purchase->code,
             ]);
 
+            /*membuat journal untuk ppn pengeluaran*/
+
+            $account_ppn = Account::where('code' , '')->first();
+            $detail_jurnal[] = new JournalDetail([
+                'account_id' => $purchase->supplier->akun_hutang,
+                'debit' => 0,
+                'credit' => $this->total_tagihan,
+                'memo' => 'Pembelian '.$purchase->code,
+            ]);
+
             $journal->details()->saveMany($detail_jurnal);
 
             $this->alert('success', 'Berhasil',[
@@ -237,7 +246,6 @@ class Create extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
-            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);

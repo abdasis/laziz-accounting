@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Pages\Purchase;
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Journal;
+use App\Models\JournalDetail;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
@@ -18,6 +20,7 @@ class Edit extends Component
 
     public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
 
+    public $no_reference;
     public $product, $description, $quantity, $unit, $tax, $price, $total_price;
 
     public $notes, $message;
@@ -217,25 +220,63 @@ class Edit extends Component
             ]);
 
             $products = [];
+            $detail_jurnal = [];
             foreach ($this->product as $key => $product){
-                if ($this->total_price[$key] != null){
-                    $products[] = new PurchaseDetails([
-                        'product_id' => $this->product[$key],
-                        'description' => $this->description[$key],
-                        'quantity' => $this->quantity[$key],
-                        'tax' => $this->tax[$key],
-                        'price' => $this->price[$key],
-                        'total' => $this->total_price[$key],
-                    ]);
-                }
-            }
+                $products[] = new PurchaseDetails([
+                    'product_id' => $this->product[$key],
+                    'description' => $this->description[$key],
+                    'quantity' => $this->quantity[$key],
+                    'tax' => $this->tax[$key],
+                    'price' => $this->price[$key],
+                    'total' => $this->total_price[$key],
+                ]);
 
+                $product = Product::find($this->product[$key]);
+
+                $detail_jurnal[] = new JournalDetail([
+                    'account_id' => $product->purchase_account,
+                    'debit' => $this->total_price[$key],
+                    'credit' => 0,
+                    'memo' => $this->description[$key],
+                ]);
+            }
 
             $purchase = Purchase::find($this->purchase_id);
 
             $purchase->details()->delete();
 
             $purchase->details()->saveMany($products);
+
+            $journal = Journal::where('no_reference', $purchase->no_refrence)->update([
+                'code' => $this->codeTrasanctionGenerator(),
+                'transaction_date' => $this->transaction_date,
+                'contact_id' => $this->supplier_id,
+                'name' => "Pembelian {$purchase->code}",
+                'description' => $this->notes,
+                'status' => 'draft',
+                'notes' => $this->message,
+                'total' => $this->total_tagihan,
+                'type' => 'purchase',
+                'created_by' => \Auth::user()->id,
+                'updated_by' => \Auth::user()->id,
+            ]);
+
+
+            $detail_jurnal[] = new JournalDetail([
+                'account_id' => $purchase->supplier->akun_hutang,
+                'debit' => 0,
+                'credit' => $this->total_tagihan,
+                'memo' => 'Pembelian '.$purchase->code,
+            ]);
+
+            $journal = Journal::where('no_reference', $purchase->no_refrence)->first();
+
+            $journal->details()->delete();
+            $journal->details()->saveMany($detail_jurnal);
+
+
+
+            $this->no_transaction = Purchase::max('no_transaction')+1;
 
             $this->flash('success', 'Berhasil',[
                 'text'=> "Data {$purchase->code} berhasil diubah",
@@ -245,6 +286,7 @@ class Edit extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
+            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);

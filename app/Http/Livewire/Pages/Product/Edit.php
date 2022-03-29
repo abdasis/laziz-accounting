@@ -13,6 +13,7 @@ class Edit extends Component
     use LivewireAlert;
     public $code, $name, $description, $price, $tax, $sale_account;
     public $purchase_account;
+    public $sales_price, $purchase_price;
 
     public $product;
     protected $rules = [
@@ -33,6 +34,8 @@ class Edit extends Component
         $this->tax = $product->tax;
         $this->sale_account = $product->sale_account;
         $this->purchase_account = $product->purchase_account;
+        $this->sales_price = $product->sales_price;
+        $this->purchase_price = $product->purchase_price;
 
     }
 

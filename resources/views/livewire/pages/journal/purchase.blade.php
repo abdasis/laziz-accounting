@@ -27,7 +27,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($journals as $key => $journal)
+                    @forelse($journals as $key => $journal)
                         <tr>
                             <td>{{\Carbon\Carbon::parse($journal->transaction_date)->format('d/m/Y')}}</td>
                             <td>{{$journal->code}}</td>
@@ -41,7 +41,11 @@
                             <td class="text-end">{{rupiah($journal->details[1]->credit)}}</td>
                             <td>{{$journal->notes}}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="10" class="text-center">No data available in table</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
