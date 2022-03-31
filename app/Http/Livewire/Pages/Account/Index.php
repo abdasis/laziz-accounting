@@ -34,6 +34,7 @@ class Index extends Component
         $this->alert('success', 'Berhasil', [
             'text'=> 'Data akun berhasil di perbarui',
         ]);
+        $this->reset();
     }
 
     public function handleEdit($account)
