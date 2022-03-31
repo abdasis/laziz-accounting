@@ -62,19 +62,23 @@ class Edit extends Component
 
     public function updatedAccountCategoryId()
     {
-        $this->code = $this->makeCodeAccount();
+        if ($this->lock_status == 'locked'){
+            $this->code = $this->code;
+        }else{
+            $this->code = $this->makeCodeAccount();
+        }
     }
 
     public function updatedParentId()
     {
         if ($this->parent_id != null){
             $account = Account::where('id', $this->parent_id)->first();
-            if($account != null && $account->lock_status == 'locked' && $account->parent_id == null){
+            if($this->lock_status == 'locked'){
                 $locked_code = Account::where('parent_id', $this->parent_id)->max('code');
                 if ($locked_code == null){
-                    $this->code = $account->code+1000;
+                    $this->code = $this->code;
                 }else{
-                    $this->code = $locked_code+1000;
+                    $this->code = $this->code;
                 }
             }elseif($account != null && $account->lock_status == 'locked' && $account->parent_id != null){
                 $locked_code = Account::where('parent_id', $this->parent_id)->max('code');
