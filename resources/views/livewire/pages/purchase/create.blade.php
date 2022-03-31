@@ -78,7 +78,7 @@
                                 @endforeach">
                             </x-form-select>
                         </td>
-                        <td>
+                        <td width="25%">
                             <x-form-input name="description.0"/>
                         </td>
                         <td width="10%">
@@ -104,7 +104,7 @@
                                     @endforeach">
                                 </x-form-select>
                             </td>
-                            <td>
+                            <td width="25%">
                                 <x-form-input name="description.{{$value}}"/>
                             </td>
                             <td width="10%">

@@ -218,19 +218,27 @@ class Create extends Component
             $detail_jurnal[] = new JournalDetail([
                 'account_id' => $purchase->supplier->akun_hutang,
                 'debit' => 0,
-                'credit' => $this->total_tagihan,
+                'credit' => $purchase->details->sum('total') + $purchase->details->sum('tax'),
                 'memo' => 'Pembelian '.$purchase->code,
             ]);
 
             /*membuat journal untuk ppn pengeluaran*/
+            $account_ppn = Account::where('code' , '217200')->first()->id;
 
-            $account_ppn = Account::where('code' , '')->first();
+            $ppn = $purchase->details->sum('tax');
+
+            $price_total = $purchase->details->sum('total');
+
+            $total_ppn = $price_total * ($ppn / 100);
+
             $detail_jurnal[] = new JournalDetail([
-                'account_id' => $purchase->supplier->akun_hutang,
-                'debit' => 0,
-                'credit' => $this->total_tagihan,
+                'account_id' => $account_ppn,
+                'credit' => 0,
+                'debit' => $total_ppn,
                 'memo' => 'Pembelian '.$purchase->code,
             ]);
+
+            /*membuat journal untuk hutang*/
 
             $journal->details()->saveMany($detail_jurnal);
 
@@ -246,6 +254,7 @@ class Create extends Component
 
         }catch (\Throwable $e) {
             \DB::rollBack();
+            dd($e);
             $this->alert('error', 'Gagal',[
                 'text'=> 'Data gagal disimpan',
             ]);

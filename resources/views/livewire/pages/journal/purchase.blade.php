@@ -31,7 +31,7 @@
                         <tr>
                             <td>{{\Carbon\Carbon::parse($journal->transaction_date)->format('d/m/Y')}}</td>
                             <td>{{$journal->code}}</td>
-                            <td>{{$journal->description}}</td>
+                            <td>{{$journal->notes}}</td>
                             <td>{{$journal->no_reference}}</td>
                             <td>{{$journal->details[0]->account->name}}</td>
                             <td class="text-end">{{number_format($journal->details[0]->account->code,0,'-','-')}}</td>
@@ -39,7 +39,7 @@
                             <td>{{$journal->details[1]->account->name}}</td>
                             <td class="text-end">{{number_format($journal->details[1]->account->code,0,'-','-')}}</td>
                             <td class="text-end">{{rupiah($journal->details[1]->credit)}}</td>
-                            <td>{{$journal->notes}}</td>
+                            <td>{{$journal->description}}</td>
                         </tr>
                     @empty
                         <tr>

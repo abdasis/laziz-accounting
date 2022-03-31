@@ -33,12 +33,21 @@
                             </tr>
                         </table>
                     </div>
-                    <a href="{{route('payment.create', $purchase)}}" class="d-grid gap-2">
-                        <button class="btn btn-primary border-bottom">
-                            <i class="icon icon-wallet me-1"></i>
-                            Kirim Pembayaran
-                        </button>
-                    </a>
+                    @if($purchase->status != 'dibayar')
+                        <a href="{{route('payment.create', $purchase)}}" class="d-grid gap-2">
+                            <button class="btn btn-primary border-bottom">
+                                <i class="icon icon-wallet me-1"></i>
+                                Kirim Pembayaran
+                            </button>
+                        </a>
+                    @else
+                        <a href="#" class="d-grid gap-2">
+                            <button class="btn btn-success border-bottom">
+                                <i class="icon icon-check me-1"></i>
+                                Lunas
+                            </button>
+                        </a>
+                    @endif
                 </div>
             </div>
             <div class="col-md-8">

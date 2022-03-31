@@ -84,7 +84,7 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.pages.contact.edit', [
-            'accounts'=> Account::where('lock_status', 'unlocked')->orderBy('name', 'asc')->get(),
+            'accounts'=> Account::orderBy('name', 'asc')->get(),
         ]);
     }
 }

@@ -67,7 +67,7 @@ class Create extends Component
     public function render()
     {
         return view('livewire.pages.product.create', [
-            'accounts' => \App\Models\Account::orderBy('name', 'asc')->where('lock_status', 'unlocked')->get(),
+            'accounts' => \App\Models\Account::orderBy('name', 'asc')->get(),
         ]);
     }
 }

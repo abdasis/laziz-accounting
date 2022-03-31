@@ -21,6 +21,9 @@ class Create extends Component
     public function mount(Purchase $purchase)
     {
         $this->purchase = $purchase;
+        foreach ($purchase->details as $key => $detail) {
+            $this->amount[$key] = $detail->total;
+        }
     }
 
     public function updatedAccountPotongan($value)
@@ -75,7 +78,6 @@ class Create extends Component
             /*membuat code*/
             $code = 'PY-'.now()->format('ymd').str_pad($this->purchase->id, 3, '0', STR_PAD_LEFT);
 
-
             $journal = $contact->journals()->create([
                 'code' => $code,
                 'transaction_date' => $this->payment_date ?? now()->format('Y-m-d'),
@@ -90,6 +92,7 @@ class Create extends Component
 
             $details = [];
 
+            /*membuat detail journal*/
             foreach ($this->amount as $key => $value) {
                 $details[] = new JournalDetail([
                     'journal_id' => $journal->id,
@@ -109,6 +112,11 @@ class Create extends Component
             ]);
 
             $journal->details()->saveMany($details);
+
+            $this->purchase->update([
+                'status' => 'dibayar',
+                'updated_by' => auth()->user()->id,
+            ]);
 
 
             $this->flash('success', 'Berhasil', [

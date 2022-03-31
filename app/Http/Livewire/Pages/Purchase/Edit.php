@@ -237,7 +237,7 @@ class Edit extends Component
                     'account_id' => $product->purchase_account,
                     'debit' => $this->total_price[$key],
                     'credit' => 0,
-                    'memo' => $this->description[$key],
+                    'memo' => "Pembelian " . $this->description[$key],
                 ]);
             }
 
@@ -262,12 +262,29 @@ class Edit extends Component
             ]);
 
 
+            /*deklrasi journal ppn*/
+            $account_ppn = Account::where('code' , '217200')->first()->id;
+
+            $ppn = $purchase->details->sum('tax');
+
+            $price_total = $purchase->details->sum('total');
+
+            $total_ppn = $price_total * ($ppn / 100);
+
+            $detail_jurnal[] = new JournalDetail([
+                'account_id' => $account_ppn,
+                'credit' => 0,
+                'debit' => $total_ppn,
+                'memo' => 'PPn Pembelian '.$purchase->code,
+            ]);
+
             $detail_jurnal[] = new JournalDetail([
                 'account_id' => $purchase->supplier->akun_hutang,
                 'debit' => 0,
-                'credit' => $this->total_tagihan,
-                'memo' => 'Pembelian '.$purchase->code,
+                'credit' => $price_total + $total_ppn,
+                'memo' => 'Hutang Pembelian '.$purchase->code,
             ]);
+
 
             $journal = Journal::where('no_reference', $purchase->no_refrence)->first();
 

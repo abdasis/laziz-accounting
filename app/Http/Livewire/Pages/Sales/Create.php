@@ -137,7 +137,7 @@ class Create extends Component
     {
         $last_transaction = Sales::max('no_transaction');
         $number = now()->format('ymd') . '.' .$last_transaction+1;
-        $text = sprintf('BYR-%s', $number);
+        $text = sprintf('SL-%s', $number);
         return $text;
 
     }
@@ -152,7 +152,7 @@ class Create extends Component
     {
         $product = Product::find($val);
         $this->description[$key] = $product->description;
-        $this->price[$key] = $product->price;
+        $this->price[$key] = $product->sales_price;
         $this->tax[$key] = $product->tax;
     }
 
@@ -200,8 +200,10 @@ class Create extends Component
             //membuat kode journal
 
             $last_transaction = Journal::count();
+
             $number = now()->format('ymd') . '.' .$last_transaction+1;
-            $code_journal = sprintf('BYR-%s', $number);
+
+            $code_journal = sprintf('JL-%s', $number);
 
             $journal = Journal::create([
                 'code' => $code_journal,
@@ -218,22 +220,61 @@ class Create extends Component
 
             //membuat journal detail untuk penjualan
             $journal_details = [];
+
             foreach ($sale->details as $detail){
                 $product = Product::find($detail->product_id);
                 $journal_details[] = new JournalDetail([
                     'account_id' => $product->sale_account,
-                    'debit' => 0,
-                    'credit' => $detail->total,
-                    'memo' => $detail->description,
+                    'debit' => $product->purchase_price * $detail->quantity,
+                    'credit' => 0,
+                    'memo' => "Beban pokok pendapatan " . $detail->description,
                 ]);
             }
 
+            /*membuat journal untuk ppn pengeluaran*/
+            $account_ppn = Account::where('code' , '217100')->first()->id;
+
+            $ppn = $sale->details->sum('tax');
+
+            $price_total = $sale->details->sum('total');
+
+            $total_ppn = $price_total * ($ppn / 100);
+
             $journal_details[] = new JournalDetail([
                 'account_id' => $sale->customer->akun_piutang,
-                'debit' => $sale->details->sum('total'),
+                'debit' => $price_total + $total_ppn,
                 'credit' => 0,
-                'memo' => 'Penjualan Kode' . $sale->code,
+                'memo' => 'Piutang usaha penjualan ' . $sale->code,
             ]);
+
+
+
+            $journal_details[] = new JournalDetail([
+                'account_id' => $account_ppn,
+                'credit' => $total_ppn,
+                'memo' => 'PPn Keluaran '.$sale->code,
+            ]);
+
+
+            /*membuat journal untuk persediaan barang*/
+            foreach ($sale->details as $detail){
+                $product = Product::find($detail->product_id);
+                $journal_details[] = new JournalDetail([
+                    'account_id' => $product->sales_price,
+                    'credit' => $product->purchase_price * $detail->quantity,
+                    'memo' => 'Persediaan barang ' . $detail->description,
+                ]);
+            }
+
+            $account_pendapatan = Account::where('code' , '410000')->first()->id;
+
+
+            $journal_details[] = new JournalDetail([
+                'account_id' => $account_pendapatan,
+                'credit' => $sale->details->sum('total'),
+                'memo' => 'Pendapatan usaha  '.$sale->code,
+            ]);
+
 
             $journal->details()->saveMany($journal_details);
 
