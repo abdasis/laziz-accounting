@@ -30,7 +30,7 @@ class Purchase extends Model
 
     public function journal()
     {
-        return $this->hasOne(Journal::class, 'no_reference', 'no_refrence');
+        return $this->hasOne(Journal::class, 'no_reference', 'code');
     }
 
 

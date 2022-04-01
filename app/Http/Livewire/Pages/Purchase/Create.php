@@ -207,7 +207,7 @@ class Create extends Component
                 'name' => "Pembelian {$purchase->code}",
                 'description' => $this->notes,
                 'status' => 'draft',
-                'no_reference' => $this->no_reference,
+                'no_reference' => $purchase->code,
                 'notes' => $this->message,
                 'total' => $this->total_tagihan,
                 'type' => 'purchase',

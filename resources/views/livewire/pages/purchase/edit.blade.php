@@ -43,6 +43,18 @@
                             <x-form-textarea label="Alamat Supplier" name="address" placeholder="Masukan Alamat" />
                         </div>
                     </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <div class="mb-2">
+                            <x-form-input-group label="No. Referensi" >
+                                <x-form-input-group-text>
+                                    <i class="fe-file-text"></i>
+                                </x-form-input-group-text>
+                                <x-form-input name="no_reference" placeholder="No Referensi" id="no_refenrence" />
+                            </x-form-input-group>
+                        </div>
+                    </div>
                 </div>
                 <table class="table table-sm">
                     <thead class="bg-light bg-gradient">

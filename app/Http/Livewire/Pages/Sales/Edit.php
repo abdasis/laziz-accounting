@@ -23,7 +23,7 @@ class Edit extends Component
 
     public $product, $description, $quantity, $unit, $tax, $price, $total_price, $no_reference;
 
-    public $remarks, $internal_notes;
+    public $remarks, $internal_notes, $sales_id;
 
     public $inputs = [], $i = 1;
 
@@ -93,11 +93,28 @@ class Edit extends Component
         unset($this->inputs[$i]);
     }
 
-    public function mount()
+    public function mount(Sales $sale)
     {
-        $transaction = Sales::max('no_transaction');
-        $this->no_transaction = $transaction+1;
-        array_push($this->inputs, 1);
+        $this->supplier_id = $sale->contact_id;
+        $this->transaction_date = Carbon::parse($sale->transaction_date)->format('Y-m-d');
+        $this->due_date = Carbon::parse($sale->due_date)->format('Y-m-d');
+        $this->no_transaction = $sale->no_transaction;
+        $this->no_reference = $sale->no_refrence;
+        $this->address = $sale->customer->shipping_address;
+        $this->internal_notes = $sale->internal_notes;
+        $this->remarks = $sale->remarks;
+        foreach ($sale->details as $key => $detail){
+            array_push($this->inputs, $key+1);
+            $this->product[$key] = $detail->product_id;
+            $this->description[$key] = $detail->description;
+            $this->quantity[$key] = $detail->quantity;
+            $this->unit[$key] = $detail->unit;
+            $this->tax[$key] = $detail->tax;
+            $this->price[$key] = $detail->price;
+            $this->total_price[$key] = $detail->total;
+            $this->ppn[$key] =  $this->total_price[$key] * $this->tax[$key] / 100;
+        }
+        $this->sales_id = $sale->id;
 
     }
 
@@ -160,7 +177,7 @@ class Edit extends Component
         $this->validate();
         try {
             \DB::beginTransaction();
-            $sale = Sales::create([
+            $sale = Sales::where('id', $this->sales_id)->update([
                 'contact_id' => $this->supplier_id,
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
@@ -171,7 +188,6 @@ class Edit extends Component
                 'income_tax' => $this->potongan_nominal,
                 'remarks' => $this->remarks,
                 'internal_notes' => $this->internal_notes,
-                'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
 
@@ -191,6 +207,8 @@ class Edit extends Component
 
                 }
             }
+
+            $sale = Sales::find($this->sales_id);
 
             $sale->details()->saveMany($detail_products);
 
@@ -245,8 +263,6 @@ class Edit extends Component
                 'credit' => 0,
                 'memo' => 'Piutang usaha penjualan ' . $sale->code,
             ]);
-
-
 
             $journal_details[] = new JournalDetail([
                 'account_id' => $account_ppn,

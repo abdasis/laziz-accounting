@@ -18,9 +18,7 @@ class Edit extends Component
 
     use LivewireAlert;
 
-    public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
-
-    public $no_reference;
+    public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_reference, $address;
     public $product, $description, $quantity, $unit, $tax, $price, $total_price;
 
     public $notes, $message;
@@ -73,7 +71,7 @@ class Edit extends Component
         $this->transaction_date = Carbon::parse($purchase->transaction_date)->format('Y-m-d');
         $this->due_date = Carbon::parse($purchase->due_date)->format('Y-m-d');
         $this->no_transaction = $purchase->no_transaction;
-        $this->no_refrence = $purchase->no_refrence;
+        $this->no_reference = $purchase->no_refrence;
         $this->potongan = $purchase->income_tax_type;
         $this->potongan_nominal = $purchase->income_tax;
         $this->notes = $purchase->remarks;
@@ -95,7 +93,6 @@ class Edit extends Component
             $this->price[$key] = $detail->price;
             $this->total_price[$key] = $this->price[$key] * $this->quantity[$key];
             $this->detail_id[$key] = $detail->id;
-
         }
 
     }
