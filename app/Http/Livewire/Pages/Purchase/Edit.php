@@ -203,7 +203,6 @@ class Edit extends Component
             \DB::beginTransaction();
             $purchase  = Purchase::where('id', $this->purchase_id)->update([
                 'contact_id' => $this->supplier_id,
-                'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
@@ -244,7 +243,7 @@ class Edit extends Component
 
             $purchase->details()->saveMany($products);
 
-            $journal = Journal::where('no_reference', $purchase->no_refrence)->update([
+            $journal = Journal::where('no_reference', $purchase->code)->update([
                 'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'contact_id' => $this->supplier_id,
@@ -282,9 +281,7 @@ class Edit extends Component
                 'memo' => 'Hutang Pembelian '.$purchase->code,
             ]);
 
-
-            $journal = Journal::where('no_reference', $purchase->no_refrence)->first();
-
+            $journal = Journal::where('no_reference', $purchase->code)->first();
             $journal->details()->delete();
             $journal->details()->saveMany($detail_jurnal);
 

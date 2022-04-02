@@ -36,9 +36,9 @@
                             <td>{{$journal->details[0]->account->name}}</td>
                             <td class="text-end">{{number_format($journal->details[0]->account->code,0,'-','-')}}</td>
                             <td class="text-end">{{rupiah($journal->details[0]->debit)}}</td>
-                            <td>{{$journal->details[1]->account->name}}</td>
-                            <td class="text-end">{{number_format($journal->details[1]->account->code,0,'-','-')}}</td>
-                            <td class="text-end">{{rupiah($journal->details[1]->credit)}}</td>
+                            <td>{{$journal->details[2]->account->name}}</td>
+                            <td class="text-end">{{number_format($journal->details[2]->account->code,0,'-','-')}}</td>
+                            <td class="text-end">{{rupiah($journal->details[2]->credit)}}</td>
                             <td>{{$journal->description}}</td>
                         </tr>
                     @empty

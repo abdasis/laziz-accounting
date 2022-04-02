@@ -110,6 +110,8 @@ class Create extends Component
     public function updatedQuantity($value, $key)
     {
         $this->total_price[$key] = $this->generateTotal($this->quantity[$key] ?? 0, $this->price[$key] ?? 0);
+        $this->ppn[$key] = $this->generateTax($this->tax[$key] ?? 0);
+
     }
 
     public function updatedPrice($value, $key)
@@ -213,7 +215,7 @@ class Create extends Component
                 'notes' => $sale->internal_notes,
                 'total' => $sale->total,
                 'status' => 'draft',
-                'no_reference' => $sale->no_refrence,
+                'no_reference' => $sale->code,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);

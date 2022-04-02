@@ -6,7 +6,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-hover">
+                <table class="table table-sm table-hover table-nowrap">
                     <thead class="bg-light bg-gradient">
                     <tr>
                         <th class="align-middle" rowspan="2">Date</th>

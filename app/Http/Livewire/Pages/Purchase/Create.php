@@ -172,6 +172,26 @@ class Create extends Component
                 'internal_notes' => $this->message,
             ]);
 
+            /*validasi untuk akun hutang dan piutang*/
+            $supplier = Contact::find($this->supplier_id);
+            if ($supplier->akun_hutang == null) {
+                $this->alert('warning', 'Kesalahan',[
+                    'text' =>   'Akun hutang untuk ' . $supplier->name . ' belum di set'
+                ]);
+
+                return false;
+            }
+
+            if ($supplier->akun_piutang == null) {
+                $this->alert('warning', 'Kesalahan',[
+                    'text' =>   'Akun piutang untuk ' . $supplier->name . ' belum di set'
+                ]);
+
+                return false;
+            }
+
+
+
             $products = [];
             $detail_jurnal = [];
             foreach ($this->product as $key => $product){

@@ -179,11 +179,10 @@ class Edit extends Component
             \DB::beginTransaction();
             $sale = Sales::where('id', $this->sales_id)->update([
                 'contact_id' => $this->supplier_id,
-                'code' => $this->codeTrasanctionGenerator(),
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
-                'no_refrence' => $this->no_refrence,
+                'no_refrence' => $this->no_reference,
                 'income_tax_type' => $this->potongan,
                 'income_tax' => $this->potongan_nominal,
                 'remarks' => $this->remarks,
@@ -222,7 +221,7 @@ class Edit extends Component
 
             $code_journal = sprintf('JL-%s', $number);
 
-            $journal = Journal::create([
+            $journal = Journal::where('no_reference', $sale->code)->update([
                 'code' => $code_journal,
                 'name' => 'Penjualan Kode' . $sale->code,
                 'transaction_date' => $sale->transaction_date,
@@ -230,7 +229,7 @@ class Edit extends Component
                 'notes' => $sale->internal_notes,
                 'total' => $sale->total,
                 'status' => 'draft',
-                'no_reference' => $sale->no_refrence,
+                'no_reference' => $sale->code,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
@@ -290,6 +289,7 @@ class Edit extends Component
                 'memo' => 'Pendapatan usaha  '.$sale->code,
             ]);
 
+            $journal = Journal::where('no_reference', $sale->code)->first();
 
             $journal->details()->saveMany($journal_details);
 
