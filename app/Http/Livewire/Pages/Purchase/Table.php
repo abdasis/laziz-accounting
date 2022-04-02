@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pages\Purchase;
 
-use App\Models\Purchase;
+use App\Models\purchase;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
