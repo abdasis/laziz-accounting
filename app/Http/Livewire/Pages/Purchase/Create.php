@@ -7,7 +7,7 @@ use App\Models\Contact;
 use App\Models\Journal;
 use App\Models\JournalDetail;
 use App\Models\Product;
-use App\Models\purchase;
+use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Supplier;
 use Carbon\Carbon;
