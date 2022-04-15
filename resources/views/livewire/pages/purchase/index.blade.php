@@ -1,7 +1,7 @@
 <div>
     {{-- The whole world belongs to you. --}}
 
-    <div class="card">
+    <div class="card border-top">
         <div class="card-body">
             <h4 class="card-title d-flex justify-content-between mb-3">
                 <span class="align-middle">Data Semua Pembelian</span>

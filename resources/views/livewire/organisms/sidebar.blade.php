@@ -117,7 +117,12 @@
                     </li>
 
                     <li class="menu-title">Sistem</li>
-
+                    <li>
+                        <a href="{{route('staff.index')}}">
+                            <i class="icon icon-user-follow"></i>
+                            <span> Staff </span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#setting" data-bs-toggle="collapse">
                             <i class="icon icon-settings"></i>

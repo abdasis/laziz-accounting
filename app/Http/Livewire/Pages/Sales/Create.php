@@ -190,8 +190,6 @@ class Create extends Component
                         'price' => $this->price[$key],
                         'total' => $this->total_price[$key],
                     ]);
-
-
                 }
             }
 
@@ -286,7 +284,6 @@ class Create extends Component
             \DB::commit();
         }catch (\Exception $e){
             \DB::rollBack();
-            dd($e);;
             $this->alert('error', 'Gagal', [
                 'text' => 'Data gagal disimpan',
             ]);

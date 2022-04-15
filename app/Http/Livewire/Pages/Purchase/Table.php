@@ -25,7 +25,7 @@ class Table extends DataTableComponent
                 })
                 ->sortable()->searchable(),
             Column::make('Kode Pembelian', 'code')->format(function ($val){
-                return '<span class="fw-bold text-success">'.$val.'</span>';
+                return '<span class="fw-bold text-primary">'.$val.'</span>';
             })->sortable()->searchable()->asHtml(),
             Column::make('Supplier', 'supplier.company_name')->sortable()->searchable(),
             Column::make('Jatuh Tempo', 'due_date')->sortable()->searchable(),

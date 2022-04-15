@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Pages\Cost\Create;
 use App\Http\Livewire\Pages\Cost\Edit;
 use App\Http\Livewire\Pages\Cost\Index;
 use App\Http\Livewire\Pages\Cost\Show;
+use App\Http\Livewire\Pages\Journal\CashIn;
+use App\Http\Livewire\Pages\Journal\CashOut;
+use App\Http\Livewire\Pages\Journal\Purchase;
+use App\Http\Livewire\Pages\Journal\Sales;
 use App\Http\Livewire\Pages\Report\ReportCreate;
 use App\Http\Livewire\Pages\Report\ReportEdit;
 use App\Http\Livewire\Pages\Report\ReportIndex;
@@ -84,13 +89,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('create', ReportCreate::class)->name('reports.create');
         Route::get('edit/{report}', ReportEdit::class)->name('reports.edit');
         Route::get('show/{report}', ReportShow::class)->name('reports.show');
-        Route::get('sales-journal', \App\Http\Livewire\Pages\Journal\Sales::class)->name('reports.sales-journal');
-        Route::get('purchases-journal', \App\Http\Livewire\Pages\Journal\Purchase::class)->name('reports.purchases-journal');
-        Route::get('cash-in', \App\Http\Livewire\Pages\Journal\CashIn::class)->name('reports.cash-in');
-        Route::get('cash-out', \App\Http\Livewire\Pages\Journal\CashOut::class)->name('reports.cash-out');
+        Route::get('sales-journal', Sales::class)->name('reports.sales-journal');
+        Route::get('purchases-journal', Purchase::class)->name('reports.purchases-journal');
+        Route::get('cash-in', CashIn::class)->name('reports.cash-in');
+        Route::get('cash-out', CashOut::class)->name('reports.cash-out');
+    });
+
+
+    //route for system menu
+    Route::group(['prefix' => 'staff'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Staff\Index::class)->name('staff.index');
+        Route::get('create', \App\Http\Livewire\Pages\Staff\Create::class)->name('staff.create');
+        Route::get('edit/{staff}', \App\Http\Livewire\Pages\Staff\Edit::class)->name('staff.edit');
+        Route::get('show/{staff}', \App\Http\Livewire\Pages\Staff\Show::class)->name('staff.show');
     });
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Dashboard::class)->name('dashboard');

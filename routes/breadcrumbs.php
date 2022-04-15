@@ -187,3 +187,23 @@ Breadcrumbs::for('accounts.show', function (BreadcrumbTrail $trail, $account) {
     $trail->parent('accounts.index');
     $trail->push('Detail Akun', route('accounts.show', $account));
 });
+
+Breadcrumbs::for('staff.index',  function(BreadcrumbTrail $trail){
+    $trail->parent('dashboard', route('dashboard'));
+    $trail->push('Semua Staff', route('staff.index'));
+});
+
+Breadcrumbs::for('staff.create', function (BreadcrumbTrail $trail){
+    $trail->parent('staff.index');
+    $trail->push('Tambah Staff', route('staff.create'));
+});
+
+Breadcrumbs::for('staff.edit', function(BreadcrumbTrail $trail, $id){
+    $trail->parent('staff.index');
+    $trail->push('Edit Staff', route('staff.edit', $id));
+});
+
+Breadcrumbs::for('staff.show', function (BreadcrumbTrail $trail, $id){
+    $trail->parent('staff.index');
+    $trail->push('Detail Staff', route('staff.show', $id));
+});
