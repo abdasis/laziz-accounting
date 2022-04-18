@@ -95,6 +95,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cash-out', CashOut::class)->name('reports.cash-out');
     });
 
+    Route::group(['prefix' => 'asets'], function (){
+        Route::get('/', \App\Http\Livewire\Pages\Aset\Index::class)->name('aset.index');
+        Route::get('create', \App\Http\Livewire\Pages\Aset\Create::class)->name('aset.create');
+        Route::get('edit/{aset}', \App\Http\Livewire\Pages\Aset\Edit::class)->name('aset.edit');
+        Route::get('show/{aset}', \App\Http\Livewire\Pages\Aset\Show::class)->name('aset.show');
+    });
 
     //route for system menu
     Route::group(['prefix' => 'staff'], function (){

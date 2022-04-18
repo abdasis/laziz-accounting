@@ -1,17 +1,15 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <div class="mb-2">
-        <a href="{{route('contacts.create')}}">
-            <button class="btn btn-primary rounded-3">
-                <i class="icon icon-plus me-1"></i>
-                Tambah Kontak
-            </button>
-        </a>
-    </div>
     <div class="card border-top border-2 shadow-none">
         <div class="card-body">
-            <div class="card-title">
+            <div class="card-title justify-content-between d-flex">
                 <h4>Data Semua Kontak</h4>
+                <a href="{{route('contacts.create')}}">
+                    <button class="btn btn-light border-bottom rounded">
+                        <i class="fe-plus me-1"></i>
+                        Contact Baru
+                    </button>
+                </a>
             </div>
             <ul class="nav nav-tabs nav-bordered">
                 <li class="nav-item">

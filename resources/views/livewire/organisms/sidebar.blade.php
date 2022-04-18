@@ -110,7 +110,7 @@
                     </li>
 
                     <li>
-                        <a href="sahabat">
+                        <a href="{{route('aset.index')}}">
                             <i class="icon  icon-briefcase"></i>
                             <span> Data Aset </span>
                         </a>

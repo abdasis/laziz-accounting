@@ -207,3 +207,24 @@ Breadcrumbs::for('staff.show', function (BreadcrumbTrail $trail, $id){
     $trail->parent('staff.index');
     $trail->push('Detail Staff', route('staff.show', $id));
 });
+
+Breadcrumbs::for('aset.index', function (BreadcrumbTrail $trail){
+    $trail->parent('dashboard');
+    $trail->push('Semua Aset', route('aset.index'));
+});
+
+Breadcrumbs::for('aset.create', function (BreadcrumbTrail $trail){
+    $trail->parent('aset.index');
+    $trail->push('Tambah Data Aset', route('aset.create'));
+
+});
+
+ Breadcrumbs::for('aset.edit', function (BreadcrumbTrail $trail, $id){
+     $trail->parent('aset.index');
+     $trail->push('Edit Data Aset', route('aset.edit'));
+ });
+
+ Breadcrumbs::for('aset.show', function (BreadcrumbTrail $trail, $id){
+     $trail->parent('aset.index');
+     $trail->push('Detail Data Aset', route('aset.show', $id));
+ });
