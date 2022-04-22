@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('costs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_id')->nullable()->constrained();
+            $table->foreignId('contact_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('code');
             $table->string('name');
             $table->date('transaction_date');
             $table->text('description');
             $table->text('notes')->nullable();
             $table->decimal('total', 65, 30)->default(0);
-            $table->enum('status', ['draft', 'posted']);
+            $table->enum('status', ['pending', 'proses', 'invalid', 'valid']);
             $table->string('no_reference')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->default(0);

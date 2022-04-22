@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Pages\Cost;
 
 use App\Models\Account;
+use App\Models\Cost;
+use App\Models\CostDetail;
 use App\Models\Journal;
 use App\Models\JournalDetail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -12,7 +14,8 @@ class Create extends Component
 {
 
     use LivewireAlert;
-    public $memo, $amount, $account_id;
+    public $memo, $account_id;
+    public $amount, $total;
 
     public $credit_account, $transaction_date, $code, $description, $notes;
     public $inputs = [];
@@ -30,6 +33,11 @@ class Create extends Component
         'amount.0' => 'required|numeric',
     ];
 
+    public function updatedAmount()
+    {
+        $amount = $this->amount;
+        $this->total = collect($amount)->sum();
+    }
     public function messages()
     {
         return[
@@ -72,7 +80,35 @@ class Create extends Component
     {
         $this->validate();
         try {
-            \DB::beginTransaction();;
+            \DB::beginTransaction();
+
+            /*menyimpan data pengeluaran*/
+            $cost = Cost::create([
+               'code' => $this->code,
+               'name' => "Pengeluaran {$this->transaction_date}",
+                'transaction_date' => $this->transaction_date,
+                'description' => $this->description,
+                'notes' => $this->notes,
+                'total' => collect($this->amount)->sum(),
+                'status' => 'pending',
+                'no_reference' => $this->code,
+                'created_by' => auth()->user()->id,
+            ]);
+
+            $cost_detail = [];
+            foreach ($this->inputs as $key => $value){
+                if (!empty($this->account_id[$key]) && !empty($this->amount[$key])){
+                    $cost_detail[] = new CostDetail([
+                        'name' => '-',
+                        'description' => $this->memo[$key],
+                        'amount' => $this->amount[$key],
+                    ]);
+                }
+            }
+            /*menyimpan detail transaksi*/
+            $cost->details()->saveMany($cost_detail);
+
+            /*membuat journal dari pengeluran yang sudah dibuat*/
             $journal = Journal::create([
                 'code' => $this->code,
                 'name' => '-',
@@ -84,6 +120,7 @@ class Create extends Component
             ]);
 
             $details = [];
+
 
             foreach ($this->inputs as $key => $value) {
                 if (!empty($this->account_id[$key]) && !empty($this->amount[$key])){

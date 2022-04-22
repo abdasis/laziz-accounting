@@ -89,7 +89,7 @@
                             Total:
                         </th>
                         <th>
-                            <span class="text-danger">{{rupiah(collect($amount)->sum())}}</span>
+                            <span class="text-danger">{{ rupiah($total) }}</span>
                         </th>
                         <td></td>
                     </tr>
