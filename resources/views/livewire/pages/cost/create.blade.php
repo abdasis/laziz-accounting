@@ -103,7 +103,7 @@
                 <div class="d-flex justify-content-between">
                     <button type="button" wire:click.prevent="addForm({{$i}})" class="btn btn-light border-bottom">
                         <i class="fe-layers me-1"></i>
-                        Tambah Product
+                        Tambah Biaya
                     </button>
                     <button class="btn btn-primary border-bottom">
                         <i class="fe-save me-1"></i>

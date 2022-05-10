@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cost_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->integer('description')->nullable();
+            $table->text('description')->nullable();
             $table->decimal('amount', 15, 2);
             $table->timestamps();
         });

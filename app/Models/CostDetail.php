@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CostDetail extends Model
 {
     use HasFactory;
-    protected $guarded  =   [];
+
+    protected $fillable  =   [
+        'name', 'description', 'amount'
+    ];
 }

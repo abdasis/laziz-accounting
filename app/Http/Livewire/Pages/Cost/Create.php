@@ -96,14 +96,12 @@ class Create extends Component
             ]);
 
             $cost_detail = [];
-            foreach ($this->inputs as $key => $value){
-                if (!empty($this->account_id[$key]) && !empty($this->amount[$key])){
-                    $cost_detail[] = new CostDetail([
-                        'name' => '-',
-                        'description' => $this->memo[$key],
-                        'amount' => $this->amount[$key],
-                    ]);
-                }
+            foreach ($this->account_id as $key => $value){
+                $cost_detail[] = new CostDetail([
+                    'name' => '-',
+                    'description' => $this->memo[$key] . " ketearangan",
+                    'amount' => $this->amount[$key],
+                ]);
             }
             /*menyimpan detail transaksi*/
             $cost->details()->saveMany($cost_detail);
@@ -122,7 +120,7 @@ class Create extends Component
             $details = [];
 
 
-            foreach ($this->inputs as $key => $value) {
+            foreach ($this->account_id as $key => $value) {
                 if (!empty($this->account_id[$key]) && !empty($this->amount[$key])){
                     $details[] = new JournalDetail([
                         'journal_id' => $journal->id,
@@ -150,9 +148,9 @@ class Create extends Component
             ]);
             \DB::commit();
             $this->reset();
-        }catch (\Exception $e) {
-            dd($e);
+        }catch (\Throwable $e) {
             \DB::rollBack();
+            dd($e);
             $this->alert('error', 'Gagal', [
                 'text' => 'Data gagal disimpan',
             ]);

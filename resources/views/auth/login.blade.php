@@ -1,9 +1,9 @@
 <x-guest-layout>
-    <div class="bg-soft-light bg-gradient">
+    <div class="bg-soft-light bg-gradient" style="background: #E8E8E8 !important;">
         <div class="container">
             <div class="row justify-content-center" style="min-height: 100vh">
                 <div class="col-md-8 col-lg-6 col-xl-4 my-auto">
-                    <div class="card border-top border-primary bg-white">
+                    <div class="card border-top border-primary bg-white" style="border-top: 5px solid #0078D7 !important;">
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-logo mb-3">
@@ -70,11 +70,11 @@
                     </div>
                     <!-- end card -->
 
-                    <div class="row mt-3">
+                  {{--  <div class="row mt-3">
                         <div class="col-12 text-center">
                             <p> <a href="auth-recoverpw.html" class="text-white-50 ms-1">Forgot your password?</a></p>
                         </div> <!-- end col -->
-                    </div>
+                    </div>--}}
                     <!-- end row -->
 
                 </div> <!-- end col -->
