@@ -150,7 +150,6 @@ class Create extends Component
             $this->reset();
         }catch (\Throwable $e) {
             \DB::rollBack();
-            dd($e);
             $this->alert('error', 'Gagal', [
                 'text' => 'Data gagal disimpan',
             ]);
