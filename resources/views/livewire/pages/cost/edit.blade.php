@@ -8,7 +8,7 @@
             </h4>
         </div>
         <div class="card-body">
-            <form wire:submit.prevent="store">
+            <form wire:submit.prevent="update">
                 <div class="row">
                     <div class="col-md-4 mb-1">
                         <x-form-select name="credit_account" label="Bayar Menggunakan: ">
@@ -78,7 +78,7 @@
                                 <x-form-input name="amount.{{$input}}" type="number"/>
                             </td>
                             <td width="10%" class="text-end align-middle">
-                                <button wire:click="removeForm({{$key}})" class="btn btn-sm btn-action">
+                                <button wire:click.prevent="removeForm({{$key}})" class="btn btn-sm btn-action">
                                     <i class="fe-minus-circle"></i>
                                 </button>
                             </td>

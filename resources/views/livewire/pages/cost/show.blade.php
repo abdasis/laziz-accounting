@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row justify-content-between">
         <div class="col-md-3">
             <a href="{{route('cost.edit', $cost)}}">
                 <button class="btn btn-action text-warning">
@@ -105,6 +105,12 @@
                     Sunting
                 </button>
             </a>
+        </div>
+        <div class="col-md-3 text-end">
+            <button wire:click.prevent="delete({{$cost->id}})" class="btn btn-action text-danger">
+                <i class="fe-trash-2"></i>
+                Hapus
+            </button>
         </div>
     </div>
 </div>

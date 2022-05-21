@@ -78,7 +78,7 @@
                                 <x-form-input name="amount.{{$input}}" type="number"/>
                             </td>
                             <td width="10%" class="text-end align-middle">
-                                <button wire:click="removeForm({{$key}})" class="btn btn-sm btn-action">
+                                <button type="button" wire:click.prevent="removeForm({{$key}})" class="btn btn-sm btn-action">
                                     <i class="fe-minus-circle"></i>
                                 </button>
                             </td>
