@@ -101,11 +101,11 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="button" wire:click.prevent="addForm({{$i}})" class="btn btn-light border-bottom">
+                    <button type="button" wire:click.prevent="addForm({{$i}})" class="btn btn-light rounded-3 border-bottom">
                         <i class="fe-layers me-1"></i>
                         Tambah Biaya
                     </button>
-                    <button class="btn btn-primary border-bottom">
+                    <button class="btn btn-primary rounded-3 border-bottom">
                         <i class="fe-save me-1"></i>
                         Simpan Biaya
                     </button>

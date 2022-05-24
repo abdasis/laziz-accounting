@@ -1,16 +1,13 @@
 <div>
     {{-- Nothing in the world is as soft and yielding as water. --}}
-    <div class="card border-top">
+    <div class="card border-top border-primary">
         <div class="card-header d-flex justify-content-between bg-white">
-            <h4>{{ __('Biaya Pengeluaran') }}</h4>
-            <h4>
-                Jenis Transaksi
-            </h4>
+            <h4>{{ __('Buat Pengeluaran Baru') }}</h4>
         </div>
         <div class="card-body">
             <form wire:submit.prevent="store">
                 <div class="row">
-                    <div class="col-md-4 mb-1">
+                    <div class="col-md-3 mb-1">
                         <x-form-select name="credit_account" label="Bayar Menggunakan: ">
                             <option value="">Pilih Akun</option>
                             @foreach($accounts as $account)
@@ -18,10 +15,18 @@
                             @endforeach
                         </x-form-select>
                     </div>
-                    <div class="col-md-4 mb-1">
+                    <div class="col-md-3 mb-1">
                         <x-form-input name="transaction_date" label="Tanggal Transaksi" type="date"/>
                     </div>
-                    <div class="col-md-4 mb-1">
+                    <div class="col-md-3 mb-1">
+                        <x-form-select name="payment_method" label="Metode Pembayaran">
+                            <option value="">Pilih Metode</option>
+                            <option value="Cek & Giro">Cek & Giro</option>
+                            <option value="Tunai">Tunai</option>
+                            <option value="Transfer">Transfer</option>
+                        </x-form-select>
+                    </div>
+                    <div class="col-md-3 mb-1">
                         <x-form-input-group label="Kode Transaksi" >
                             <x-form-input-group-text>
                                 <i class="fe-clipboard"></i>
@@ -29,7 +34,7 @@
                             <x-form-input name="code" placeholder="Kode Transaksi" id="code" />
                         </x-form-input-group>
                     </div>
-                    <div class="col-md-4 mb-1">
+                    <div class="col-md-3 mb-1">
                         <x-form-textarea name="description" label="Masukan keterangan "/>
                     </div>
                 </div>
@@ -79,7 +84,7 @@
                             </td>
                             <td width="10%" class="text-end align-middle">
                                 <button type="button" wire:click.prevent="removeForm({{$key}})" class="btn btn-sm btn-action">
-                                    <i class="fe-minus-circle"></i>
+                                    <i class="fe-minus-circle text-danger"></i>
                                 </button>
                             </td>
                         </tr>

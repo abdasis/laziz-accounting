@@ -91,26 +91,30 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Paham!</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Tutup
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row justify-content-between">
-        <div class="col-md-3">
+
+        <div class="col-md-3 text-start">
+            <button wire:click.prevent="delete({{$cost->id}})" class="btn btn-white rounded">
+                <i class="fe-trash-2"></i>
+                Hapus
+            </button>
+        </div>
+
+        <div class="col-md-3 text-end">
             <a href="{{route('cost.edit', $cost)}}">
-                <button class="btn btn-action text-warning">
+                <button class="btn btn-white rounded">
                     <i class="fe-edit me-1"></i>
                     Sunting
                 </button>
             </a>
-        </div>
-        <div class="col-md-3 text-end">
-            <button wire:click.prevent="delete({{$cost->id}})" class="btn btn-action text-danger">
-                <i class="fe-trash-2"></i>
-                Hapus
-            </button>
         </div>
     </div>
 </div>

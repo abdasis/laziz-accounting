@@ -19,7 +19,7 @@ class Table extends DataTableComponent
                     return Carbon::parse($date)->format('d-m-Y');
                 })
                 ->sortable(),
-            Column::make("Kode", "code")
+            Column::make("Nama Pengeluaran", "name")
                 ->format(function ($code, $column, $row){
                     $url = route('cost.show', $row);
                     return "<a class='fw-bolder' href='$url'>$code</a>";

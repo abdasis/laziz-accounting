@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AccountCategorySeeder::class,
             ContactSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            AccountSeeder::class,
         ]);
         User::create([
             'name' => 'Abdul Aziz',

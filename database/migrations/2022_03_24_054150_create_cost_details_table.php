@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cost_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cost_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('cost_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('amount', 15, 2);

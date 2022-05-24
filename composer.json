@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.2",
-        "fakerphp/faker": "^1.9.1",
         "diglactic/laravel-breadcrumbs": "^7.1",
         "guzzlehttp/guzzle": "^7.2",
         "jantinnerezo/livewire-alert": "^2.2",
