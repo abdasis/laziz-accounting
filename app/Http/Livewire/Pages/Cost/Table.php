@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Pages\Cost;
 
+use Carbon\Carbon;
+use Cron\AbstractField;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -20,9 +22,11 @@ class Table extends DataTableComponent
             Column::make('Total', 'total')->format(function ($total){
                 return rupiah($total);
             }),
-            Column::make("Created at", "created_at")
-                ->sortable(),
-            Column::make("Updated at", "updated_at")
+            Column::make('Dibuat Oleh', 'creator.name'),
+            Column::make("Tgl Dibuat", "created_at")
+                ->format(function ($date){
+                    return Carbon::parse($date)->format('d-m-Y');
+                })
                 ->sortable(),
         ];
     }

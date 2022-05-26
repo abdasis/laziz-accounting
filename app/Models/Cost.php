@@ -15,7 +15,7 @@ class Cost extends Model
         return $this->hasMany(CostDetail::class );
     }
 
-    public function pembuat()
+    public function creator()
     {
         return $this->belongsTo(User::class,'created_by', 'id')->withDefault();
     }
