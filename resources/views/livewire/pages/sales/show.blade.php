@@ -1,8 +1,12 @@
 <div>
     {{-- Close your eyes. Count to one. That is how long forever feels. --}}
     <div class="card border-top">
-        <div class="card-header bg-white">
+        <div class="card-header bg-white d-flex justify-content-between">
             <h4>PEMBELIAN : {{$sales->code}}</h4>
+            <button class="btn btn-light border-bottom" data-bs-toggle="modal" data-bs-target="#journal">
+                <i class="fe-file-text"></i>
+                Lihat Journal
+            </button>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4 border-light border-end">
@@ -127,6 +131,47 @@
             </div>
         </div>
     </div>
+
+    {{--modal untuk meanmpilkan journal--}}
+    <div class="modal fade" id="journal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-bottom border-light">
+                    <h5 class="modal-title" id="staticBackdropLabel">Detail Journal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm table-striped">
+                        <thead class="bg-light">
+                        <tr>
+                            <th>No.</th>
+                            <th>Akun</th>
+                            <th>Debit</th>
+                            <th>Kredit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($sales->journal->details as $detail)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$detail->account->name}}</td>
+                                <td>{{rupiah($detail->debit)}}</td>
+                                <td>{{rupiah($detail->credit)}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="my-2">
         <div class="d-flex justify-content-between">
             <a href="" wire:click.prevent="delete({{$sales->id}})">

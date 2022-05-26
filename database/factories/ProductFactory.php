@@ -25,6 +25,8 @@ class ProductFactory extends Factory
             'tax' => $this->faker->numberBetween(1,10),
             'price' => $this->faker->randomFloat(20, 8, 9999999),
             'sale_account' => $this->faker->numberBetween(1, 10),
+            'sales_price' => $this->faker->randomFloat(20, 8, 9999999),
+            'purchase_price' => $this->faker->randomFloat(20, 8, 9999999),
             'purchase_account' => $this->faker->numberBetween(1, 10),
         ];
     }

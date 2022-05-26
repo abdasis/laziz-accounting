@@ -163,9 +163,10 @@ class Create extends Component
         $this->validate();
         try {
             \DB::beginTransaction();
+            $sale_code = $this->codeTrasanctionGenerator();
             $sale = Sales::create([
                 'contact_id' => $this->supplier_id,
-                'code' => $this->codeTrasanctionGenerator(),
+                'code' => $sale_code,
                 'transaction_date' => $this->transaction_date,
                 'due_date' => $this->due_date,
                 'no_transaction' => $this->no_transaction,
@@ -207,13 +208,13 @@ class Create extends Component
 
             $journal = Journal::create([
                 'code' => $code_journal,
-                'name' => 'Penjualan Kode' . $sale->code,
+                'name' => 'Penjualan Kode ' . $sale->code,
                 'transaction_date' => $sale->transaction_date,
                 'description' => $sale->remarks,
                 'notes' => $sale->internal_notes,
                 'total' => $sale->total,
                 'status' => 'draft',
-                'no_reference' => $sale->code,
+                'no_reference' => $sale_code,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
@@ -260,20 +261,21 @@ class Create extends Component
             foreach ($sale->details as $detail){
                 $product = Product::find($detail->product_id);
                 $journal_details[] = new JournalDetail([
-                    'account_id' => $product->sales_price,
+                    'account_id' => $product->sale_account,
                     'credit' => $product->purchase_price * $detail->quantity,
                     'memo' => 'Persediaan barang ' . $detail->description,
                 ]);
             }
 
-            $account_pendapatan = Account::where('code' , '410000')->first()->id;
+            $account_pendapatan = Account::where('code' , '410000')->first();
 
-
-            $journal_details[] = new JournalDetail([
-                'account_id' => $account_pendapatan,
-                'credit' => $sale->details->sum('total'),
-                'memo' => 'Pendapatan usaha  '.$sale->code,
-            ]);
+            if (!is_null($account_pendapatan)){
+                $journal_details[] = new JournalDetail([
+                    'account_id' => $account_pendapatan->id,
+                    'credit' => $sale->details->sum('total'),
+                    'memo' => 'Pendapatan usaha  '.$sale->code,
+                ]);
+            }
 
 
             $journal->details()->saveMany($journal_details);
@@ -283,6 +285,7 @@ class Create extends Component
             ]);
             \DB::commit();
         }catch (\Exception $e){
+            dd($e);
             \DB::rollBack();
             $this->alert('error', 'Gagal', [
                 'text' => 'Data gagal disimpan',

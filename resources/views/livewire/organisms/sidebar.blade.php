@@ -1,6 +1,6 @@
 <div>
     {{-- If your happiness depends on money, you will never be happy with yourself. --}}
-    <div class="left-side-menu">
+    <div class="left-side-menu bg-dark text-white">
         <div class="h-100" data-simplebar>
             <!-- User box -->
             <div class="user-box text-center">

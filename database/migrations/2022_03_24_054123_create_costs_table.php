@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->text('description');
             $table->text('notes')->nullable();
+            $table->string('payment_method')->nullable();
             $table->decimal('total', 65, 30)->default(0);
             $table->enum('status', ['pending', 'proses', 'invalid', 'valid']);
             $table->string('no_reference')->nullable();

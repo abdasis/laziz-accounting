@@ -65,6 +65,11 @@ class Sales extends Model
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
+    public function journal()
+    {
+        return $this->belongsTo(Journal::class, 'code', 'no_reference')->withDefault();
+    }
+
     public function getTotalAttribute()
     {
         return $this->details->sum('total');
