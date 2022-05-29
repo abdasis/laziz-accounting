@@ -18,10 +18,11 @@ class Edit extends Component
     public function rules()
     {
         $id = $this->account_id;
+
         return [
             'account_category_id' => 'required',
             'name' => 'required|unique:accounts,name,'.$id,
-            'code' => 'required|unique:accounts,code,'.$id,
+            'code' => "required|unique:accounts,code,{$this->account_id}",
             'account_type'=> 'required',
             'default_balance'=> 'required',
         ];
@@ -39,7 +40,6 @@ class Edit extends Component
         $this->default_balance = $account['default_balance'];
         $this->lock_status = $account['lock_status'];
         $this->account_id = $account['id'];
-
     }
 
     public function makeCodeAccount()
@@ -136,7 +136,6 @@ class Edit extends Component
             $this->emitTo(Index::class, 'accountUpdated');
 
         }catch (\Throwable $exception) {
-            dd($exception);
             $this->alert('error', 'Gagal', [
                 'text'=> 'Data gagal ditambahkan',
             ]);

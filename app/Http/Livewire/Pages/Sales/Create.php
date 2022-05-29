@@ -43,6 +43,7 @@ class Create extends Component
             'supplier_id' => 'required',
             'transaction_date' => 'required',
             'due_date' => 'required',
+            'remarks' => 'required',
 
             'product.0' => 'required',
             'description.0' => 'required',
@@ -241,6 +242,16 @@ class Create extends Component
 
             $total_ppn = $price_total * ($ppn / 100);
 
+            //cek akun untuk akun piutang customer
+
+            if(empty($sale->customer->akun_piutang)){
+                $this->alert('warning', 'Kesalahan', [
+                    'text' => 'Data akun pada contact belum di tentukan',
+                ]);
+
+                return false;
+            }
+
             $journal_details[] = new JournalDetail([
                 'account_id' => $sale->customer->akun_piutang,
                 'debit' => $price_total + $total_ppn,
@@ -258,8 +269,9 @@ class Create extends Component
 
 
             /*membuat journal untuk persediaan barang*/
+            $product = Product::find($detail->product_id);
+
             foreach ($sale->details as $detail){
-                $product = Product::find($detail->product_id);
                 $journal_details[] = new JournalDetail([
                     'account_id' => $product->sale_account,
                     'credit' => $product->purchase_price * $detail->quantity,
