@@ -149,6 +149,17 @@ Breadcrumbs::for('reports.index', function (BreadcrumbTrail $trail) {
     $trail->push('Laporan', route('reports.index'));
 });
 
+Breadcrumbs::for('reports.ledger', function (BreadcrumbTrail $trail) {
+    $trail->parent('reports.index');
+    $trail->push('Buku Besar', route('reports.ledger'));
+});
+
+
+Breadcrumbs::for('reports.ledger-detail', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('reports.ledger');
+    $trail->push('Buku Besar', route('reports.ledger-detail', $id));
+});
+
 Breadcrumbs::for('reports.create', function (BreadcrumbTrail $trail) {
     $trail->parent('reports.index');
     $trail->push('Tambah Laporan', route('reports.create'));

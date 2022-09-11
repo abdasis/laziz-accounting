@@ -9,11 +9,14 @@ use App\Http\Livewire\Journal\CashIn;
 use App\Http\Livewire\Journal\CashOut;
 use App\Http\Livewire\Journal\Purchase;
 use App\Http\Livewire\Journal\Sales;
+use App\Http\Livewire\Report\DetailLedger;
 use App\Http\Livewire\Report\ReportCreate;
 use App\Http\Livewire\Report\ReportEdit;
 use App\Http\Livewire\Report\ReportIndex;
+use App\Http\Livewire\Report\ReportLedger;
 use App\Http\Livewire\Report\ReportShow;
 use App\Http\Livewire\Sales\Invoice;
+use App\Http\Livewire\Sales\Invoices;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('create', \App\Http\Livewire\Sales\Create::class)->name('sales.create');
         Route::get('edit/{sale}', \App\Http\Livewire\Sales\Edit::class)->name('sales.edit');
         Route::get('show/{sale}', \App\Http\Livewire\Sales\Show::class)->name('sales.show');
-        Route::get('invoices/{sales}', \App\Http\Livewire\Sales\Invoices::class)->name('sales.invoice');
+        Route::get('invoices/{sales}', Invoices::class)->name('sales.invoice');
     });
 
     Route::group(['prefix' => 'category-account'], function (){
@@ -95,6 +98,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('purchases-journal', Purchase::class)->name('reports.purchases-journal');
         Route::get('cash-in', CashIn::class)->name('reports.cash-in');
         Route::get('cash-out', CashOut::class)->name('reports.cash-out');
+        Route::get('buku-besar', ReportLedger::class)->name('reports.ledger');
+        Route::get('buku-besar/{kode}', DetailLedger::class)->name('reports.ledger-detail');
     });
 
     Route::group(['prefix' => 'asets'], function (){

@@ -25,6 +25,8 @@
         @stack('css')
         <!-- Scripts -->
         @vite('resources/js/app.js')
+        <script src="//unpkg.com/alpinejs" defer></script>
+
     </head>
     <body class="loading"  data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "brand", "size": "default", "showuser": false},  "showRightSidebarOnPageLoad": false}'>
     <div id="wrapper">

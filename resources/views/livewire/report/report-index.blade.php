@@ -27,5 +27,18 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <h4>Buku Besar</h4>
+                    <p>Laporan transaksi yang ada berdasarkan SOA</p>
+                    <a href="{{route('reports.ledger')}}">
+                        <button class="btn btn-outline-warning btn-sm">
+                            Lihat Selengkapnya
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

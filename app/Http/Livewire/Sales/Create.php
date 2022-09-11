@@ -259,6 +259,7 @@ class Create extends Component
 
             $journal = Journal::create([
                 'code' => $code_journal,
+                'contact_id' => $this->supplier_id,
                 'name' => 'Penjualan Kode ' . $sale->code,
                 'transaction_date' => $sale->transaction_date,
                 'description' => $sale->remarks,
