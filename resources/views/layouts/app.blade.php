@@ -23,11 +23,8 @@
         <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
         @stack('css')
-        @livewireStyles
-
-
         <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        @vite('resources/js/app.js')
     </head>
     <body class="loading"  data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "brand", "size": "default", "showuser": false},  "showRightSidebarOnPageLoad": false}'>
     <div id="wrapper">
@@ -49,11 +46,7 @@
                 <div class="container-fluid">
                     <!-- start page title -->
                     {{Breadcrumbs::render()}}
-                    <!-- end page title -->
-                    <x-atoms.loading-indicator/>
-
                     {{$slot}}
-
                     <!-- end row -->
                 </div>
                 <!-- container -->
@@ -92,3 +85,9 @@
     </script>
     </body>
 </html>
+
+
+
+
+
+

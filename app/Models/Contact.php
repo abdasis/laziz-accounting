@@ -70,4 +70,14 @@ class Contact extends Model
     {
         return $this->hasMany(Journal::class);
     }
+
+    public function piutang()
+    {
+        return $this->belongsTo(Account::class, 'akun_piutang', 'id');
+    }
+
+    public function hutang()
+    {
+        return $this->belongsTo(Account::class, 'akun_hutang', 'id');
+    }
 }

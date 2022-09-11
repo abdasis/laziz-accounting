@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'view' => 'components.atoms.breadcrumbs',
+    'view' => 'components.breadcrumbs',
 
     /*
     |--------------------------------------------------------------------------

@@ -67,6 +67,13 @@ Breadcrumbs::for('sales.index', function (BreadcrumbTrail $trail) {
     $trail->push('Penjualan', route('sales.index'));
 });
 
+Breadcrumbs::for('sales.invoice', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('dashboard');
+    $trail->push('Invoice', route('sales.invoice', $id));
+});
+
+
+
 Breadcrumbs::for('sales.create', function (BreadcrumbTrail $trail) {
     $trail->parent('sales.index');
     $trail->push('Tambah Penjualan', route('sales.create'));

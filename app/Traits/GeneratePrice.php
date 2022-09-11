@@ -4,28 +4,15 @@ namespace App\Traits;
 
 trait GeneratePrice
 {
-    public $total, $price, $discount;
-    public $total_price, $total_ppn;
 
-
-
-    public function generateTotal($quantity = 0, $price = 0)
+    public function TotalPrice($quantity, $price, $day)
     {
-        return $this->total =  $quantity * $price;
+        return $quantity * $price * $day;
     }
 
-    public function generateTotalPrice(array $prices)
+    public function TotalPpn($price, $ppn)
     {
-        return $this->total_price = collect($prices)->sum();
+        return  $price * $ppn / 100;
     }
 
-    public function generateTax($tax)
-    {
-        return $this->total_ppn = collect($this->total_price)->sum() * $tax / 100;
-    }
-
-    public function generateDiscount($pph)
-    {
-        return $this->discount = collect($this->total_price)->sum() * $pph / 100;
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,7 @@ class ContactFactory extends Factory
      */
     public function definition()
     {
+        $code = Account::pluck('id')->toArray();
         return [
             'nick_name' => $this->faker->name,
             'type_contact' => $this->faker->randomElement(['customer', 'supplier', 'karyawan', 'lainnya']),
@@ -34,6 +36,8 @@ class ContactFactory extends Factory
             'bank_account_number' => $this->faker->randomNumber(8),
             'bank_account_name' => $this->faker->name,
             'branch_office' => $this->faker->randomElement(['jakarta', 'surabaya', 'bandung', 'lainnya']),
+            'akun_piutang' => $this->faker->randomElement($code),
+            'akun_hutang' => $this->faker->randomElement($code),
         ];
     }
 }

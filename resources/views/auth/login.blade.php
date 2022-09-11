@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row justify-content-center" style="min-height: 100vh">
                 <div class="col-md-8 col-lg-6 col-xl-4 my-auto">
-                    <div class="card border-top border-primary bg-white" style="border-top: 5px solid #0078D7 !important;">
+                    <div class="card border-top border-warning bg-white" style="border-top: 5px solid #FFB900 !important;">
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-logo mb-3">
@@ -36,7 +36,7 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="emailaddress" class="form-label">Email address</label>
-                                    <input class="form-control" value="{{old('email')}}" type="email" id="emailaddress" required="" placeholder="Masukan email" name="email">
+                                    <input class="form-control text-warning" value="{{old('email')}}" type="email" id="emailaddress" required="" placeholder="Masukan email" name="email">
                                 </div>
 
                                 <div class="mb-3">
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="text-center d-grid">
-                                    <button class="btn rounded btn-primary border-bottom" type="submit">
+                                    <button class="btn rounded btn-warning border-bottom" type="submit">
                                         <i class="mdi mdi-login me-1"></i>
                                         Masuk
                                     </button>

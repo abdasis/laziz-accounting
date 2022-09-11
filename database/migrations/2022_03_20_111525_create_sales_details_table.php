@@ -17,13 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('sale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedInteger('contact_id')->nullable();
             $table->text('description');
             $table->integer('quantity');
             $table->string('unit')->nullable();
             $table->string('tax');
+            $table->integer('day')->nullable();
             $table->string('discount')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->decimal('price', 18, 2);
+            $table->decimal('total', 18, 2);
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nick_name');
             $table->enum('type_contact', ['customer', 'supplier', 'karyawan', 'lainnya']);
-            $table->string('contact_name');
-            $table->string('handphone');
+            $table->string('contact_name')->nullable();
+            $table->string('handphone')->nullable();
             $table->string('type_identity')->nullable();
             $table->string('identity_number')->nullable();
             $table->string('company_name');
@@ -36,10 +36,6 @@ return new class extends Migration
 
             $table->unsignedBigInteger('akun_hutang')->nullable();
             $table->unsignedBigInteger('akun_piutang')->nullable();
-
-            $table->foreign('akun_hutang')->references('id')->on('accounts')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('akun_piutang')->references('id')->on('accounts')->onDelete('set null')->onUpdate('cascade');
-
             $table->enum('status', ['active','nonactive','pending'])->default('active');
             $table->timestamps();
         });
