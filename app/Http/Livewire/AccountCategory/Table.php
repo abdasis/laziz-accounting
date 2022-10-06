@@ -16,6 +16,11 @@ class Table extends DataTableComponent
 
     protected $listeners  = ['confirmed' => 'deleteCategory'];
 
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+    }
+
     public function deleteCategory()
     {
         if ($this->model_id){
@@ -50,8 +55,8 @@ class Table extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
-        return AccountCategory::query()->orderBy('code', 'asc');
+        return AccountCategory::query();
     }
 }

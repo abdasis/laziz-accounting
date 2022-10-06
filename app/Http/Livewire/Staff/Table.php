@@ -11,6 +11,12 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class Table extends DataTableComponent
 {
 
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+    }
+
+
     public function columns(): array
     {
         return [
@@ -31,7 +37,7 @@ class Table extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return User::query();
     }

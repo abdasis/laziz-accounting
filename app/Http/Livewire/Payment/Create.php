@@ -5,24 +5,39 @@ namespace App\Http\Livewire\Payment;
 use App\Models\Account;
 use App\Models\JournalDetail;
 use App\Models\Payment;
-use App\Models\Purchase;
+use App\Models\Sales;
+use DB;
+use Exception;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Create extends Component
 {
     use LivewireAlert;
-    public $purchase;
 
+    public $sales;
     public $payment_method, $payment_date, $amount, $notes, $account_potongan, $total_discount;
     public $title_potongan, $credit_account;
+    public $account;
+    public $description;
 
-    public function mount(Purchase $purchase)
+    public function mount($id)
     {
-        $this->purchase = $purchase;
-        foreach ($purchase->details as $key => $detail) {
-            $this->amount[$key] = $detail->total;
-        }
+        $sales = Sales::find($id);
+        $this->payment_date = now()->format('Y-m-d');
+        $total_penjualan = $sales->details()->sum('total');
+        $ppn = $sales->details()->sum('total') * $sales->details()->sum('tax') / 100;
+        $this->amount = $total_penjualan + $ppn - $sales->totalPaid();
+        $this->sales = $sales;
+    }
+
+    public function rules()
+    {
+        return[
+            'payment_date' => 'required',
+            'account' => 'required',
+            'description' => 'required',
+        ];
     }
 
     public function updatedAccountPotongan($value)
@@ -30,112 +45,78 @@ class Create extends Component
         $this->title_potongan = Account::find($value)->name;
     }
 
-    public function updated($field)
-    {
-        $this->validateOnly($field);
-    }
-
-    public function rules()
-    {
-        return[
-            'amount.0' => 'required|numeric|max:'.$this->purchase->details->sum('total'),
-            'amount.*' => 'required|numeric|max:'.$this->purchase->details->sum('total'),
-            'credit_account' => 'required',
-        ];
-    }
-
-    public function messages()
-    {
-        return[
-            'amount.0.required' => 'Jumlah pembayaran harus diisi',
-            'amount.*.required' => 'Jumlah pembayaran harus diisi',
-            'amount.0.max' => 'Tidak boleh melebihi dari total pembelian',
-            'amount.*.max' => 'Tidak boleh melebihi dari total pembelian',
-        ];
-    }
     public function store()
     {
         $this->validate();
-
         try {
-            \DB::beginTransaction();
-
+            DB::beginTransaction();
 
             $payment = Payment::create([
-                'purchase_id' => $this->purchase->id,
-                'payment_method' => $this->payment_method,
+                'paymentable_id' => $this->sales->id,
+                'paymentable_type' => get_class($this->sales),
+                'payment_method' => $this->account,
                 'payment_date' => $this->payment_date ?? now()->format('Y-m-d'),
                 'amount' => collect($this->amount)->sum(),
-                'notes' => $this->notes,
+                'notes' => $this->description,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
 
-            /*selanjutnya membuat fitur untuk menyimpannya ke journal*/
-            $contact = $this->purchase->supplier;
+            $contact = $this->sales->contact;
 
-            /*membuat code*/
-            $code = 'PY-'.now()->format('ymd').str_pad($this->purchase->id, 3, '0', STR_PAD_LEFT);
+            $code = 'PY-' . str_pad($payment->id, 8, '0', STR_PAD_LEFT);
 
             $journal = $contact->journals()->create([
                 'code' => $code,
                 'transaction_date' => $this->payment_date ?? now()->format('Y-m-d'),
-                'name' => 'Pembayaran '.$this->purchase->code,
-                'description' => 'Pembayaran pembelian '.$this->purchase->code,
-                'notes' => $this->notes,
+                'name' => 'Pembayaran ' . $code,
+                'description' => $this->description,
+                'notes' => $this->description,
                 'total' => collect($this->amount)->sum(),
+                'no_reference' => $payment->id,
                 'status' => 'draft',
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
+
             ]);
 
             $details = [];
 
-            /*membuat detail journal*/
-            foreach ($this->amount as $key => $value) {
-                $details[] = new JournalDetail([
-                    'journal_id' => $journal->id,
-                    'account_id' => $this->purchase->details[$key]->product->purchase_account,
-                    'debit' => $value,
-                    'credit' => 0,
-                    'memo' => "Pembayaran {$this->purchase->details[$key]->description}"
-                ]);
-            }
-
-            $details[] = new JournalDetail([
+            array_push($details, new JournalDetail([
                 'journal_id' => $journal->id,
-                'account_id' => $this->credit_account,
+                'account_id' => $contact->akun_piutang,
+                'contact_id' => $contact->id,
                 'debit' => 0,
-                'credit' => collect($this->amount)->sum(),
-                'memo' => "Pembayaran Pembelian {$this->purchase->code}"
-            ]);
+                'credit' => $this->amount,
+                'memo' => $this->description
+            ]));
+
+            array_push($details, new JournalDetail([
+                'journal_id' => $journal->id,
+                'account_id' => $this->account,
+                'contact_id' => $contact->id,
+                'debit' => $this->amount,
+                'credit' => 0,
+                'memo' => $this->description
+            ]));
 
             $journal->details()->saveMany($details);
 
-            $this->purchase->update([
-                'status' => 'dibayar',
-                'updated_by' => auth()->user()->id,
-            ]);
-
-
             $this->flash('success', 'Berhasil', [
-                'text' =>   'Pembayaran berhasil ditambahkan',
-            ], route('purchases.show', $this->purchase->id));
+                'text' => 'Pembayaran berhasil ditambahkan',
+            ], route('sales.show', $this->sales->id));
 
-            \DB::commit();
+            DB::commit();
 
-        }catch (\Exception $e) {
-            \DB::rollBack();
-            $this->flash('error', 'Gagal', [
-                'text' =>   'Pembayaran gagal ditambahkan',
-            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
         }
     }
 
 
     public function render()
     {
-        return view('livewire.payment.create',[
+        return view('livewire.payment.create', [
             'accounts' => Account::where('lock_status', 'unlocked')->get(),
         ]);
     }

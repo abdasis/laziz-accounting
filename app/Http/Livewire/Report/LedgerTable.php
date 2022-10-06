@@ -10,9 +10,11 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class LedgerTable extends DataTableComponent
 {
 
-    public function getTableRowUrl($code): string
+    public function configure(): void
     {
-        return route('reports.ledger-detail', $code->code);
+        $this->setPrimaryKey('id')->setTableRowUrl(function ($row) {
+            return route('reports.ledger-detail', $row->code);
+        });
     }
 
     public function columns(): array
@@ -25,7 +27,7 @@ class LedgerTable extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Account::query();
     }

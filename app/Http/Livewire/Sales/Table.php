@@ -12,28 +12,31 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class Table extends DataTableComponent
 {
 
-    public function getTableRowUrl($id): string
+    public function configure(): void
     {
-        return route('sales.show', $id);
+        $this->setPrimaryKey('id')
+        ->setTableRowUrl(function ($row) {
+            return route('sales.show', $row->id);
+        });
     }
 
 
     public function columns(): array
     {
         return [
-            Column::make('Kode Transaksi', 'no_transaction')
+            Column::make('Kode Transaksi', 'id')
                 ->searchable()
-                ->format(function ($val, $row, $column) {
+                ->format(function ($val, $column, $row) {
                     $bulan_romawi = getRoman(\Carbon\Carbon::parse($column->transaction_date)->format('m'));
                     $tahun = \Carbon\Carbon::parse($column->transaction_date)->format('Y');
                     $val = "{$val}/INV/SOKA-R/{$bulan_romawi}/{$tahun}";
                     return "<span class='fw-bold text-warning'>{$val}</span>";
                 })
-                ->asHtml()
+                ->html()
                 ->sortable(),
             Column::make('Customer', 'customer.company_name')->format(function ($customer) {
                 return "<span>{$customer}</span>";
-            })->asHtml(),
+            })->html(),
             Column::make('Tanggal Penjualan', 'transaction_date')->format(function ($val){
                 return Carbon::parse($val)->format('d-m-Y');
             })->sortable(),
@@ -52,15 +55,15 @@ class Table extends DataTableComponent
                 $val = \Str::title($val);
 
                 return "<span class='$badge'>$val</span>";
-            })->sortable()->asHtml(),
-            Column::make('Total', 'total')->format(function ($val){
-                return rupiah($val);
+            })->sortable()->html(),
+            Column::make('Total', 'id')->format(function ($val, $column, $row){
+                return rupiah($column->details_sum_total);
             })->sortable(),
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
-        return Sales::query();
+        return Sales::query()->withSum('details', 'total');
     }
 }

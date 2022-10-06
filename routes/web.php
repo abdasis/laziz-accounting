@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Cost\Create;
 use App\Http\Livewire\Cost\Edit;
@@ -58,7 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'payment'], function (){
         Route::get('/', \App\Http\Livewire\Payment\Index::class)->name('payment.index');
-        Route::get('create/{purchase}', \App\Http\Livewire\Payment\Create::class)->name('payment.create');
+        Route::get('create/{id}', \App\Http\Livewire\Payment\Create::class)->name('payment.create');
         Route::get('edit/{payment}', \App\Http\Livewire\Payment\Edit::class)->name('payment.edit');
         Route::get('show/{payment}', \App\Http\Livewire\Payment\Show::class)->name('payment.show');
     });
@@ -69,6 +70,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('edit/{sale}', \App\Http\Livewire\Sales\Edit::class)->name('sales.edit');
         Route::get('show/{sale}', \App\Http\Livewire\Sales\Show::class)->name('sales.show');
         Route::get('invoices/{sales}', Invoices::class)->name('sales.invoice');
+        Route::get('invoices/print/{sales}', [InvoiceController::class, 'print'])->name('sales.print-invoice');
+    });
+
+    Route::group(['prefix' => 'rechieve'], function (){
+//        Route::get('create', )
     });
 
     Route::group(['prefix' => 'category-account'], function (){

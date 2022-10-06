@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchase_id')->constrained();
+            $table->unsignedInteger('paymentable_id');
+            $table->string('paymentable_type');
             $table->string('payment_method')->nullable();
             $table->date('payment_date');
             $table->decimal('amount', 20, 2);

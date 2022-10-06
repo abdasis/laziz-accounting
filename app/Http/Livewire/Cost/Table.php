@@ -11,6 +11,11 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class Table extends DataTableComponent
 {
 
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+    }
+
     public function columns(): array
     {
         return [
@@ -23,10 +28,10 @@ class Table extends DataTableComponent
                 ->format(function ($code, $column, $row){
                     $url = route('cost.show', $row);
                     return "<a class='fw-bolder' href='$url'>$code</a>";
-                })->asHtml()
+                })->html()
                 ->sortable(),
             Column::make('Keterangan', 'description')->searchable(),
-            Column::make('Dibuat Oleh', 'pembuat.name'),
+            Column::make('Dibuat Oleh', 'creator.name'),
             Column::make('Total', 'total')->format(function ($total){
                 return rupiah($total);
             }),
@@ -39,7 +44,7 @@ class Table extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Cost::query();
     }

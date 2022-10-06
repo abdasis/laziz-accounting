@@ -1,6 +1,35 @@
 <div>
     {{-- Nothing in the world is as soft and yielding as water. --}}
     <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form action="{{route('sales.print-invoice',['sales' => $sales, 'format' => $format, 'tanda_tangan' => $tanda_tangan])}}" method="GET">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <x-form-select name="format" wire:model="format" label="Format">
+                                <option value="">Pilih Format</option>
+                                <option value="per-penjualan">Per Pernjualan</option>
+                                <option value="per-item">Per Item Penjualan</option>
+                            </x-form-select>
+                        </div>
+                        <div class="form-group mb-2">
+                            <x-form-select label="Tanda Tangan" name="tanda_tangan" wire:model="tanda_tangan">
+                                <option value="">Pilih Tampilan</option>
+                                <option value="dengan-tanda-tangan">Dengan Tanda Tangan</option>
+                                <option value="tanpa-tanda-tangan">Tanpa Tanda Tangan</option>
+                            </x-form-select>
+                        </div>
+                        <div class="form-group mb-2">
+                            <button class="btn btn-warning">
+                                <i class="mdi mdi-file-pdf"></i>
+                                Print Sekarang
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             <div class="card shadow-sm border-light">
                 <img src="{{asset('assets/images/kop-surat.png')}}" class="img-fluid" alt="">
@@ -19,7 +48,9 @@
                                 <tr>
                                     <td>No. Invoice</td>
                                     <td>:</td>
-                                    <td> {{$sales->id}}/INV/SOKA-R/{{getRoman(\Carbon\Carbon::parse($sales->transaction_date)->format('m'))}}/{{\Carbon\Carbon::parse($sales->transaction_date)->format('Y')}}</td>
+                                    <td> {{$sales->id}}
+                                        /INV/SOKA-R/{{getRoman(\Carbon\Carbon::parse($sales->transaction_date)->format('m'))}}
+                                        /{{\Carbon\Carbon::parse($sales->transaction_date)->format('Y')}}</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal</td>
@@ -81,7 +112,7 @@
                             <p> Mohon untuk pembayaran ditransfer ke rekening :</p>
                             <p class="my-0">Bank Mandiri </p>
                             <p class="my-0">Kantor Cabang Banjarbaru</p>
-                            <table class="table table-sm table-small-font mt-2 table-small-font table-borderless" >
+                            <table class="table table-sm table-small-font mt-2 table-small-font table-borderless">
                                 <tr>
                                     <td>No. Rekening</td>
                                     <td>:</td>
@@ -125,13 +156,14 @@
             width: 100px;
         }
 
-        .gambar-panjang-coklat{
+        .gambar-panjang-coklat {
             margin-top: 6px;
             background: #6c2c01;
             height: 10px;
             width: 180px;
         }
-        .gambar-panjang-hitam{
+
+        .gambar-panjang-hitam {
             margin-top: 6px;
             background: #000000;
             height: 10px;

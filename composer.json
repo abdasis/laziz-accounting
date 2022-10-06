@@ -8,10 +8,13 @@
         "php": "^8.1.2",
         "ext-gd": "*",
         "barryvdh/laravel-dompdf": "^2.0",
+        "barryvdh/laravel-snappy": "^1.0",
         "diglactic/laravel-breadcrumbs": "^7.1",
         "fakerphp/faker": "^1.9.1",
         "guzzlehttp/guzzle": "^7.2",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "jantinnerezo/livewire-alert": "^2.2",
+        "knplabs/knp-snappy": "^1.4",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.14.1",
@@ -53,7 +56,9 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
@@ -68,9 +73,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "barryvdh/laravel-ide-helper"
-            ]
+            "dont-discover": []
         }
     },
     "config": {

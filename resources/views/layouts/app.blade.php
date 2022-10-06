@@ -18,6 +18,7 @@
 
         <link href="{{asset('assets/css/config/default/bootstrap-dark.min.css')}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
         <link href="{{asset('assets/css/config/default/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
         <!-- icons -->
         <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -28,7 +29,7 @@
         <script src="//unpkg.com/alpinejs" defer></script>
 
     </head>
-    <body class="loading"  data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "brand", "size": "default", "showuser": false},  "showRightSidebarOnPageLoad": false}'>
+    <body class="loading"  data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar" : {"color" : "light"},  "showRightSidebarOnPageLoad": false}'>
     <div id="wrapper">
         <!-- Topbar Start -->
         <livewire:organisms.navbar/>
@@ -73,7 +74,9 @@
     <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
     <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
-
+    <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+    <script src="{{asset('assets/js/pages/form-pickers.init.js')}}"></script>
+    <script src="{{asset('assets/libs/spectrum-colorpicker2/spectrum.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('assets/js/app.min.js')}}"></script>
     @livewireScripts

@@ -10,10 +10,13 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class Table extends DataTableComponent
 {
 
-    public function getTableRowUrl($row)
+
+    public function configure(): void
     {
-        return route('products.show', $row);
+        $this->setPrimaryKey('id');
     }
+
+
     public function columns(): array
     {
         return [
@@ -28,7 +31,7 @@ class Table extends DataTableComponent
             Column::make('Price', 'price')
                 ->searchable()
                 ->sortable()
-                ->format(function ($price){
+                ->format(function ($price) {
                     return rupiah($price);
                 }),
             Column::make("Created at", "created_at")
@@ -38,7 +41,7 @@ class Table extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Product::query();
     }

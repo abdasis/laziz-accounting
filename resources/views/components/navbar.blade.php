@@ -1,6 +1,6 @@
 <div>
     {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
-    <div class="navbar-custom bg-warning text-light shadow-sm">
+    <div class="navbar-custom">
         <div class="container-fluid">
             <ul class="list-unstyled topnav-menu float-end mb-0">
 
@@ -230,7 +230,7 @@
             </ul>
 
             <!-- LOGO -->
-            <div class="logo-box bg-warning">
+            <div class="logo-box">
                 <a href="{{route('dashboard')}}" class="logo logo-dark text-center">
               <span class="logo-sm">
                 <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="80"/>

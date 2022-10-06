@@ -20,4 +20,9 @@ class JournalDetail extends Model
     {
         return $this->belongsTo(Account::class);
     }
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class, 'contact_id', 'id');
+    }
 }

@@ -19,15 +19,11 @@ class Create extends Component
 {
     use LivewireAlert;
     use GeneratePrice;
-
     public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
-
     public $product, $description, $quantity, $unit, $tax, $price, $total_price, $no_reference;
-
     public $remarks, $internal_notes;
-
-    public $inputs = [], $i = 1;
-
+    public $inputs = [];
+    public $i = 0;
     public $sub_total;
     public $ppn, $pph_total;
     public $total;
@@ -38,11 +34,12 @@ class Create extends Component
     public $contact;
     public $day;
     public $status_transaksi;
+    public $taxable = [];
 
     public function mount()
     {
-        $transaction = Sales::max('no_transaction');
-        $this->no_transaction = $transaction+1;
+        $transaction = Sales::max('id');
+        $this->no_transaction = $transaction + 1;
         array_push($this->inputs, 1);
 
     }
@@ -53,7 +50,6 @@ class Create extends Component
             'supplier_id' => 'required',
             'transaction_date' => 'required',
             'due_date' => 'required',
-            'remarks' => 'required',
 
             'product.0' => 'required',
             'description.0' => 'required',
@@ -73,21 +69,18 @@ class Create extends Component
 
     public function messages()
     {
-        return[
+        return [
             'product.0.required' => 'Product is required',
             'description.0.required' => 'Description is required',
             'quantity.0.required' => 'Quantity is required',
             'tax.0.required' => 'Tax is required',
             'price.0.required' => 'Price is required',
-            'total_price.0.required' => 'Total Price is required',
 
             'product.*.required' => 'Product is required',
             'description.*.required' => 'Description is required',
             'quantity.*.required' => 'Quantity is required',
             'tax.*.required' => 'Tax is required',
             'price.*.required' => 'Price is required',
-            'total_price.*.required' => 'Total Price is required',
-
         ];
     }
 
@@ -103,18 +96,23 @@ class Create extends Component
         return array_push($this->inputs, $i);
     }
 
-    public function removeForm($i, $key)
+    public function removeForm($i)
     {
-        $this->quantity[$key] = 0;
+        $this->quantity[$i] = 0;
         unset($this->inputs[$i]);
+    }
+
+    public function Taxable($key)
+    {
+        $this->taxable[$key] = true;
     }
 
     public function updatedQuantity($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->quantity[$key] = 0;
             $this->ppn[$key] = 0;
             $this->total_price[$key] = 0;
@@ -131,13 +129,13 @@ class Create extends Component
     {
         $product = Product::find($val);
 
-        if ($val){
+        if ($val) {
             $this->description[$key] = $product->description;
             $this->price[$key] = $product->sales_price;
             $this->tax[$key] = $product->tax;
             $this->quantity[$key] = 0;
             $this->day[$key] = 1;
-        }else{
+        } else {
             $this->description[$key] = '';
             $this->price[$key] = 0;
             $this->tax[$key] = 0;
@@ -148,10 +146,10 @@ class Create extends Component
 
     public function updatedDay($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->quantity[$key] = 0;
             $this->ppn[$key] = 0;
             $this->total_price[$key] = 0;
@@ -161,20 +159,27 @@ class Create extends Component
 
     public function updatedPrice($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->total_price[$key] = 0;
         }
     }
 
+    public function removePpn($key)
+    {
+        $this->taxable[$key] = false;
+        $this->tax[$key] = 0;
+        $this->ppn[$key] = 0;
+    }
+
     public function updatedTax($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->ppn[$key] = 0;
             $this->tax[$key] = 0;
         }
@@ -201,7 +206,7 @@ class Create extends Component
     public function codeTrasanctionGenerator()
     {
         $last_transaction = Sales::max('no_transaction');
-        $number = now()->format('ymd') . '.' .$last_transaction+1;
+        $number = now()->format('ymd') . '.' . $last_transaction + 1;
         $text = sprintf('SL-%s', $number);
         return $text;
 
@@ -233,8 +238,8 @@ class Create extends Component
 
             $detail_products = [];
 
-            foreach ($this->product as $key => $product){
-                if (!empty($product) && !empty($this->total_price[$key])){
+            foreach ($this->product as $key => $product) {
+                if (!empty($product) && !empty($this->total_price[$key])) {
                     $detail_products[] = new SalesDetails([
                         'contact_id' => $this->contact[$key] ?? null,
                         'product_id' => $product,
@@ -253,7 +258,7 @@ class Create extends Component
 
             $last_transaction = Journal::count();
 
-            $number = now()->format('ymd') . '.' .$last_transaction+1;
+            $number = now()->format('ymd') . '.' . $last_transaction + 1;
 
             $code_journal = sprintf('JL-%s', $number);
 
@@ -262,7 +267,7 @@ class Create extends Component
                 'contact_id' => $this->supplier_id,
                 'name' => 'Penjualan Kode ' . $sale->code,
                 'transaction_date' => $sale->transaction_date,
-                'description' => $sale->remarks,
+                'description' => $sale->internal_notes,
                 'notes' => $sale->internal_notes,
                 'total' => $sale->total,
                 'status' => 'draft',
@@ -273,7 +278,7 @@ class Create extends Component
 
             $journal_details = [];
 
-            foreach ($sale->details as $key => $detail){
+            foreach ($sale->details as $key => $detail) {
                 $product = Product::find($detail->product_id);
                 $journal_details[] = new JournalDetail([
                     'account_id' => $product->sale_account,
@@ -283,24 +288,24 @@ class Create extends Component
                 ]);
             }
 
-            $account_ppn = Account::where('code' , '217100')->first()->id;
+            $account_ppn = Account::where('code', '217100')->first()->id;
 
             $journal_details[] = new JournalDetail([
                 'account_id' => $account_ppn,
                 'credit' => collect($this->ppn)->sum(),
-                'memo' => 'PPn '.$sale->code,
+                'memo' => 'PPn ' . $sale->code,
             ]);
 
-            if ($sale->status == 'dibayar'){
-                $account_debet = Account::where('code' , '111000')->first()->id;
-            }else{
+            if ($sale->status == 'dibayar') {
+                $account_debet = Account::where('code', '111000')->first()->id;
+            } else {
                 $account_debet = Contact::where('id', $this->supplier_id)->first()->akun_piutang;
             }
 
             $journal_details[] = new JournalDetail([
                 'account_id' => $account_debet,
                 'debit' => collect($journal_details)->sum('credit'),
-                'memo' => 'Penjualan '.$sale->code,
+                'memo' => 'Penjualan ' . $sale->code,
             ]);
 
             $journal->details()->saveMany($journal_details);
@@ -311,7 +316,7 @@ class Create extends Component
             \DB::commit();
             $this->reset();
             $this->mount();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \DB::rollBack();
             \Log::debug($e);
             $this->alert('error', 'Gagal', [
@@ -322,7 +327,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.sales.create',[
+        return view('livewire.sales.create', [
             'contacts' => Contact::latest()->whereIn('type_contact', ['karyawan', 'lainnya'])->get(),
             'suppliers' => Contact::where('type_contact', 'customer')->orderBy('company_name', 'asc')
                 ->where('status', 'active')

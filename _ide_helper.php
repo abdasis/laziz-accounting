@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.12.0.
+ * Generated for Laravel 9.33.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1496,6 +1496,52 @@
                         /** @var \Illuminate\Foundation\Application $instance */
                         $instance->offsetUnset($key);
         }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+                        \Illuminate\Foundation\Application::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {
+                        \Illuminate\Foundation\Application::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+                        return \Illuminate\Foundation\Application::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Foundation\Application::flushMacros();
+        }
          
     }
             /**
@@ -1529,6 +1575,30 @@
         {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
                         /** @var \App\Console\Kernel $instance */
                         $instance->terminate($input, $status);
+        }
+                    /**
+         * Register a callback to be invoked when the command lifecyle duration exceeds a given amount of time.
+         *
+         * @param \DateTimeInterface|\Carbon\CarbonInterval|float|int $threshold
+         * @param callable $handler
+         * @return void 
+         * @static 
+         */ 
+        public static function whenCommandLifecycleIsLongerThan($threshold, $handler)
+        {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
+                        /** @var \App\Console\Kernel $instance */
+                        $instance->whenCommandLifecycleIsLongerThan($threshold, $handler);
+        }
+                    /**
+         * When the command being handled started.
+         *
+         * @return \Illuminate\Support\Carbon|null 
+         * @static 
+         */ 
+        public static function commandStartedAt()
+        {            //Method inherited from \Illuminate\Foundation\Console\Kernel         
+                        /** @var \App\Console\Kernel $instance */
+                        return $instance->commandStartedAt();
         }
                     /**
          * Register a Closure based command with the application.
@@ -2184,6 +2254,17 @@
                         return $instance->setRequest($request);
         }
                     /**
+         * Get the timebox instance used by the guard.
+         *
+         * @return \Illuminate\Support\Timebox 
+         * @static 
+         */ 
+        public static function getTimebox()
+        {
+                        /** @var \Illuminate\Auth\SessionGuard $instance */
+                        return $instance->getTimebox();
+        }
+                    /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
          * @return \App\Models\User 
@@ -2768,13 +2849,14 @@
             /**
      * 
      *
-     * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(string $channel, callable|string  $callback, array $options = [])
+     * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(string $channel, callable|string $callback, array $options = [])
      * @method static mixed auth(\Illuminate\Http\Request $request)
+     * @method static void resolveAuthenticatedUserUsing(\Closure $callback)
      * @see \Illuminate\Contracts\Broadcasting\Factory
      */ 
         class Broadcast {
                     /**
-         * Register the routes for handling broadcast authentication and sockets.
+         * Register the routes for handling broadcast channel authentication and sockets.
          *
          * @param array|null $attributes
          * @return void 
@@ -2784,6 +2866,32 @@
         {
                         /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
                         $instance->routes($attributes);
+        }
+                    /**
+         * Register the routes for handling broadcast user authentication.
+         *
+         * @param array|null $attributes
+         * @return void 
+         * @static 
+         */ 
+        public static function userRoutes($attributes = null)
+        {
+                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
+                        $instance->userRoutes($attributes);
+        }
+                    /**
+         * Register the routes for handling broadcast authentication and sockets.
+         * 
+         * Alias of "routes" method.
+         *
+         * @param array|null $attributes
+         * @return void 
+         * @static 
+         */ 
+        public static function channelRoutes($attributes = null)
+        {
+                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
+                        $instance->channelRoutes($attributes);
         }
                     /**
          * Get the socket ID for the given request.
@@ -3110,6 +3218,18 @@
                         return $instance->map($map);
         }
                     /**
+         * Specify the jobs that should be dispatched instead of faked.
+         *
+         * @param array|string $jobsToDispatch
+         * @return void 
+         * @static 
+         */ 
+        public static function except($jobsToDispatch)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        $instance->except($jobsToDispatch);
+        }
+                    /**
          * Assert if a job was dispatched based on a truth-test callback.
          *
          * @param string|\Closure $command
@@ -3287,6 +3407,17 @@
                         $instance->assertBatchCount($count);
         }
                     /**
+         * Assert that no batched jobs were dispatched.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function assertNothingBatched()
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        $instance->assertNothingBatched();
+        }
+                    /**
          * Get all of the jobs matching a truth-test callback.
          *
          * @param string $command
@@ -3372,6 +3503,18 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         return $instance->hasDispatchedAfterResponse($command);
+        }
+                    /**
+         * Dispatch an empty job batch for testing.
+         *
+         * @param string $name
+         * @return \Illuminate\Bus\Batch 
+         * @static 
+         */ 
+        public static function dispatchFakeBatch($name = '')
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->dispatchFakeBatch($name);
         }
                     /**
          * Record the fake pending batch dispatch.
@@ -4200,6 +4343,52 @@
                         /** @var \Illuminate\Config\Repository $instance */
                         $instance->offsetUnset($key);
         }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+                        \Illuminate\Config\Repository::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {
+                        \Illuminate\Config\Repository::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+                        return \Illuminate\Config\Repository::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Config\Repository::flushMacros();
+        }
          
     }
             /**
@@ -4229,7 +4418,7 @@
                         return $instance->make($name, $value, $minutes, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
         }
                     /**
-         * Create a cookie that lasts "forever" (five years).
+         * Create a cookie that lasts "forever" (400 days).
          *
          * @param string $name
          * @param string $value
@@ -4893,14 +5082,25 @@
                         return $instance->macroCall($method, $parameters);
         }
                     /**
+         * Determine if the connected database is a MariaDB database.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isMaria()
+        {
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        return $instance->isMaria();
+        }
+                    /**
          * Get a schema builder instance for the connection.
          *
-         * @return \Illuminate\Database\Schema\PostgresBuilder 
+         * @return \Illuminate\Database\Schema\MySqlBuilder 
          * @static 
          */ 
         public static function getSchemaBuilder()
         {
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getSchemaBuilder();
         }
                     /**
@@ -4908,12 +5108,12 @@
          *
          * @param \Illuminate\Filesystem\Filesystem|null $files
          * @param callable|null $processFactory
-         * @return \Illuminate\Database\Schema\PostgresSchemaState 
+         * @return \Illuminate\Database\Schema\MySqlSchemaState 
          * @static 
          */ 
         public static function getSchemaState($files = null, $processFactory = null)
         {
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getSchemaState($files, $processFactory);
         }
                     /**
@@ -4924,7 +5124,7 @@
          */ 
         public static function useDefaultQueryGrammar()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->useDefaultQueryGrammar();
         }
                     /**
@@ -4935,7 +5135,7 @@
          */ 
         public static function useDefaultSchemaGrammar()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->useDefaultSchemaGrammar();
         }
                     /**
@@ -4946,7 +5146,7 @@
          */ 
         public static function useDefaultPostProcessor()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->useDefaultPostProcessor();
         }
                     /**
@@ -4959,7 +5159,7 @@
          */ 
         public static function table($table, $as = null)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->table($table, $as);
         }
                     /**
@@ -4970,7 +5170,7 @@
          */ 
         public static function query()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->query();
         }
                     /**
@@ -4984,7 +5184,7 @@
          */ 
         public static function selectOne($query, $bindings = [], $useReadPdo = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->selectOne($query, $bindings, $useReadPdo);
         }
                     /**
@@ -4999,7 +5199,7 @@
          */ 
         public static function scalar($query, $bindings = [], $useReadPdo = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->scalar($query, $bindings, $useReadPdo);
         }
                     /**
@@ -5012,7 +5212,7 @@
          */ 
         public static function selectFromWriteConnection($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->selectFromWriteConnection($query, $bindings);
         }
                     /**
@@ -5026,7 +5226,7 @@
          */ 
         public static function select($query, $bindings = [], $useReadPdo = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->select($query, $bindings, $useReadPdo);
         }
                     /**
@@ -5040,7 +5240,7 @@
          */ 
         public static function cursor($query, $bindings = [], $useReadPdo = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->cursor($query, $bindings, $useReadPdo);
         }
                     /**
@@ -5053,7 +5253,7 @@
          */ 
         public static function insert($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->insert($query, $bindings);
         }
                     /**
@@ -5066,7 +5266,7 @@
          */ 
         public static function update($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->update($query, $bindings);
         }
                     /**
@@ -5079,7 +5279,7 @@
          */ 
         public static function delete($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->delete($query, $bindings);
         }
                     /**
@@ -5092,7 +5292,7 @@
          */ 
         public static function statement($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->statement($query, $bindings);
         }
                     /**
@@ -5105,7 +5305,7 @@
          */ 
         public static function affectingStatement($query, $bindings = [])
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->affectingStatement($query, $bindings);
         }
                     /**
@@ -5117,7 +5317,7 @@
          */ 
         public static function unprepared($query)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->unprepared($query);
         }
                     /**
@@ -5129,7 +5329,7 @@
          */ 
         public static function pretend($callback)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->pretend($callback);
         }
                     /**
@@ -5142,7 +5342,7 @@
          */ 
         public static function bindValues($statement, $bindings)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->bindValues($statement, $bindings);
         }
                     /**
@@ -5154,7 +5354,7 @@
          */ 
         public static function prepareBindings($bindings)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->prepareBindings($bindings);
         }
                     /**
@@ -5168,19 +5368,65 @@
          */ 
         public static function logQuery($query, $bindings, $time = null)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->logQuery($query, $bindings, $time);
+        }
+                    /**
+         * Register a callback to be invoked when the connection queries for longer than a given amount of time.
+         *
+         * @param \DateTimeInterface|\Carbon\CarbonInterval|float|int $threshold
+         * @param callable $handler
+         * @return void 
+         * @static 
+         */ 
+        public static function whenQueryingForLongerThan($threshold, $handler)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        $instance->whenQueryingForLongerThan($threshold, $handler);
+        }
+                    /**
+         * Allow all the query duration handlers to run again, even if they have already run.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function allowQueryDurationHandlersToRunAgain()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        $instance->allowQueryDurationHandlersToRunAgain();
+        }
+                    /**
+         * Get the duration of all run queries in milliseconds.
+         *
+         * @return float 
+         * @static 
+         */ 
+        public static function totalQueryDuration()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        return $instance->totalQueryDuration();
+        }
+                    /**
+         * Reset the duration of all run queries.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function resetTotalQueryDuration()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        $instance->resetTotalQueryDuration();
         }
                     /**
          * Register a hook to be run just before a database query is executed.
          *
          * @param \Closure $callback
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function beforeExecuting($callback)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->beforeExecuting($callback);
         }
                     /**
@@ -5192,7 +5438,7 @@
          */ 
         public static function listen($callback)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->listen($callback);
         }
                     /**
@@ -5204,7 +5450,7 @@
          */ 
         public static function raw($value)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->raw($value);
         }
                     /**
@@ -5215,7 +5461,7 @@
          */ 
         public static function hasModifiedRecords()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->hasModifiedRecords();
         }
                     /**
@@ -5227,19 +5473,19 @@
          */ 
         public static function recordsHaveBeenModified($value = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->recordsHaveBeenModified($value);
         }
                     /**
          * Set the record modification state.
          *
          * @param bool $value
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setRecordModificationState($value)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setRecordModificationState($value);
         }
                     /**
@@ -5250,19 +5496,19 @@
          */ 
         public static function forgetRecordModificationState()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->forgetRecordModificationState();
         }
                     /**
          * Indicate that the connection should use the write PDO connection for reads.
          *
          * @param bool $value
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function useWriteConnectionWhenReading($value = true)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->useWriteConnectionWhenReading($value);
         }
                     /**
@@ -5273,7 +5519,7 @@
          */ 
         public static function isDoctrineAvailable()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->isDoctrineAvailable();
         }
                     /**
@@ -5286,7 +5532,7 @@
          */ 
         public static function getDoctrineColumn($table, $column)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getDoctrineColumn($table, $column);
         }
                     /**
@@ -5297,7 +5543,7 @@
          */ 
         public static function getDoctrineSchemaManager()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getDoctrineSchemaManager();
         }
                     /**
@@ -5308,7 +5554,7 @@
          */ 
         public static function getDoctrineConnection()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getDoctrineConnection();
         }
                     /**
@@ -5319,7 +5565,7 @@
          */ 
         public static function getPdo()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getPdo();
         }
                     /**
@@ -5330,7 +5576,7 @@
          */ 
         public static function getRawPdo()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getRawPdo();
         }
                     /**
@@ -5341,7 +5587,7 @@
          */ 
         public static function getReadPdo()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getReadPdo();
         }
                     /**
@@ -5352,31 +5598,31 @@
          */ 
         public static function getRawReadPdo()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getRawReadPdo();
         }
                     /**
          * Set the PDO connection.
          *
          * @param \PDO|\Closure|null $pdo
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setPdo($pdo)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setPdo($pdo);
         }
                     /**
          * Set the PDO connection used for reading.
          *
          * @param \PDO|\Closure|null $pdo
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setReadPdo($pdo)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setReadPdo($pdo);
         }
                     /**
@@ -5387,7 +5633,7 @@
          */ 
         public static function getName()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getName();
         }
                     /**
@@ -5398,7 +5644,7 @@
          */ 
         public static function getNameWithReadWriteType()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getNameWithReadWriteType();
         }
                     /**
@@ -5410,7 +5656,7 @@
          */ 
         public static function getConfig($option = null)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getConfig($option);
         }
                     /**
@@ -5421,7 +5667,7 @@
          */ 
         public static function getDriverName()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getDriverName();
         }
                     /**
@@ -5432,19 +5678,19 @@
          */ 
         public static function getQueryGrammar()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getQueryGrammar();
         }
                     /**
          * Set the query grammar used by the connection.
          *
          * @param \Illuminate\Database\Query\Grammars\Grammar $grammar
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setQueryGrammar($grammar)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setQueryGrammar($grammar);
         }
                     /**
@@ -5455,19 +5701,19 @@
          */ 
         public static function getSchemaGrammar()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getSchemaGrammar();
         }
                     /**
          * Set the schema grammar used by the connection.
          *
          * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setSchemaGrammar($grammar)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setSchemaGrammar($grammar);
         }
                     /**
@@ -5478,19 +5724,19 @@
          */ 
         public static function getPostProcessor()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getPostProcessor();
         }
                     /**
          * Set the query post processor used by the connection.
          *
          * @param \Illuminate\Database\Query\Processors\Processor $processor
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setPostProcessor($processor)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setPostProcessor($processor);
         }
                     /**
@@ -5501,19 +5747,19 @@
          */ 
         public static function getEventDispatcher()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getEventDispatcher();
         }
                     /**
          * Set the event dispatcher instance on the connection.
          *
          * @param \Illuminate\Contracts\Events\Dispatcher $events
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setEventDispatcher($events)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setEventDispatcher($events);
         }
                     /**
@@ -5524,19 +5770,19 @@
          */ 
         public static function unsetEventDispatcher()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->unsetEventDispatcher();
         }
                     /**
          * Set the transaction manager instance on the connection.
          *
          * @param \Illuminate\Database\DatabaseTransactionsManager $manager
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setTransactionManager($manager)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setTransactionManager($manager);
         }
                     /**
@@ -5547,7 +5793,7 @@
          */ 
         public static function unsetTransactionManager()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->unsetTransactionManager();
         }
                     /**
@@ -5558,7 +5804,7 @@
          */ 
         public static function pretending()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->pretending();
         }
                     /**
@@ -5569,7 +5815,7 @@
          */ 
         public static function getQueryLog()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getQueryLog();
         }
                     /**
@@ -5580,7 +5826,7 @@
          */ 
         public static function flushQueryLog()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->flushQueryLog();
         }
                     /**
@@ -5591,7 +5837,7 @@
          */ 
         public static function enableQueryLog()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->enableQueryLog();
         }
                     /**
@@ -5602,7 +5848,7 @@
          */ 
         public static function disableQueryLog()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->disableQueryLog();
         }
                     /**
@@ -5613,7 +5859,7 @@
          */ 
         public static function logging()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->logging();
         }
                     /**
@@ -5624,31 +5870,31 @@
          */ 
         public static function getDatabaseName()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getDatabaseName();
         }
                     /**
          * Set the name of the connected database.
          *
          * @param string $database
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setDatabaseName($database)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setDatabaseName($database);
         }
                     /**
          * Set the read / write type of the connection.
          *
          * @param string|null $readWriteType
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setReadWriteType($readWriteType)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setReadWriteType($readWriteType);
         }
                     /**
@@ -5659,19 +5905,19 @@
          */ 
         public static function getTablePrefix()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getTablePrefix();
         }
                     /**
          * Set the table prefix in use by the connection.
          *
          * @param string $prefix
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return \Illuminate\Database\MySqlConnection 
          * @static 
          */ 
         public static function setTablePrefix($prefix)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->setTablePrefix($prefix);
         }
                     /**
@@ -5683,7 +5929,7 @@
          */ 
         public static function withTablePrefix($grammar)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->withTablePrefix($grammar);
         }
                     /**
@@ -5696,7 +5942,7 @@
          */ 
         public static function resolverFor($driver, $callback)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        \Illuminate\Database\PostgresConnection::resolverFor($driver, $callback);
+                        \Illuminate\Database\MySqlConnection::resolverFor($driver, $callback);
         }
                     /**
          * Get the connection resolver for the given driver.
@@ -5707,7 +5953,7 @@
          */ 
         public static function getResolver($driver)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        return \Illuminate\Database\PostgresConnection::getResolver($driver);
+                        return \Illuminate\Database\MySqlConnection::getResolver($driver);
         }
                     /**
          * Execute a Closure within a transaction.
@@ -5720,7 +5966,7 @@
          */ 
         public static function transaction($callback, $attempts = 1)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->transaction($callback, $attempts);
         }
                     /**
@@ -5732,7 +5978,7 @@
          */ 
         public static function beginTransaction()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->beginTransaction();
         }
                     /**
@@ -5744,7 +5990,7 @@
          */ 
         public static function commit()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->commit();
         }
                     /**
@@ -5757,7 +6003,7 @@
          */ 
         public static function rollBack($toLevel = null)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->rollBack($toLevel);
         }
                     /**
@@ -5768,7 +6014,7 @@
          */ 
         public static function transactionLevel()
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->transactionLevel();
         }
                     /**
@@ -5781,7 +6027,7 @@
          */ 
         public static function afterCommit($callback)
         {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\PostgresConnection $instance */
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->afterCommit($callback);
         }
          
@@ -6024,10 +6270,22 @@
                         \Illuminate\Events\Dispatcher::flushMacros();
         }
                     /**
+         * Specify the events that should be dispatched instead of faked.
+         *
+         * @param array|string $eventsToDispatch
+         * @return \Illuminate\Support\Testing\Fakes\EventFake 
+         * @static 
+         */ 
+        public static function except($eventsToDispatch)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
+                        return $instance->except($eventsToDispatch);
+        }
+                    /**
          * Assert if an event has a listener attached to it.
          *
          * @param string $expectedEvent
-         * @param string $expectedListener
+         * @param string|array $expectedListener
          * @return void 
          * @static 
          */ 
@@ -6211,16 +6469,17 @@
                         return $instance->lines($path);
         }
                     /**
-         * Get the MD5 hash of the file at the given path.
+         * Get the hash of the file at the given path.
          *
          * @param string $path
+         * @param string $algorithm
          * @return string 
          * @static 
          */ 
-        public static function hash($path)
+        public static function hash($path, $algorithm = 'md5')
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->hash($path);
+                        return $instance->hash($path, $algorithm);
         }
                     /**
          * Write the contents of a file.
@@ -6489,6 +6748,19 @@
                         return $instance->isDirectory($directory);
         }
                     /**
+         * Determine if the given path is a directory that does not contain any other files or directories.
+         *
+         * @param string $directory
+         * @param bool $ignoreDotFiles
+         * @return bool 
+         * @static 
+         */ 
+        public static function isEmptyDirectory($directory, $ignoreDotFiles = false)
+        {
+                        /** @var \Illuminate\Filesystem\Filesystem $instance */
+                        return $instance->isEmptyDirectory($directory, $ignoreDotFiles);
+        }
+                    /**
          * Determine if the given path is readable.
          *
          * @param string $path
@@ -6683,6 +6955,38 @@
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
                         return $instance->cleanDirectory($directory);
+        }
+                    /**
+         * Apply the callback if the given "value" is (or resolves to) truthy.
+         *
+         * @template TWhenParameter
+         * @template TWhenReturnType
+         * @param \Illuminate\Filesystem\(\Closure($this):  TWhenParameter)|TWhenParameter|null $value
+         * @param \Illuminate\Filesystem\(callable($this,  TWhenParameter): TWhenReturnType)|null  $callback
+         * @param \Illuminate\Filesystem\(callable($this,  TWhenParameter): TWhenReturnType)|null  $default
+         * @return $this|\Illuminate\Filesystem\TWhenReturnType 
+         * @static 
+         */ 
+        public static function when($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Filesystem\Filesystem $instance */
+                        return $instance->when($value, $callback, $default);
+        }
+                    /**
+         * Apply the callback if the given "value" is (or resolves to) falsy.
+         *
+         * @template TUnlessParameter
+         * @template TUnlessReturnType
+         * @param \Illuminate\Filesystem\(\Closure($this):  TUnlessParameter)|TUnlessParameter|null  $value
+         * @param \Illuminate\Filesystem\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $callback
+         * @param \Illuminate\Filesystem\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $default
+         * @return $this|\Illuminate\Filesystem\TUnlessReturnType 
+         * @static 
+         */ 
+        public static function unless($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Filesystem\Filesystem $instance */
+                        return $instance->unless($value, $callback, $default);
         }
                     /**
          * Register a custom macro.
@@ -7034,6 +7338,33 @@
                         /** @var \Illuminate\Auth\Access\Gate $instance */
                         return $instance->setContainer($container);
         }
+                    /**
+         * Deny with a HTTP status code.
+         *
+         * @param int $status
+         * @param \Illuminate\Auth\Access\?string $message
+         * @param \Illuminate\Auth\Access\?int $code
+         * @return \Illuminate\Auth\Access\Response 
+         * @static 
+         */ 
+        public static function denyWithStatus($status, $message = null, $code = null)
+        {
+                        /** @var \Illuminate\Auth\Access\Gate $instance */
+                        return $instance->denyWithStatus($status, $message, $code);
+        }
+                    /**
+         * Deny with a 404 HTTP status code.
+         *
+         * @param \Illuminate\Auth\Access\?string $message
+         * @param \Illuminate\Auth\Access\?int $code
+         * @return \Illuminate\Auth\Access\Response 
+         * @static 
+         */ 
+        public static function denyAsNotFound($message = null, $code = null)
+        {
+                        /** @var \Illuminate\Auth\Access\Gate $instance */
+                        return $instance->denyAsNotFound($message, $code);
+        }
          
     }
             /**
@@ -7220,7 +7551,7 @@
      * @method static \Illuminate\Http\Client\PendingRequest asJson()
      * @method static \Illuminate\Http\Client\PendingRequest asMultipart()
      * @method static \Illuminate\Http\Client\PendingRequest async()
-     * @method static \Illuminate\Http\Client\PendingRequest attach(string|array $name, string $contents = '', string|null $filename = null, array $headers = [])
+     * @method static \Illuminate\Http\Client\PendingRequest attach(string|array $name, string|resource $contents = '', string|null $filename = null, array $headers = [])
      * @method static \Illuminate\Http\Client\PendingRequest baseUrl(string $url)
      * @method static \Illuminate\Http\Client\PendingRequest beforeSending(callable $callback)
      * @method static \Illuminate\Http\Client\PendingRequest bodyFormat(string $format)
@@ -7228,7 +7559,8 @@
      * @method static \Illuminate\Http\Client\PendingRequest contentType(string $contentType)
      * @method static \Illuminate\Http\Client\PendingRequest dd()
      * @method static \Illuminate\Http\Client\PendingRequest dump()
-     * @method static \Illuminate\Http\Client\PendingRequest retry(int $times, int $sleep = 0, ?callable $when = null, bool $throw = true)
+     * @method static \Illuminate\Http\Client\PendingRequest maxRedirects(int $max)
+     * @method static \Illuminate\Http\Client\PendingRequest retry(int $times, int $sleepMilliseconds = 0, ?callable $when = null, bool $throw = true)
      * @method static \Illuminate\Http\Client\PendingRequest sink(string|resource $to)
      * @method static \Illuminate\Http\Client\PendingRequest stub(callable $callback)
      * @method static \Illuminate\Http\Client\PendingRequest timeout(int $seconds)
@@ -7245,6 +7577,7 @@
      * @method static \Illuminate\Http\Client\PendingRequest withoutVerifying()
      * @method static \Illuminate\Http\Client\PendingRequest throw(callable $callback = null)
      * @method static \Illuminate\Http\Client\PendingRequest throwIf($condition)
+     * @method \Illuminate\Http\Client\PendingRequest throwUnless($condition)
      * @method static array pool(callable $callback)
      * @method static \Illuminate\Http\Client\Response delete(string $url, array $data = [])
      * @method static \Illuminate\Http\Client\Response get(string $url, array|string|null $query = null)
@@ -7259,7 +7592,7 @@
                     /**
          * Create a new response instance for use during stubbing.
          *
-         * @param array|string $body
+         * @param array|string|null $body
          * @param int $status
          * @param array $headers
          * @return \GuzzleHttp\Promise\PromiseInterface 
@@ -7284,7 +7617,7 @@
                     /**
          * Register a stub callable that will intercept requests and be able to return stub responses.
          *
-         * @param callable|array $callback
+         * @param callable|array|null $callback
          * @return \Illuminate\Http\Client\Factory 
          * @static 
          */ 
@@ -7319,7 +7652,7 @@
                         return $instance->stubUrl($url, $callback);
         }
                     /**
-         * Indicate that an exception should not be thrown if any request is not faked.
+         * Indicate that an exception should be thrown if any request is not faked.
          *
          * @param bool $prevent
          * @return \Illuminate\Http\Client\Factory 
@@ -8409,6 +8742,18 @@
          * @return \Illuminate\Mail\PendingMail 
          * @static 
          */ 
+        public static function cc($users)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+                        return $instance->cc($users);
+        }
+                    /**
+         * Begin the process of mailing a mailable class instance.
+         *
+         * @param mixed $users
+         * @return \Illuminate\Mail\PendingMail 
+         * @static 
+         */ 
         public static function bcc($users)
         {
                         /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
@@ -8752,6 +9097,18 @@
                         $instance->assertSentTimes($notification, $expectedCount);
         }
                     /**
+         * Assert the total count of notification that were sent.
+         *
+         * @param int $expectedCount
+         * @return void 
+         * @static 
+         */ 
+        public static function assertCount($expectedCount)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
+                        $instance->assertCount($expectedCount);
+        }
+                    /**
          * Assert the total amount of times a notification was sent.
          *
          * @param int $expectedCount
@@ -8791,6 +9148,17 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
                         return $instance->hasSent($notifiable, $notification);
+        }
+                    /**
+         * Get the notifications that have been sent.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function sentNotifications()
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
+                        return $instance->sentNotifications();
         }
                     /**
          * Register a custom macro.
@@ -9076,6 +9444,18 @@
         {
                         /** @var \Illuminate\Queue\QueueManager $instance */
                         return $instance->setApplication($app);
+        }
+                    /**
+         * Specify the jobs that should be queued instead of faked.
+         *
+         * @param array|string $jobsToBeQueued
+         * @return \Illuminate\Support\Testing\Fakes\QueueFake 
+         * @static 
+         */ 
+        public static function except($jobsToBeQueued)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+                        return $instance->except($jobsToBeQueued);
         }
                     /**
          * Assert if a job was pushed based on a truth-test callback.
@@ -9567,6 +9947,7 @@
          *
          * @param int $status
          * @return \Illuminate\Http\RedirectResponse 
+         * @deprecated Will be removed in a future Laravel version.
          * @static 
          */ 
         public static function home($status = 302)
@@ -9619,7 +10000,7 @@
                     /**
          * Create a new redirect response to the previously intended location.
          *
-         * @param string $default
+         * @param mixed $default
          * @param int $status
          * @param array $headers
          * @param bool|null $secure
@@ -9630,18 +10011,6 @@
         {
                         /** @var \Illuminate\Routing\Redirector $instance */
                         return $instance->intended($default, $status, $headers, $secure);
-        }
-                    /**
-         * Set the intended url.
-         *
-         * @param string $url
-         * @return \Illuminate\Routing\Redirector 
-         * @static 
-         */ 
-        public static function setIntendedUrl($url)
-        {
-                        /** @var \Illuminate\Routing\Redirector $instance */
-                        return $instance->setIntendedUrl($url);
         }
                     /**
          * Create a new redirect response to the given path.
@@ -9770,6 +10139,29 @@
         {
                         /** @var \Illuminate\Routing\Redirector $instance */
                         $instance->setSession($session);
+        }
+                    /**
+         * Get the "intended" URL from the session.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function getIntendedUrl()
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->getIntendedUrl();
+        }
+                    /**
+         * Set the "intended" URL in the session.
+         *
+         * @param string $url
+         * @return \Illuminate\Routing\Redirector 
+         * @static 
+         */ 
+        public static function setIntendedUrl($url)
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->setIntendedUrl($url);
         }
                     /**
          * Register a custom macro.
@@ -9998,6 +10390,39 @@
                         return $instance->fullUrlIs(...$patterns);
         }
                     /**
+         * Get the host name.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function host()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->host();
+        }
+                    /**
+         * Get the HTTP host being requested.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function httpHost()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->httpHost();
+        }
+                    /**
+         * Get the scheme and HTTP host.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function schemeAndHttpHost()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->schemeAndHttpHost();
+        }
+                    /**
          * Determine if the request is the result of an AJAX call.
          *
          * @return bool 
@@ -10196,6 +10621,7 @@
                     /**
          * Gets the Session.
          *
+         * @throws SessionNotFoundException When session is not set properly
          * @static 
          */ 
         public static function getSession()
@@ -10226,6 +10652,30 @@
         {
                         /** @var \Illuminate\Http\Request $instance */
                         $instance->setLaravelSession($session);
+        }
+                    /**
+         * Set the locale for the request instance.
+         *
+         * @param string $locale
+         * @return void 
+         * @static 
+         */ 
+        public static function setRequestLocale($locale)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        $instance->setRequestLocale($locale);
+        }
+                    /**
+         * Set the default locale for the request instance.
+         *
+         * @param string $locale
+         * @return void 
+         * @static 
+         */ 
+        public static function setDefaultRequestLocale($locale)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        $instance->setDefaultRequestLocale($locale);
         }
                     /**
          * Get the user making the request.
@@ -11216,6 +11666,40 @@
                         return $instance->isFromTrustedProxy();
         }
                     /**
+         * Filter the given array of rules into an array of rules that are included in precognitive headers.
+         *
+         * @param array $rules
+         * @return array 
+         * @static 
+         */ 
+        public static function filterPrecognitiveRules($rules)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->filterPrecognitiveRules($rules);
+        }
+                    /**
+         * Determine if the request is attempting to be precognitive.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isAttemptingPrecognition()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->isAttemptingPrecognition();
+        }
+                    /**
+         * Determine if the request is precognitive.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isPrecognitive()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->isPrecognitive();
+        }
+                    /**
          * Determine if the request is sending JSON.
          *
          * @return bool 
@@ -11627,18 +12111,59 @@
                         return $instance->boolean($key, $default);
         }
                     /**
+         * Retrieve input as an integer value.
+         *
+         * @param string $key
+         * @param int $default
+         * @return int 
+         * @static 
+         */ 
+        public static function integer($key, $default = 0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->integer($key, $default);
+        }
+                    /**
+         * Retrieve input as a float value.
+         *
+         * @param string $key
+         * @param float $default
+         * @return float 
+         * @static 
+         */ 
+        public static function float($key, $default = 0.0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->float($key, $default);
+        }
+                    /**
          * Retrieve input from the request as a Carbon instance.
          *
          * @param string $key
          * @param string|null $format
          * @param string|null $tz
          * @return \Illuminate\Support\Carbon|null 
+         * @throws \Carbon\Exceptions\InvalidFormatException
          * @static 
          */ 
         public static function date($key, $format = null, $tz = null)
         {
                         /** @var \Illuminate\Http\Request $instance */
                         return $instance->date($key, $format, $tz);
+        }
+                    /**
+         * Retrieve input from the request as an enum.
+         *
+         * @template TEnum
+         * @param string $key
+         * @param \Illuminate\Http\class-string<TEnum> $enumClass
+         * @return \Illuminate\Http\TEnum|null 
+         * @static 
+         */ 
+        public static function enum($key, $enumClass)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->enum($key, $enumClass);
         }
                     /**
          * Retrieve input from the request as a collection.
@@ -11767,13 +12292,13 @@
          * Dump the request items and end the script.
          *
          * @param mixed $keys
-         * @return void 
+         * @return \Illuminate\Http\never 
          * @static 
          */ 
         public static function dd(...$keys)
         {
                         /** @var \Illuminate\Http\Request $instance */
-                        $instance->dd(...$keys);
+                        return $instance->dd(...$keys);
         }
                     /**
          * Dump the items.
@@ -13070,7 +13595,7 @@
          */ 
         public static function createDatabase($name)
         {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->createDatabase($name);
         }
                     /**
@@ -13082,7 +13607,7 @@
          */ 
         public static function dropDatabaseIfExists($name)
         {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->dropDatabaseIfExists($name);
         }
                     /**
@@ -13094,74 +13619,8 @@
          */ 
         public static function hasTable($table)
         {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->hasTable($table);
-        }
-                    /**
-         * Drop all tables from the database.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function dropAllTables()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        $instance->dropAllTables();
-        }
-                    /**
-         * Drop all views from the database.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function dropAllViews()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        $instance->dropAllViews();
-        }
-                    /**
-         * Drop all types from the database.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function dropAllTypes()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        $instance->dropAllTypes();
-        }
-                    /**
-         * Get all of the table names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllTables()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllTables();
-        }
-                    /**
-         * Get all of the view names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllViews()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllViews();
-        }
-                    /**
-         * Get all of the type names for the database.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getAllTypes()
-        {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
-                        return $instance->getAllTypes();
         }
                     /**
          * Get the column listing for a given table.
@@ -13172,8 +13631,52 @@
          */ 
         public static function getColumnListing($table)
         {
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->getColumnListing($table);
+        }
+                    /**
+         * Drop all tables from the database.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function dropAllTables()
+        {
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
+                        $instance->dropAllTables();
+        }
+                    /**
+         * Drop all views from the database.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function dropAllViews()
+        {
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
+                        $instance->dropAllViews();
+        }
+                    /**
+         * Get all of the table names for the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllTables()
+        {
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
+                        return $instance->getAllTables();
+        }
+                    /**
+         * Get all of the view names for the database.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getAllViews()
+        {
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
+                        return $instance->getAllViews();
         }
                     /**
          * Set the default string length for migrations.
@@ -13184,7 +13687,7 @@
          */ 
         public static function defaultStringLength($length)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        \Illuminate\Database\Schema\PostgresBuilder::defaultStringLength($length);
+                        \Illuminate\Database\Schema\MySqlBuilder::defaultStringLength($length);
         }
                     /**
          * Set the default morph key type for migrations.
@@ -13196,7 +13699,7 @@
          */ 
         public static function defaultMorphKeyType($type)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        \Illuminate\Database\Schema\PostgresBuilder::defaultMorphKeyType($type);
+                        \Illuminate\Database\Schema\MySqlBuilder::defaultMorphKeyType($type);
         }
                     /**
          * Set the default morph key type for migrations to UUIDs.
@@ -13206,7 +13709,17 @@
          */ 
         public static function morphUsingUuids()
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        \Illuminate\Database\Schema\PostgresBuilder::morphUsingUuids();
+                        \Illuminate\Database\Schema\MySqlBuilder::morphUsingUuids();
+        }
+                    /**
+         * Set the default morph key type for migrations to ULIDs.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function morphUsingUlids()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Illuminate\Database\Schema\MySqlBuilder::morphUsingUlids();
         }
                     /**
          * Determine if the given table has a given column.
@@ -13218,7 +13731,7 @@
          */ 
         public static function hasColumn($table, $column)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->hasColumn($table, $column);
         }
                     /**
@@ -13231,7 +13744,7 @@
          */ 
         public static function hasColumns($table, $columns)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->hasColumns($table, $columns);
         }
                     /**
@@ -13245,7 +13758,7 @@
          */ 
         public static function whenTableHasColumn($table, $column, $callback)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->whenTableHasColumn($table, $column, $callback);
         }
                     /**
@@ -13259,7 +13772,7 @@
          */ 
         public static function whenTableDoesntHaveColumn($table, $column, $callback)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->whenTableDoesntHaveColumn($table, $column, $callback);
         }
                     /**
@@ -13272,7 +13785,7 @@
          */ 
         public static function getColumnType($table, $column)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->getColumnType($table, $column);
         }
                     /**
@@ -13285,7 +13798,7 @@
          */ 
         public static function table($table, $callback)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->table($table, $callback);
         }
                     /**
@@ -13298,7 +13811,7 @@
          */ 
         public static function create($table, $callback)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->create($table, $callback);
         }
                     /**
@@ -13310,7 +13823,7 @@
          */ 
         public static function drop($table)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->drop($table);
         }
                     /**
@@ -13322,7 +13835,7 @@
          */ 
         public static function dropIfExists($table)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->dropIfExists($table);
         }
                     /**
@@ -13335,8 +13848,20 @@
          */ 
         public static function dropColumns($table, $columns)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->dropColumns($table, $columns);
+        }
+                    /**
+         * Drop all types from the database.
+         *
+         * @return void 
+         * @throws \LogicException
+         * @static 
+         */ 
+        public static function dropAllTypes()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
+                        $instance->dropAllTypes();
         }
                     /**
          * Rename a table on the schema.
@@ -13348,7 +13873,7 @@
          */ 
         public static function rename($from, $to)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->rename($from, $to);
         }
                     /**
@@ -13359,7 +13884,7 @@
          */ 
         public static function enableForeignKeyConstraints()
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->enableForeignKeyConstraints();
         }
                     /**
@@ -13370,7 +13895,7 @@
          */ 
         public static function disableForeignKeyConstraints()
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->disableForeignKeyConstraints();
         }
                     /**
@@ -13381,19 +13906,19 @@
          */ 
         public static function getConnection()
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->getConnection();
         }
                     /**
          * Set the database connection instance.
          *
          * @param \Illuminate\Database\Connection $connection
-         * @return \Illuminate\Database\Schema\PostgresBuilder 
+         * @return \Illuminate\Database\Schema\MySqlBuilder 
          * @static 
          */ 
         public static function setConnection($connection)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         return $instance->setConnection($connection);
         }
                     /**
@@ -13405,7 +13930,7 @@
          */ 
         public static function blueprintResolver($resolver)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->blueprintResolver($resolver);
         }
          
@@ -14170,6 +14695,18 @@
                         return $instance->createS3Driver($config);
         }
                     /**
+         * Create a scoped driver.
+         *
+         * @param array $config
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
+         * @static 
+         */ 
+        public static function createScopedDriver($config)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemManager $instance */
+                        return $instance->createScopedDriver($config);
+        }
+                    /**
          * Set the given disk instance.
          *
          * @param string $name
@@ -14626,6 +15163,17 @@
                         return $instance->url($path);
         }
                     /**
+         * Determine if temporary URLs can be generated.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function providesTemporaryUrls()
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
+                        return $instance->providesTemporaryUrls();
+        }
+                    /**
          * Get a temporary URL for the file at the given path.
          *
          * @param string $path
@@ -14758,6 +15306,38 @@
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         $instance->buildTemporaryUrlsUsing($callback);
+        }
+                    /**
+         * Apply the callback if the given "value" is (or resolves to) truthy.
+         *
+         * @template TWhenParameter
+         * @template TWhenReturnType
+         * @param \Illuminate\Filesystem\(\Closure($this):  TWhenParameter)|TWhenParameter|null $value
+         * @param \Illuminate\Filesystem\(callable($this,  TWhenParameter): TWhenReturnType)|null  $callback
+         * @param \Illuminate\Filesystem\(callable($this,  TWhenParameter): TWhenReturnType)|null  $default
+         * @return $this|\Illuminate\Filesystem\TWhenReturnType 
+         * @static 
+         */ 
+        public static function when($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
+                        return $instance->when($value, $callback, $default);
+        }
+                    /**
+         * Apply the callback if the given "value" is (or resolves to) falsy.
+         *
+         * @template TUnlessParameter
+         * @template TUnlessReturnType
+         * @param \Illuminate\Filesystem\(\Closure($this):  TUnlessParameter)|TUnlessParameter|null  $value
+         * @param \Illuminate\Filesystem\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $callback
+         * @param \Illuminate\Filesystem\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $default
+         * @return $this|\Illuminate\Filesystem\TUnlessReturnType 
+         * @static 
+         */ 
+        public static function unless($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
+                        return $instance->unless($value, $callback, $default);
         }
                     /**
          * Register a custom macro.
@@ -15273,6 +15853,18 @@
                         return $instance->setKeyResolver($keyResolver);
         }
                     /**
+         * Clone a new instance of the URL generator with a different encryption key resolver.
+         *
+         * @param callable $keyResolver
+         * @return \Illuminate\Routing\UrlGenerator 
+         * @static 
+         */ 
+        public static function withKeyResolver($keyResolver)
+        {
+                        /** @var \Illuminate\Routing\UrlGenerator $instance */
+                        return $instance->withKeyResolver($keyResolver);
+        }
+                    /**
          * Get the root controller namespace.
          *
          * @return string 
@@ -15506,7 +16098,7 @@
                     /**
          * Get the container instance used by the validation factory.
          *
-         * @return \Illuminate\Contracts\Container\Container 
+         * @return \Illuminate\Contracts\Container\Container|null 
          * @static 
          */ 
         public static function getContainer()
@@ -16413,6 +17005,212 @@
         }
          
     }
+            /**
+     * 
+     *
+     * @see \Illuminate\Foundation\Vite
+     */ 
+        class Vite {
+                    /**
+         * Get the Content Security Policy nonce applied to all generated tags.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function cspNonce()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->cspNonce();
+        }
+                    /**
+         * Generate or set a Content Security Policy nonce to apply to all generated tags.
+         *
+         * @param \Illuminate\Foundation\?string $nonce
+         * @return string 
+         * @static 
+         */ 
+        public static function useCspNonce($nonce = null)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useCspNonce($nonce);
+        }
+                    /**
+         * Use the given key to detect integrity hashes in the manifest.
+         *
+         * @param string|false $key
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useIntegrityKey($key)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useIntegrityKey($key);
+        }
+                    /**
+         * Set the Vite entry points.
+         *
+         * @param array $entryPoints
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function withEntryPoints($entryPoints)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->withEntryPoints($entryPoints);
+        }
+                    /**
+         * Get the Vite "hot" file path.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function hotFile()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->hotFile();
+        }
+                    /**
+         * Set the Vite "hot" file path.
+         *
+         * @param string $path
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useHotFile($path)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useHotFile($path);
+        }
+                    /**
+         * Set the Vite build directory.
+         *
+         * @param string $path
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useBuildDirectory($path)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useBuildDirectory($path);
+        }
+                    /**
+         * Use the given callback to resolve attributes for script tags.
+         *
+         * @param \Illuminate\Foundation\(callable(string,  string, ?array, ?array): array)|array  $attributes
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useScriptTagAttributes($attributes)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useScriptTagAttributes($attributes);
+        }
+                    /**
+         * Use the given callback to resolve attributes for style tags.
+         *
+         * @param \Illuminate\Foundation\(callable(string,  string, ?array, ?array): array)|array  $attributes
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useStyleTagAttributes($attributes)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useStyleTagAttributes($attributes);
+        }
+                    /**
+         * Generate React refresh runtime script.
+         *
+         * @return \Illuminate\Support\HtmlString|void 
+         * @static 
+         */ 
+        public static function reactRefresh()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->reactRefresh();
+        }
+                    /**
+         * Get the URL for an asset.
+         *
+         * @param string $asset
+         * @param string|null $buildDirectory
+         * @return string 
+         * @static 
+         */ 
+        public static function asset($asset, $buildDirectory = null)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->asset($asset, $buildDirectory);
+        }
+                    /**
+         * Get a unique hash representing the current manifest, or null if there is no manifest.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function manifestHash($buildDirectory = null)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->manifestHash($buildDirectory);
+        }
+                    /**
+         * Get the Vite tag content as a string of HTML.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function toHtml()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->toHtml();
+        }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+                        \Illuminate\Foundation\Vite::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin, $replace = true)
+        {
+                        \Illuminate\Foundation\Vite::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+                        return \Illuminate\Foundation\Vite::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Foundation\Vite::flushMacros();
+        }
+         
+    }
      
 }
 
@@ -16438,10 +17236,1184 @@
         class Str {
          
     }
+            /**
+     * 
+     *
+     * @template TKey of array-key
+     * @template TValue
+     * @implements \ArrayAccess<TKey, TValue>
+     * @implements \Illuminate\Support\Enumerable<TKey, TValue>
+     */ 
+        class Collection {
+                    /**
+         * 
+         *
+         * @see \Barryvdh\Debugbar\ServiceProvider::register()
+         * @static 
+         */ 
+        public static function debug()
+        {
+                        return \Illuminate\Support\Collection::debug();
+        }
+         
+    }
      
 }
 
-        namespace Diglactic\Breadcrumbs { 
+        namespace Barryvdh\Debugbar\Facades { 
+            /**
+     * 
+     *
+     * @method static void alert(mixed $message)
+     * @method static void critical(mixed $message)
+     * @method static void debug(mixed $message)
+     * @method static void emergency(mixed $message)
+     * @method static void error(mixed $message)
+     * @method static void info(mixed $message)
+     * @method static void log(mixed $message)
+     * @method static void notice(mixed $message)
+     * @method static void warning(mixed $message)
+     * @see \Barryvdh\Debugbar\LaravelDebugbar
+     */ 
+        class Debugbar {
+                    /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */ 
+        public static function enable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->enable();
+        }
+                    /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */ 
+        public static function boot()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->boot();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldCollect($name, $default = false)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->shouldCollect($name, $default);
+        }
+                    /**
+         * Adds a data collector
+         *
+         * @param \DebugBar\DataCollector\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function addCollector($collector)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addCollector($collector);
+        }
+                    /**
+         * Handle silenced errors
+         *
+         * @param $level
+         * @param $message
+         * @param string $file
+         * @param int $line
+         * @param array $context
+         * @throws \ErrorException
+         * @static 
+         */ 
+        public static function handleError($level, $message, $file = '', $line = 0, $context = [])
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->handleError($level, $message, $file, $line, $context);
+        }
+                    /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */ 
+        public static function startMeasure($name, $label = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->startMeasure($name, $label);
+        }
+                    /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */ 
+        public static function stopMeasure($name)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stopMeasure($name);
+        }
+                    /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @deprecated in favor of addThrowable
+         * @static 
+         */ 
+        public static function addException($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addException($e);
+        }
+                    /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @static 
+         */ 
+        public static function addThrowable($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addThrowable($e);
+        }
+                    /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */ 
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getJavascriptRenderer($baseUrl, $basePath);
+        }
+                    /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function modifyResponse($request, $response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->modifyResponse($request, $response);
+        }
+                    /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isEnabled()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isEnabled();
+        }
+                    /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collect()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collect();
+        }
+                    /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */ 
+        public static function injectDebugbar($response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->injectDebugbar($response);
+        }
+                    /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */ 
+        public static function disable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->disable();
+        }
+                    /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */ 
+        public static function addMeasure($label, $start, $end)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMeasure($label, $start, $end);
+        }
+                    /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @return mixed 
+         * @static 
+         */ 
+        public static function measure($label, $closure)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->measure($label, $closure);
+        }
+                    /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collectConsole()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collectConsole();
+        }
+                    /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */ 
+        public static function addMessage($message, $label = 'info')
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMessage($message, $label);
+        }
+                    /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasCollector($name)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasCollector($name);
+        }
+                    /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollector\DataCollectorInterface 
+         * @throws DebugBarException
+         * @static 
+         */ 
+        public static function getCollector($name)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollector($name);
+        }
+                    /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */ 
+        public static function getCollectors()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollectors();
+        }
+                    /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setRequestIdGenerator($generator)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setRequestIdGenerator($generator);
+        }
+                    /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */ 
+        public static function getRequestIdGenerator()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getRequestIdGenerator();
+        }
+                    /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getCurrentRequestId()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCurrentRequestId();
+        }
+                    /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStorage($storage = null)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStorage($storage);
+        }
+                    /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */ 
+        public static function getStorage()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStorage();
+        }
+                    /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isDataPersisted()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isDataPersisted();
+        }
+                    /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setHttpDriver($driver)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setHttpDriver($driver);
+        }
+                    /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */ 
+        public static function getHttpDriver()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getHttpDriver();
+        }
+                    /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getData();
+        }
+                    /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */ 
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+                    /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+                    /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */ 
+        public static function stackData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stackData();
+        }
+                    /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasStackedData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasStackedData();
+        }
+                    /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */ 
+        public static function getStackedData($delete = true)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackedData($delete);
+        }
+                    /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackDataSessionNamespace($ns)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackDataSessionNamespace($ns);
+        }
+                    /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getStackDataSessionNamespace()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackDataSessionNamespace();
+        }
+                    /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackAlwaysUseSessionStorage($enabled = true)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackAlwaysUseSessionStorage($enabled);
+        }
+                    /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isStackAlwaysUseSessionStorage()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isStackAlwaysUseSessionStorage();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetSet($key, $value)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetSet($key, $value);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetGet($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetGet($key);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetExists($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetExists($key);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetUnset($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetUnset($key);
+        }
+         
+    }
+     
+}
+
+    namespace Barryvdh\DomPDF\Facade { 
+            /**
+     * 
+     *
+     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     */ 
+        class Pdf {
+                    /**
+         * Get the DomPDF instance
+         *
+         * @return \Dompdf\Dompdf 
+         * @static 
+         */ 
+        public static function getDomPDF()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->getDomPDF();
+        }
+                    /**
+         * Show or hide warnings
+         *
+         * @static 
+         */ 
+        public static function setWarnings($warnings)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setWarnings($warnings);
+        }
+                    /**
+         * Load a HTML string
+         *
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadHTML($string, $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadHTML($string, $encoding);
+        }
+                    /**
+         * Load a HTML file
+         *
+         * @static 
+         */ 
+        public static function loadFile($file)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadFile($file);
+        }
+                    /**
+         * Add metadata info
+         *
+         * @param \Barryvdh\DomPDF\array<string,  string> $info
+         * @return static 
+         * @static 
+         */ 
+        public static function addInfo($info)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->addInfo($info);
+        }
+                    /**
+         * Load a View and convert to HTML
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $data
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $mergeData
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadView($view, $data, $mergeData, $encoding);
+        }
+                    /**
+         * Set/Change an option (or array of options) in Dompdf
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed>|string $attribute
+         * @param null|mixed $value
+         * @return \Barryvdh\DomPDF\PDF 
+         * @static 
+         */ 
+        public static function setOption($attribute, $value = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOption($attribute, $value);
+        }
+                    /**
+         * Replace all the Options from DomPDF
+         *
+         * @deprecated Use setOption to override individual options.
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $options
+         * @static 
+         */ 
+        public static function setOptions($options)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOptions($options);
+        }
+                    /**
+         * Output the PDF as a string.
+         * 
+         * The options parameter controls the output. Accepted options are:
+         * 
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param \Barryvdh\DomPDF\array<string,  int> $options
+         * @return string The rendered PDF as string
+         * @static 
+         */ 
+        public static function output($options = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->output($options);
+        }
+                    /**
+         * Save the PDF to a file
+         *
+         * @static 
+         */ 
+        public static function save($filename)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->save($filename);
+        }
+                    /**
+         * Make the PDF downloadable by the user
+         *
+         * @static 
+         */ 
+        public static function download($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->download($filename);
+        }
+                    /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @static 
+         */ 
+        public static function stream($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->stream($filename);
+        }
+                    /**
+         * Render the PDF
+         *
+         * @static 
+         */ 
+        public static function render()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->render();
+        }
+                    /**
+         * 
+         *
+         * @param \Barryvdh\DomPDF\array<string> $pc
+         * @static 
+         */ 
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setEncryption($password, $ownerpassword, $pc);
+        }
+         
+    }
+     
+}
+
+    namespace Barryvdh\Snappy\Facades { 
+            /**
+     * 
+     *
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     * @method static \Barryvdh\DomPDF\PDF addInfo($info)
+     */ 
+        class SnappyPdf {
+                    /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Pdf 
+         * @static 
+         */ 
+        public static function snappy()
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->snappy();
+        }
+                    /**
+         * Set temporary folder
+         *
+         * @param string $path
+         * @static 
+         */ 
+        public static function setTemporaryFolder($path)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setTemporaryFolder($path);
+        }
+                    /**
+         * Set the paper size (default A4)
+         *
+         * @param string $paper
+         * @param string $orientation
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function setPaper($paper, $orientation = null)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setPaper($paper, $orientation);
+        }
+                    /**
+         * Set the orientation (default portrait)
+         *
+         * @param string $orientation
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function setOrientation($orientation)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setOrientation($orientation);
+        }
+                    /**
+         * Show or hide warnings
+         *
+         * @param bool $warnings
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @deprecated 
+         * @static 
+         */ 
+        public static function setWarnings($warnings)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setWarnings($warnings);
+        }
+                    /**
+         * 
+         *
+         * @param string $name
+         * @param mixed $value
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function setOption($name, $value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setOption($name, $value);
+        }
+                    /**
+         * 
+         *
+         * @param array $options
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function setOptions($options)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->setOptions($options);
+        }
+                    /**
+         * Load a HTML string
+         *
+         * @param Array|string|\Illuminate\Contracts\Support\Renderable $html
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function loadHTML($html)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->loadHTML($html);
+        }
+                    /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function loadFile($file)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->loadFile($file);
+        }
+                    /**
+         * Load a View and convert to HTML
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function loadView($view, $data = [], $mergeData = [])
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->loadView($view, $data, $mergeData);
+        }
+                    /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static 
+         */ 
+        public static function output()
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->output();
+        }
+                    /**
+         * Save the PDF to a file
+         *
+         * @param $filename
+         * @return \Barryvdh\Snappy\PdfWrapper 
+         * @static 
+         */ 
+        public static function save($filename, $overwrite = false)
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->save($filename, $overwrite);
+        }
+                    /**
+         * Make the PDF downloadable by the user
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function download($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->download($filename);
+        }
+                    /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function inline($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->inline($filename);
+        }
+                    /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @deprecated use inline() instead
+         * @static 
+         */ 
+        public static function stream($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\Snappy\PdfWrapper $instance */
+                        return $instance->stream($filename);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function assertViewIs($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertViewIs($value);
+        }
+                    /**
+         * Assert that the response view has a given piece of bound data.
+         *
+         * @param string|array $key
+         * @param mixed $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertViewHas($key, $value = null)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertViewHas($key, $value);
+        }
+                    /**
+         * Assert that the response view has a given list of bound data.
+         *
+         * @param array $bindings
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertViewHasAll($bindings)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertViewHasAll($bindings);
+        }
+                    /**
+         * Assert that the response view is missing a piece of bound data.
+         *
+         * @param string $key
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertViewMissing($key)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertViewMissing($key);
+        }
+                    /**
+         * Assert that the given string is contained within the response.
+         *
+         * @param string $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertSee($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertSee($value);
+        }
+                    /**
+         * Assert that the given string is contained within the response text.
+         *
+         * @param string $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertSeeText($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertSeeText($value);
+        }
+                    /**
+         * Assert that the given string is not contained within the response.
+         *
+         * @param string $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertDontSee($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertDontSee($value);
+        }
+                    /**
+         * Assert that the given string is not contained within the response text.
+         *
+         * @param string $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertDontSeeText($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertDontSeeText($value);
+        }
+                    /**
+         * Assert that the given string is equal to the saved filename.
+         *
+         * @param string $value
+         * @return \Barryvdh\Snappy\PdfFaker 
+         * @static 
+         */ 
+        public static function assertFileNameIs($value)
+        {
+                        /** @var \Barryvdh\Snappy\PdfFaker $instance */
+                        return $instance->assertFileNameIs($value);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class SnappyImage {
+                    /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Image 
+         * @static 
+         */ 
+        public static function snappy()
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->snappy();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setOption($name, $value)
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->setOption($name, $value);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setOptions($options)
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->setOptions($options);
+        }
+                    /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return static 
+         * @static 
+         */ 
+        public static function loadHTML($string)
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->loadHTML($string);
+        }
+                    /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static 
+         * @static 
+         */ 
+        public static function loadFile($file)
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->loadFile($file);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function loadView($view, $data = [], $mergeData = [])
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->loadView($view, $data, $mergeData);
+        }
+                    /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static 
+         */ 
+        public static function output()
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->output();
+        }
+                    /**
+         * Save the image to a file
+         *
+         * @param $filename
+         * @return static 
+         * @static 
+         */ 
+        public static function save($filename, $overwrite = false)
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->save($filename, $overwrite);
+        }
+                    /**
+         * Make the image downloadable by the user
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function download($filename = 'image.jpg')
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->download($filename);
+        }
+                    /**
+         * Return a response with the image to show in the browser
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function inline($filename = 'image.jpg')
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->inline($filename);
+        }
+                    /**
+         * Return a response with the image to show in the browser
+         *
+         * @deprecated Use inline() instead
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function stream($filename = 'image.jpg')
+        {
+                        /** @var \Barryvdh\Snappy\ImageWrapper $instance */
+                        return $instance->stream($filename);
+        }
+         
+    }
+     
+}
+
+    namespace Diglactic\Breadcrumbs { 
             /**
      * Breadcrumbs facade - allows easy access to the Manager instance.
      *
@@ -17928,6 +19900,16 @@
          *
          * @static 
          */ 
+        public static function filterReportsUsing($filterReportsCallable)
+        {
+                        /** @var \Spatie\FlareClient\Flare $instance */
+                        return $instance->filterReportsUsing($filterReportsCallable);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
         public static function version()
         {
                         /** @var \Spatie\FlareClient\Flare $instance */
@@ -18727,7 +20709,7 @@ namespace  {
              * Find a model by its primary key.
              *
              * @param mixed $id
-             * @param array $columns
+             * @param array|string $columns
              * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null 
              * @static 
              */ 
@@ -18741,7 +20723,7 @@ namespace  {
              * Find multiple models by their primary keys.
              *
              * @param \Illuminate\Contracts\Support\Arrayable|array $ids
-             * @param array $columns
+             * @param array|string $columns
              * @return \Illuminate\Database\Eloquent\Collection 
              * @static 
              */ 
@@ -18755,7 +20737,7 @@ namespace  {
              * Find a model by its primary key or throw an exception.
              *
              * @param mixed $id
-             * @param array $columns
+             * @param array|string $columns
              * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static|static[] 
              * @throws \Illuminate\Database\Eloquent\ModelNotFoundException<\Illuminate\Database\Eloquent\Model>
              * @static 
@@ -18770,7 +20752,7 @@ namespace  {
              * Find a model by its primary key or return fresh model instance.
              *
              * @param mixed $id
-             * @param array $columns
+             * @param array|string $columns
              * @return \Illuminate\Database\Eloquent\Model|static 
              * @static 
              */ 
@@ -18784,7 +20766,7 @@ namespace  {
              * Find a model by its primary key or call a callback.
              *
              * @param mixed $id
-             * @param \Closure|array $columns
+             * @param \Closure|array|string $columns
              * @param \Closure|null $callback
              * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|mixed 
              * @static 
@@ -18840,7 +20822,7 @@ namespace  {
                 /**
              * Execute the query and get the first result or throw an exception.
              *
-             * @param array $columns
+             * @param array|string $columns
              * @return \Illuminate\Database\Eloquent\Model|static 
              * @throws \Illuminate\Database\Eloquent\ModelNotFoundException<\Illuminate\Database\Eloquent\Model>
              * @static 
@@ -18854,7 +20836,7 @@ namespace  {
                 /**
              * Execute the query and get the first result or call a callback.
              *
-             * @param \Closure|array $columns
+             * @param \Closure|array|string $columns
              * @param \Closure|null $callback
              * @return \Illuminate\Database\Eloquent\Model|static|mixed 
              * @static 
@@ -18990,8 +20972,8 @@ namespace  {
                 /**
              * Paginate the given query.
              *
-             * @param int|null $perPage
-             * @param array $columns
+             * @param int|null|\Closure $perPage
+             * @param array|string $columns
              * @param string $pageName
              * @param int|null $page
              * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator 
@@ -19008,7 +20990,7 @@ namespace  {
              * Paginate the given query into a simple paginator.
              *
              * @param int|null $perPage
-             * @param array $columns
+             * @param array|string $columns
              * @param string $pageName
              * @param int|null $page
              * @return \Illuminate\Contracts\Pagination\Paginator 
@@ -19024,7 +21006,7 @@ namespace  {
              * Paginate the given query into a cursor paginator.
              *
              * @param int|null $perPage
-             * @param array $columns
+             * @param array|string $columns
              * @param string $cursorName
              * @param \Illuminate\Pagination\Cursor|string|null $cursor
              * @return \Illuminate\Contracts\Pagination\CursorPaginator 
@@ -19227,6 +21209,19 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->setEagerLoads($eagerLoad);
+            }
+             
+                /**
+             * Indicate that the given relationships should not be eagerly loaded.
+             *
+             * @param array $relations
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function withoutEagerLoad($relations)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->withoutEagerLoad($relations);
             }
              
                 /**
@@ -19495,13 +21490,13 @@ namespace  {
              *
              * @template TWhenParameter
              * @template TWhenReturnType
-             * @param \Illuminate\Database\Eloquent\(\Closure($this):  TWhenParameter)|TWhenParameter  $value
+             * @param \Illuminate\Database\Eloquent\(\Closure($this):  TWhenParameter)|TWhenParameter|null $value
              * @param \Illuminate\Database\Eloquent\(callable($this,  TWhenParameter): TWhenReturnType)|null  $callback
              * @param \Illuminate\Database\Eloquent\(callable($this,  TWhenParameter): TWhenReturnType)|null  $default
              * @return $this|\Illuminate\Database\Eloquent\TWhenReturnType 
              * @static 
              */ 
-            public static function when($value, $callback = null, $default = null)
+            public static function when($value = null, $callback = null, $default = null)
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->when($value, $callback, $default);
@@ -19512,13 +21507,13 @@ namespace  {
              *
              * @template TUnlessParameter
              * @template TUnlessReturnType
-             * @param \Illuminate\Database\Eloquent\(\Closure($this):  TUnlessParameter)|TUnlessParameter  $value
+             * @param \Illuminate\Database\Eloquent\(\Closure($this):  TUnlessParameter)|TUnlessParameter|null  $value
              * @param \Illuminate\Database\Eloquent\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $callback
              * @param \Illuminate\Database\Eloquent\(callable($this,  TUnlessParameter): TUnlessReturnType)|null  $default
              * @return $this|\Illuminate\Database\Eloquent\TUnlessReturnType 
              * @static 
              */ 
-            public static function unless($value, $callback = null, $default = null)
+            public static function unless($value = null, $callback = null, $default = null)
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->unless($value, $callback, $default);
@@ -19599,6 +21594,24 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->whereHas($relation, $callback, $operator, $count);
+            }
+             
+                /**
+             * Add a relationship count / exists condition to the query with where clauses.
+             * 
+             * Also load the relationship with same condition.
+             *
+             * @param string $relation
+             * @param \Closure|null $callback
+             * @param string $operator
+             * @param int $count
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function withWhereHas($relation, $callback = null, $operator = '>=', $count = 1)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->withWhereHas($relation, $callback, $operator, $count);
             }
              
                 /**
@@ -20081,7 +22094,7 @@ namespace  {
                 /**
              * Makes "from" fetch from a subquery.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
              * @return \Illuminate\Database\Query\Builder 
              * @throws \InvalidArgumentException
@@ -20318,7 +22331,7 @@ namespace  {
                 /**
              * Add a subquery cross join to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @param string $as
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -20334,13 +22347,13 @@ namespace  {
              *
              * @param array $wheres
              * @param array $bindings
-             * @return void 
+             * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
             public static function mergeWheres($wheres, $bindings)
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
-                                $instance->mergeWheres($wheres, $bindings);
+                                return $instance->mergeWheres($wheres, $bindings);
             }
              
                 /**
@@ -20777,7 +22790,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -20793,7 +22806,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -20808,7 +22821,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -20824,7 +22837,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21227,8 +23240,8 @@ namespace  {
              * Add a "having" clause to the query.
              *
              * @param \Closure|string $column
-             * @param string|null $operator
-             * @param string|null $value
+             * @param string|int|float|null $operator
+             * @param string|int|float|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -21243,8 +23256,8 @@ namespace  {
              * Add an "or having" clause to the query.
              *
              * @param \Closure|string $column
-             * @param string|null $operator
-             * @param string|null $value
+             * @param string|int|float|null $operator
+             * @param string|int|float|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21385,7 +23398,7 @@ namespace  {
                 /**
              * Add an "order by" clause to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Expression|string $column
              * @param string $direction
              * @return \Illuminate\Database\Query\Builder 
              * @throws \InvalidArgumentException
@@ -21400,7 +23413,7 @@ namespace  {
                 /**
              * Add a descending "order by" clause to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Expression|string $column
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21550,7 +23563,7 @@ namespace  {
                 /**
              * Add a union statement to the query.
              *
-             * @param \Illuminate\Database\Query\Builder|\Closure $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
              * @param bool $all
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -21564,7 +23577,7 @@ namespace  {
                 /**
              * Add a union all statement to the query.
              *
-             * @param \Illuminate\Database\Query\Builder|\Closure $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21875,7 +23888,7 @@ namespace  {
              * Insert new records into the table using a subquery.
              *
              * @param array $columns
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
              * @return int 
              * @static 
              */ 
@@ -22205,6 +24218,11 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
+            class Vite extends \Illuminate\Support\Facades\Vite {}
+            class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
+            class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf {}
+            class SnappyImage extends \Barryvdh\Snappy\Facades\SnappyImage {}
             class Breadcrumbs extends \Diglactic\Breadcrumbs\Breadcrumbs {}
             class Image extends \Intervention\Image\Facades\Image {}
             class Agent extends \Jenssegers\Agent\Facades\Agent {}

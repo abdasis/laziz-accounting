@@ -11,9 +11,9 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class Table extends DataTableComponent
 {
 
-    public function getTableRowUrl($id): string
+    public function configure(): void
     {
-        return route('purchases.show', $id);
+        $this->setPrimaryKey('id');
     }
 
     public function columns(): array
@@ -26,7 +26,7 @@ class Table extends DataTableComponent
                 ->sortable()->searchable(),
             Column::make('Kode Pembelian', 'code')->format(function ($val){
                 return '<span class="fw-bold text-primary">'.$val.'</span>';
-            })->sortable()->searchable()->asHtml(),
+            })->sortable()->searchable()->html(),
             Column::make('Supplier', 'supplier.company_name')->sortable()->searchable(),
             Column::make('Jatuh Tempo', 'due_date')->sortable()->searchable(),
             Column::make('Status', 'status')->format(function ($val){
@@ -42,15 +42,15 @@ class Table extends DataTableComponent
                 $val = \Str::title($val);
 
                 return "<span class='$badge'>$val</span>";
-            })->sortable()->asHtml(),
+            })->sortable()->html(),
             Column::make('Total', 'total_price')->sortable()->format(function ($val){
                 $harga = rupiah($val);
                 return "<p class=' m-0 p-0 fw-bold text-end'>$harga</p>";
-            })->asHtml()->addClass('float-end'),
+            })->html(),
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Purchase::query();
 

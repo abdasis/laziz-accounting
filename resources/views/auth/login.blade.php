@@ -1,22 +1,22 @@
 <x-guest-layout>
-    <div class="bg-soft-light bg-gradient" style="background: #E8E8E8 !important;">
+    <div class="bg-soft-light">
         <div class="container">
             <div class="row justify-content-center" style="min-height: 100vh">
-                <div class="col-md-8 col-lg-6 col-xl-4 my-auto">
-                    <div class="card border-top border-warning bg-white" style="border-top: 5px solid #FFB900 !important;">
+                <div class="col-md-8 col-sm-12 col-lg-6 col-xl-4 my-auto">
+                    <div class="card rounded border-light shadow-sm bg-white">
                         <div class="card-body p-4">
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-logo mb-3">
                                     <a href="{{route('login')}}" class="logo logo-dark text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="50">
-                                            </span>
+                                        <span class="logo-lg">
+                                            <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="50">
+                                        </span>
                                     </a>
 
                                     <a href="{{route('login')}}" class="logo logo-light text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="50">
-                                            </span>
+                                        <span class="logo-lg">
+                                            <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="50">
+                                        </span>
                                     </a>
                                 </div>
                             </div>
@@ -36,14 +36,14 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="emailaddress" class="form-label">Email address</label>
-                                    <input class="form-control text-warning" value="{{old('email')}}" type="email" id="emailaddress" required="" placeholder="Masukan email" name="email">
+                                    <input class="form-control text-warning border-light" value="{{old('email')}}" type="email" id="emailaddress" required="" placeholder="Masukan email" name="email">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="password" id="password" class="form-control" name="password" value="{{old('password')}}" placeholder="Enter your password">
-                                        <div class="input-group-text" data-password="false">
+                                        <input type="password" id="password" class="form-control border-light" name="password" value="{{old('password')}}" placeholder="Enter your password">
+                                        <div class="input-group-text border-light bg-soft-light" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
                                     </div>

@@ -1,6 +1,5 @@
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-    <div class="card border-top border-2 shadow-none">
+    <div class="card shadow-sm border-light rounded-3">
         <div class="card-body">
             <div class="card-title justify-content-between d-flex">
                 <h4>Data Semua Kontak</h4>

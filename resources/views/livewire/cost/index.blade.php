@@ -14,7 +14,7 @@
                     </button>
                 </a>
             </h4>
-            <livewire:pages.cost.table/>
+            <livewire:cost.table/>
         </div>
     </div>
 </div>

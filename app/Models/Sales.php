@@ -79,4 +79,19 @@ class Sales extends Model
     {
         return $this->details->sum('total');
     }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function totalPaid()
+    {
+        return $this->payments()->sum('amount');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }

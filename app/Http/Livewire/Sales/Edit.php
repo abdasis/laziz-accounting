@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Sales;
 
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\Customer;
 use App\Models\Journal;
 use App\Models\JournalDetail;
 use App\Models\Product;
@@ -37,6 +36,7 @@ class Edit extends Component
     public $grand_total;
     public $contact;
     public $day;
+    public $status_transaksi;
 
     public function rules()
     {
@@ -45,6 +45,7 @@ class Edit extends Component
             'transaction_date' => 'required',
             'due_date' => 'required',
             'contact.0' => 'required',
+            'status_transaksi' => 'required',
 
             'product.0' => 'required',
             'description.0' => 'required',
@@ -67,7 +68,7 @@ class Edit extends Component
 
     public function messages()
     {
-        return[
+        return [
             'product.0.required' => 'Product is required',
             'description.0.required' => 'Description is required',
             'quantity.0.required' => 'Quantity is required',
@@ -106,19 +107,20 @@ class Edit extends Component
         $this->no_reference = $sale->no_refrence;
         $this->address = $sale->customer->shipping_address;
         $this->internal_notes = $sale->internal_notes;
-        $this->remarks = $sale->remarks;
-        foreach ($sale->details as $key => $detail){
-            array_push($this->inputs, $key+1);
+        $this->remarks = $sale->internal_notes;
+        $this->status_transaksi = $sale->status;
+        foreach ($sale->details as $key => $detail) {
+            array_push($this->inputs, $key + 1);
             $this->product[$key] = $detail->product_id;
             $this->description[$key] = $detail->description;
             $this->quantity[$key] = $detail->quantity;
             $this->unit[$key] = $detail->unit;
             $this->tax[$key] = $detail->tax;
-            $this->price[$key] = $detail->price;
+            $this->price[$key] = (int)$detail->price;
             $this->day[$key] = $detail->day;
             $this->total_price[$key] = $detail->total;
             $this->contact[$key] = $detail->contact_id;
-            $this->ppn[$key] =  $this->total_price[$key] * $this->tax[$key] / 100;
+            $this->ppn[$key] = $this->total_price[$key] * $this->tax[$key] / 100;
         }
         $this->sales_id = $sale->id;
 
@@ -131,10 +133,10 @@ class Edit extends Component
 
     public function updatedQuantity($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->quantity[$key] = 0;
             $this->ppn[$key] = 0;
             $this->total_price[$key] = 0;
@@ -151,13 +153,13 @@ class Edit extends Component
     {
         $product = Product::find($val);
 
-        if ($val){
+        if ($val) {
             $this->description[$key] = $product->description;
             $this->price[$key] = $product->sales_price;
             $this->tax[$key] = $product->tax;
             $this->quantity[$key] = 0;
             $this->day[$key] = 1;
-        }else{
+        } else {
             $this->description[$key] = '';
             $this->price[$key] = 0;
             $this->tax[$key] = 0;
@@ -168,10 +170,10 @@ class Edit extends Component
 
     public function updatedDay($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->quantity = 0;
             $this->ppn[$key] = 0;
             $this->total_price[$key] = 0;
@@ -181,20 +183,20 @@ class Edit extends Component
 
     public function updatedPrice($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->total_price[$key] = 0;
         }
     }
 
     public function updatedTax($value, $key)
     {
-        if ($value > 0){
+        if ($value > 0) {
             $this->total_price[$key] = $this->TotalPrice($this->quantity[$key], $this->price[$key], $this->day[$key]);
             $this->ppn[$key] = $this->TotalPpn($this->total_price[$key], $this->tax[$key]);
-        }else{
+        } else {
             $this->ppn[$key] = 0;
         }
     }
@@ -226,15 +228,16 @@ class Edit extends Component
                 'pph_account' => $this->potongan,
                 'income_tax' => $this->potongan_nominal,
                 'total_ppn' => collect($this->ppn)->sum(),
-                'remarks' => $this->remarks,
+                'remarks' => $this->internal_notes,
                 'internal_notes' => $this->internal_notes,
                 'updated_by' => auth()->user()->id,
+                'status' => $this->status_transaksi,
             ]);
 
             $detail_products = [];
 
-            foreach ($this->product as $key => $product){
-                if (!empty($product) && !empty($this->total_price[$key])){
+            foreach ($this->product as $key => $product) {
+                if (!empty($product) && !empty($this->total_price[$key])) {
                     $detail_products[] = new SalesDetails([
                         'contact_id' => $this->contact[$key] ?? null,
                         'product_id' => $product,
@@ -254,56 +257,59 @@ class Edit extends Component
 
             $last_transaction = Journal::count();
 
-            $number = now()->format('ymd') . '.' .$last_transaction+1;
+            $number = now()->format('ymd') . '.' . $last_transaction + 1;
 
             $code_journal = sprintf('JL-%s', $number);
 
-            $journal = Journal::where('no_reference', $sale->code)->update([
-                'code' => $code_journal,
-                'name' => 'Penjualan Kode' . $sale->code,
-                'transaction_date' => $sale->transaction_date,
-                'description' => $sale->remarks,
-                'notes' => $sale->internal_notes,
-                'total' => $sale->total,
-                'status' => 'draft',
-                'no_reference' => $sale->code,
-                'created_by' => auth()->user()->id,
-                'updated_by' => auth()->user()->id,
-            ]);
+            $journal = Journal::where('no_reference', $sale->code)->first();
+
+            if ($journal){
+                $journal->update([
+                    'code' => $code_journal,
+                    'name' => 'Penjualan Kode' . $sale->code,
+                    'transaction_date' => $sale->transaction_date,
+                    'description' => $sale->remarks,
+                    'notes' => $sale->internal_notes,
+                    'total' => $sale->total,
+                    'status' => 'draft',
+                    'no_reference' => $sale->code,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+            }
 
             $journal_details = [];
 
-            foreach ($sale->details as $key => $detail){
+            foreach ($sale->details as $key => $detail) {
                 $product = Product::find($detail->product_id);
-                $journal_details[] = new JournalDetail([
+                array_push($journal_details, new JournalDetail([
                     'account_id' => $product->sale_account,
                     'contact_id' => $this->contact[$key] ?? null,
                     'credit' => $detail->total,
                     'memo' => $detail->description,
-                ]);
+                ]));
             }
 
-            $account_ppn = Account::where('code' , '217100')->first()->id;
+            $account_ppn = Account::where('code', '217100')->first()->id;
 
-            $journal_details[] = new JournalDetail([
+            array_push($journal_details, new JournalDetail([
                 'account_id' => $account_ppn,
                 'credit' => collect($this->ppn)->sum(),
-                'memo' => 'PPn '.$sale->code,
-            ]);
+                'memo' => 'PPn ' . $sale->code,
+            ]));
 
-            if ($sale->status == 'dibayar'){
-                $account_debet = Account::where('code' , '111000')->first()->id;
-            }else{
+            if ($sale->status == 'dibayar') {
+                $account_debet = Account::where('code', '111000')->first()->id;
+            } else {
                 $account_debet = Contact::where('id', $this->supplier_id)->first()->akun_piutang;
             }
 
-            $journal_details[] = new JournalDetail([
-                'account_id' => $account_debet,
-                'debit' => collect($journal_details)->sum('credit'),
-                'memo' => 'Penjualan '.$sale->code,
-            ]);
-
-            $journal = Journal::where('no_reference', $sale->code)->first();
+            array_push($journal_details, new JournalDetail([
+                    'account_id' => $account_debet,
+                    'debit' => collect($journal_details)->sum('credit'),
+                    'memo' => 'Penjualan ' . $sale->code,
+                ])
+            );
 
             $journal->details()->delete();
 
@@ -313,7 +319,7 @@ class Edit extends Component
                 'text' => 'Data berhasil disimpan',
             ]);
             \DB::commit();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \DB::rollBack();
             dd($e);;
             $this->alert('error', 'Gagal', [
@@ -324,7 +330,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.sales.edit',[
+        return view('livewire.sales.edit', [
             'contacts' => Contact::latest()->whereIn('type_contact', ['karyawan', 'lainnya'])->get(),
             'suppliers' => Contact::where('type_contact', 'customer')->orderBy('company_name', 'asc')
                 ->where('status', 'active')

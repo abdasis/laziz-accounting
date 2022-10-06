@@ -7,7 +7,7 @@
             </h5>
         </div>
         <div class="card-body bg-soft-light">
-            <livewire:report.table-ledger-detail/>
+            <livewire:report.table-ledger-detail :id="$soa->id"/>
         </div>
     </div>
 </div>

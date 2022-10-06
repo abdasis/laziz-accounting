@@ -22,6 +22,11 @@ class Table extends DataTableComponent
         return route('contacts.show', $id);
     }
 
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+    }
+
     public function setTypeContact($type_contact)
     {
         $this->type_contact = $type_contact;
@@ -32,7 +37,7 @@ class Table extends DataTableComponent
         return [
             Column::make('Nama Perusahaan','company_name')->format(function ($val){
                 return "<span class='fw-bold text-primary'>$val</span>";
-            })->asHtml()->sortable()->searchable(),
+            })->html()->sortable()->searchable(),
             Column::make('Contact Person', 'contact_name')->searchable(),
             Column::make('Alamat', 'shipping_address')
                 ->format(function ($val){
@@ -44,7 +49,7 @@ class Table extends DataTableComponent
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Contact::query()->where('type_contact',$this->type_contact);
     }
