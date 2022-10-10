@@ -1,7 +1,9 @@
 {
     "version": 2,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.4.0" }
+        "api/index.php": {
+            "runtime": "vercel-php@0.5.2"
+        }
     },
     "routes": [
         {
@@ -14,7 +16,6 @@
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "APP_URL": "https://laravel-vercel.vercel.app",
-
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
