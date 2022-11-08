@@ -19,6 +19,7 @@ class Create extends Component
 {
     use LivewireAlert;
     use GeneratePrice;
+
     public $supplier_id, $code, $transaction_date, $due_date, $no_transaction, $no_refrence, $address;
     public $product, $description, $quantity, $unit, $tax, $price, $total_price, $no_reference;
     public $remarks, $internal_notes;
@@ -63,6 +64,7 @@ class Create extends Component
             'tax.*' => 'required',
             'price.*' => 'required',
             'no_reference.*' => 'required',
+            'internal_notes' => 'required',
 
         ];
     }
