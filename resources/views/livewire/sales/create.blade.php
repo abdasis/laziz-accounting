@@ -111,7 +111,7 @@
                                     <x-form-input name="tax.{{$key}}" type="number"/>
                                 </td>
                                 <td class="align-middle" width="15%">
-                                    <x-form-input class="text-end" type="number" name="price.{{$key}}"/>
+                                    <x-form-input class="text-end" wire:model="price.{{$key}}" name="price.{{$key}}"/>
                                 </td>
                                 <td class="align-middle">
                                     <button wire:click.prevent="removeForm({{$key}})" class="btn btn-action shadow-none">

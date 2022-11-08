@@ -13,30 +13,33 @@ class Table extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+            ->setTableRowUrl(function ($row){
+                return route('products.show', $row);
+            });
     }
 
 
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
+            Column::make("ID", "id")
                 ->sortable(),
             Column::make('Kode', 'code')
                 ->searchable()
                 ->sortable(),
-            Column::make("Name", "name")
+            Column::make("Nama Produk", "name")
                 ->searchable()
                 ->sortable(),
-            Column::make('Price', 'price')
+            Column::make('Harga', 'price')
                 ->searchable()
                 ->sortable()
                 ->format(function ($price) {
                     return rupiah($price);
                 }),
-            Column::make("Created at", "created_at")
+            Column::make("Dibuat Pada", "created_at")
                 ->sortable(),
-            Column::make("Updated at", "updated_at")
+            Column::make("Terakhir Update", "updated_at")
                 ->sortable(),
         ];
     }

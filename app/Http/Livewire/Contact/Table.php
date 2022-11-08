@@ -17,14 +17,12 @@ class Table extends DataTableComponent
         'type' => 'setTypeContact',
     ];
 
-    public function getTableRowUrl($id): string
-    {
-        return route('contacts.show', $id);
-    }
-
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+            ->setTableRowUrl(function ($row) {
+                return route('contacts.show', $row->id);
+            });
     }
 
     public function setTypeContact($type_contact)
@@ -35,12 +33,13 @@ class Table extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Nama Perusahaan','company_name')->format(function ($val){
+            Column::make('ID', 'id')->sortable(),
+            Column::make('Nama Perusahaan', 'company_name')->format(function ($val) {
                 return "<span class='fw-bold text-primary'>$val</span>";
             })->html()->sortable()->searchable(),
             Column::make('Contact Person', 'contact_name')->searchable(),
             Column::make('Alamat', 'shipping_address')
-                ->format(function ($val){
+                ->format(function ($val) {
                     return \Str::limit($val, 20);
                 })
                 ->searchable(),
@@ -51,6 +50,6 @@ class Table extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Contact::query()->where('type_contact',$this->type_contact);
+        return Contact::query()->where('type_contact', $this->type_contact);
     }
 }
