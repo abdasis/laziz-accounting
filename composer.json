@@ -24,6 +24,7 @@
         "laravel/tinker": "^2.7",
         "laravolt/avatar": "^4.1",
         "livewire/livewire": "^2.5",
+        "opcodesio/log-viewer": "^1.6",
         "protonemedia/laravel-form-components": "^3.6",
         "rappasoft/laravel-livewire-tables": "^2.8",
         "spatie/laravel-permission": "^5.5"

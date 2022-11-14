@@ -122,6 +122,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('edit/{staff}', \App\Http\Livewire\Staff\Edit::class)->name('staff.edit');
         Route::get('show/{staff}', \App\Http\Livewire\Staff\Show::class)->name('staff.show');
     });
+
+    Route::group(['prefix' => 'auth'], function (){
+        Route::get('keluar', function (){
+            Auth::logout();
+            return redirect()->route('login');
+        })->name('keluar');
+    });
 });
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Dashboard::class)->name('dashboard');

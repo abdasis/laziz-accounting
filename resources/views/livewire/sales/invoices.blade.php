@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-8">
             <div class="card shadow-sm border-light">
-                <img src="{{asset('assets/images/kop-surat.png')}}" class="img-fluid" alt="">
+                <img src="{{asset('themes/images/kop-surat.png')}}" class="img-fluid" alt="">
                 <div class="card-body">
 
                     <h3 class="text-center mb-4">Invoice</h3>

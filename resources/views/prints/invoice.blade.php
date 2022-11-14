@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="{{public_path('assets/css/config/creative/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="{{public_path('themes/css/config/creative/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <style>
         .gambar-panjang-orange {
             background: #FFA500;
@@ -42,7 +42,7 @@
     </style>
 </head>
 <body class="d-flex flex-column h-100">
-<img src="{{public_path('assets/images/kop-surat.png')}}" class="img-fluid" alt="">
+<img src="{{public_path('themes/images/kop-surat.png')}}" class="img-fluid" alt="">
 <h3 class="text-center mb-4">Invoice</h3>
 <table class="table table-sm table-borderless border-white">
     <tr>
@@ -155,7 +155,7 @@
             <td>
                 <p class="text-center" >Hormat Kami</p>
                 @if($tanda_tangan == 'dengan-tanda-tangan')
-                    <img src="{{public_path('assets/images/tanda-tangan.png')}}" class="mx-auto d-block" style="height: 100px; width: auto; margin: 0 auto" alt="">
+                    <img src="{{public_path('themes/images/tanda-tangan.png')}}" class="mx-auto d-block" style="height: 100px; width: auto; margin: 0 auto" alt="">
                 @else
                     <img src="" alt="" style="margin-bottom: 150px">
                 @endif

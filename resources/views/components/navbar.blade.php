@@ -71,7 +71,7 @@
                                 >
                                     <div class="notify-icon">
                                         <img
-                                            src="../assets/images/users/user-1.jpg"
+                                            src="../themes/images/users/user-1.jpg"
                                             class="img-fluid rounded-circle"
                                             alt=""
                                         />
@@ -105,7 +105,7 @@
                                 >
                                     <div class="notify-icon">
                                         <img
-                                            src="../assets/images/users/user-4.jpg"
+                                            src="../themes/images/users/user-4.jpg"
                                             class="img-fluid rounded-circle"
                                             alt=""
                                         />
@@ -221,7 +221,7 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a href="{{route('keluar')}}" class="dropdown-item text-danger notify-item">
                             <i class="fe-log-out"></i>
                             <span>Logout</span>
                         </a>
@@ -233,21 +233,21 @@
             <div class="logo-box">
                 <a href="{{route('dashboard')}}" class="logo logo-dark text-center">
               <span class="logo-sm">
-                <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="80"/>
+                <img src="{{asset('themes/images/logo-sm.png')}}" alt="" height="80"/>
                   <!-- <span class="logo-lg-text-light">UBold</span> -->
               </span>
                     <span class="logo-lg">
-                <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="80"/>
+                <img src="{{asset('themes/images/logo-dark.png')}}" alt="" height="80"/>
                         <!-- <span class="logo-lg-text-light">U</span> -->
               </span>
                 </a>
 
                 <a href="{{route('dashboard')}}" class="logo logo-light text-center">
               <span class="logo-sm">
-                <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="80"/>
+                <img src="{{asset('themes/images/logo-sm.png')}}" alt="" height="80"/>
               </span>
                     <span class="logo-lg">
-                <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="80"/>
+                <img src="{{asset('themes/images/logo-light.png')}}" alt="" height="80"/>
               </span>
                 </a>
             </div>

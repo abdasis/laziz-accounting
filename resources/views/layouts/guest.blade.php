@@ -9,17 +9,17 @@
     <meta content="Abdul El-Aziz" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{asset('themes/images/favicon.ico')}}">
 
     <!-- App css -->
-    <link href="{{asset('assets/css/config/default/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-    <link href="{{asset('assets/css/config/default/app.min.css')}}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{asset('themes/css/config/default/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{asset('themes/css/config/default/app.min.css')}}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-    <link href="{{asset('assets/css/config/default/bootstrap-dark.min.css')}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-    <link href="{{asset('assets/css/config/default/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+    <link href="{{asset('themes/css/config/default/bootstrap-dark.min.css')}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="{{asset('themes/css/config/default/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
     <!-- icons -->
-    <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
+    <link href="{{asset('themes/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{asset('themes/css/styles.css')}}">
     @livewireStyles
 
 <!-- Scripts -->
@@ -28,9 +28,9 @@
 <body class="loading">
 {{$slot}}
 <!-- Vendor js -->
-<script src="{{asset('assets/js/vendor.min.js')}}"></script>
+<script src="{{asset('themes/js/vendor.min.js')}}"></script>
 <!-- App js -->
-<script src="{{asset('assets/js/app.min.js')}}"></script>
+<script src="{{asset('themes/js/app.min.js')}}"></script>
 @livewireScripts
 </body>
 </html>

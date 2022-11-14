@@ -23,7 +23,7 @@ trait DeleteConfirm
             'onConfirmed' => 'confirmed',
             'allowOutsideClick' => false,
             'timer' => null,
-            'iconHtml' => '<img class="img-fluid" src="/assets/icons/confirm.png"/>',
+            'iconHtml' => '<img class="img-fluid" src="/themes/icons/confirm.png"/>',
             'customClass' => [
                 'icon' => 'border-warning'
 

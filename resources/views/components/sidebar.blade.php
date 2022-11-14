@@ -5,7 +5,7 @@
             <!-- User box -->
             <div class="user-box text-center">
                 <img
-                    src="{{ asset('/assets/images/users/user-3.jpg') }}"
+                    src="{{ asset('/themes/images/users/user-3.jpg') }}"
                     alt="user-img"
                     title="Mat Helme"
                     class="rounded-circle avatar-md"

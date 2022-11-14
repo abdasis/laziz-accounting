@@ -9,13 +9,13 @@
                                 <div class="auth-logo mb-3">
                                     <a href="{{route('login')}}" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="50">
+                                            <img src="{{asset('themes/images/logo-dark.png')}}" alt="" height="50">
                                         </span>
                                     </a>
 
                                     <a href="{{route('login')}}" class="logo logo-light text-center">
                                         <span class="logo-lg">
-                                            <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="50">
+                                            <img src="{{asset('themes/images/logo-light.png')}}" alt="" height="50">
                                         </span>
                                     </a>
                                 </div>

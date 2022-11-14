@@ -46,7 +46,7 @@ RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
         cp .fly/nginx-default /etc/nginx/sites-available/default; \
     fi
 
-# Multi-stage build: Build static assets
+# Multi-stage build: Build static themes
 # This allows us to not include Node within the final container
 FROM node:${NODE_VERSION} as node_modules_go_brrr
 
@@ -79,12 +79,12 @@ RUN if [ -f "vite.config.js" ]; then \
 
 # From our base container created above, we
 # create our final image, adding in static
-# assets that we generated above
+# themes that we generated above
 FROM base
 
-# Packages like Laravel Nova may have added assets to the public directory
-# or maybe some custom assets were added manually! Either way, we merge
-# in the assets we generated above rather than overwrite them
+# Packages like Laravel Nova may have added themes to the public directory
+# or maybe some custom themes were added manually! Either way, we merge
+# in the themes we generated above rather than overwrite them
 COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
 RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
     && rm -rf /var/www/html/public-npm \
